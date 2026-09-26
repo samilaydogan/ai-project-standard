@@ -1,0 +1,22 @@
+{
+  "schema_version": 2,
+  "standard": "ai-project-standard",
+  "version": "{{STANDARD_VERSION}}",
+  "adopted_on": "{{DATE}}",
+  "source_reference": "{{REVIEWED_CONTENT_REFERENCE}}",
+  "release_manifest_sha256": "{{RELEASE_MANIFEST_SHA256}}",
+  "invariants": {},
+  "project_owned": [
+    "PROJECT_PROFILE.md",
+    "PROJECT_STATE.md",
+    "EXECUTION_PLAN.md",
+    "CAPABILITY_CATALOG.md",
+    "ROADMAP_CHANGELOG.md",
+    "HANDOFF.md",
+    "STANDARD_ADOPTION_HISTORY.md"
+  ],
+  "exceptions": [],
+  "semantic_acceptance": {
+    "status": "PENDING"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "project": "{{PROJECT_NAME}}",
+  "as_of": "{{DATE}}",
+  "application_version": "PENDING",
+  "base_version": "PENDING",
+  "schema_migration": "PENDING",
+  "standard_version": "{{STANDARD_VERSION}}",
+  "source_identity": "PENDING",
+  "current": "PENDING",
+  "next": "PENDING",
+  "validation": "PENDING"
+}
