@@ -1,0 +1,31 @@
+{
+  "/Users/samil/Documents/GitHub/ai-operation-hub": {
+    "file_count": 5940,
+    "whole_tree_byte_equal": false,
+    "changed_files": [
+      ".DS_Store",
+      "docs/.DS_Store"
+    ],
+    "source_and_governance_byte_equal": true,
+    "initial_file_manifest_sha256": "282bd291b5898cfab1c68989643df037ccb87b603a2873e3a401b64c4c5e23ec",
+    "final_file_manifest_sha256": "4ef95c57f4579837815ee79532d55e114435bdc2e29c97c26b13c2382c7c3a15",
+    "git_state_unchanged": true,
+    "head": "367b78141ec10f8e7636c778254991f7495c307f",
+    "branch": "main",
+    "git_state_sha256": "8332569b3d1c51214d42243b5eab115e4c197d15ef53182ae148b4bc11312a75",
+    "qualification": "No write/mutation tool was used on this repository; two ignored OS metadata files differ in main tree, so whole-tree equality is not claimed."
+  },
+  "/Users/samil/Documents/GitHub/ai-operation-hub-preview": {
+    "file_count": 512,
+    "whole_tree_byte_equal": true,
+    "changed_files": [],
+    "source_and_governance_byte_equal": true,
+    "initial_file_manifest_sha256": "a6dfc84455a47f6ffd4d36f60b0019fc3b3ae5a441091237607091b3bad1d697",
+    "final_file_manifest_sha256": "a6dfc84455a47f6ffd4d36f60b0019fc3b3ae5a441091237607091b3bad1d697",
+    "git_state_unchanged": true,
+    "head": "36b71ce63c6c2b16753880a57288f501142973b2",
+    "branch": "",
+    "git_state_sha256": "852cc69edc1456e69a69af205b9c5ee752b25db10906de738ffedb8fd76a6526",
+    "qualification": "Exact byte-map and Git-state equality."
+  }
+}

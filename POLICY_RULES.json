@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "invariants": [
+    "AGENT_WORKFLOW.md",
+    "DEVELOPMENT_RULES.md",
+    "DOCUMENT_GOVERNANCE.md",
+    "SECURITY_BASELINE.md",
+    "TESTING_AND_EVIDENCE.md",
+    "MIGRATION_AND_RELEASE_POLICY.md",
+    "UI_IMPLEMENTATION_STANDARDS.md",
+    "ADOPTION.md",
+    "POLICY_RULES.json",
+    "scripts/check_standard.py",
+    "scripts/check_docs.py"
+  ],
+  "required_project_owned": [
+    "PROJECT_PROFILE.md",
+    "PROJECT_STATE.md",
+    "EXECUTION_PLAN.md",
+    "CAPABILITY_CATALOG.md",
+    "ROADMAP_CHANGELOG.md",
+    "HANDOFF.md",
+    "STANDARD_ADOPTION_HISTORY.md"
+  ],
+  "distribution_files": [
+    "ADOPTION.md",
+    "AGENT_WORKFLOW.md",
+    "CAPABILITY_CATALOG.template.md",
+    "CHANGELOG.md",
+    "DEVELOPMENT_RULES.md",
+    "DOCUMENT_GOVERNANCE.md",
+    "EXECUTION_PLAN.template.md",
+    "HANDOFF.template.md",
+    "MIGRATION_AND_RELEASE_POLICY.md",
+    "POLICY_RULES.json",
+    "PROJECT_PROFILE.template.md",
+    "PROJECT_STATE.template.json",
+    "PROJECT_STATE.template.md",
+    "README.md",
+    "ROADMAP_CHANGELOG.template.md",
+    "SECURITY_BASELINE.md",
+    "STANDARD_ADOPTION_HISTORY.template.md",
+    "TESTING_AND_EVIDENCE.md",
+    "UI_IMPLEMENTATION_STANDARDS.md",
+    "VERSION",
+    "scripts/check_docs.py",
+    "scripts/check_standard.py",
+    "scripts/generate_release.py",
+    "standard-adoption.template.json",
+    "tests/test_check_docs.py",
+    "tests/test_check_standard.py"
+  ],
+  "rules": {
+    "WF-PRESERVE": {
+      "owner": "AGENT_WORKFLOW.md",
+      "waivable": false
+    },
+    "WF-SCOPE": {
+      "owner": "AGENT_WORKFLOW.md",
+      "waivable": false
+    },
+    "WF-COMMANDS": {
+      "owner": "AGENT_WORKFLOW.md",
+      "waivable": true
+    },
+    "WF-CLOSURE": {
+      "owner": "AGENT_WORKFLOW.md",
+      "waivable": false
+    },
+    "WF-HANDOFF": {
+      "owner": "AGENT_WORKFLOW.md",
+      "waivable": true
+    },
+    "DEV-BOUNDARY": {
+      "owner": "DEVELOPMENT_RULES.md",
+      "waivable": false
+    },
+    "DEV-CHANGE": {
+      "owner": "DEVELOPMENT_RULES.md",
+      "waivable": false
+    },
+    "DEV-REMOTE": {
+      "owner": "DEVELOPMENT_RULES.md",
+      "waivable": true
+    },
+    "DEV-HYGIENE": {
+      "owner": "DEVELOPMENT_RULES.md",
+      "waivable": false
+    },
+    "DEV-LICENSE": {
+      "owner": "DEVELOPMENT_RULES.md",
+      "waivable": true
+    },
+    "GOV-TRUTH": {
+      "owner": "DOCUMENT_GOVERNANCE.md",
+      "waivable": false
+    },
+    "GOV-OWNERS": {
+      "owner": "DOCUMENT_GOVERNANCE.md",
+      "waivable": false
+    },
+    "GOV-PRECEDENCE": {
+      "owner": "DOCUMENT_GOVERNANCE.md",
+      "waivable": false
+    },
+    "GOV-STATE": {
+      "owner": "DOCUMENT_GOVERNANCE.md",
+      "waivable": true
+    },
+    "SEC-SECRETS": {
+      "owner": "SECURITY_BASELINE.md",
+      "waivable": false
+    },
+    "SEC-AUTHZ": {
+      "owner": "SECURITY_BASELINE.md",
+      "waivable": false
+    },
+    "SEC-LOGGING": {
+      "owner": "SECURITY_BASELINE.md",
+      "waivable": false
+    },
+    "SEC-SAFETY": {
+      "owner": "SECURITY_BASELINE.md",
+      "waivable": false
+    },
+    "TEST-APPLICABILITY": {
+      "owner": "TESTING_AND_EVIDENCE.md",
+      "waivable": true
+    },
+    "TEST-FORMAL": {
+      "owner": "TESTING_AND_EVIDENCE.md",
+      "waivable": false
+    },
+    "TEST-GUARDS": {
+      "owner": "TESTING_AND_EVIDENCE.md",
+      "waivable": false
+    },
+    "TEST-REPORT": {
+      "owner": "TESTING_AND_EVIDENCE.md",
+      "waivable": false
+    },
+    "TEST-IDENTITY": {
+      "owner": "TESTING_AND_EVIDENCE.md",
+      "waivable": false
+    },
+    "TEST-CLOSURE": {
+      "owner": "TESTING_AND_EVIDENCE.md",
+      "waivable": false
+    },
+    "TEST-SCREENSHOT": {
+      "owner": "TESTING_AND_EVIDENCE.md",
+      "waivable": true
+    },
+    "REL-METADATA": {
+      "owner": "MIGRATION_AND_RELEASE_POLICY.md",
+      "waivable": false
+    },
+    "REL-MIGRATION": {
+      "owner": "MIGRATION_AND_RELEASE_POLICY.md",
+      "waivable": false
+    },
+    "REL-RECOVERY": {
+      "owner": "MIGRATION_AND_RELEASE_POLICY.md",
+      "waivable": false
+    },
+    "REL-ARTIFACT": {
+      "owner": "MIGRATION_AND_RELEASE_POLICY.md",
+      "waivable": false
+    },
+    "REL-PRODUCTION": {
+      "owner": "MIGRATION_AND_RELEASE_POLICY.md",
+      "waivable": false
+    },
+    "UI-APPLY": {
+      "owner": "UI_IMPLEMENTATION_STANDARDS.md",
+      "waivable": true
+    },
+    "UI-ACCESS": {
+      "owner": "UI_IMPLEMENTATION_STANDARDS.md",
+      "waivable": false
+    },
+    "UI-LIST": {
+      "owner": "UI_IMPLEMENTATION_STANDARDS.md",
+      "waivable": true
+    },
+    "UI-MAPPING": {
+      "owner": "UI_IMPLEMENTATION_STANDARDS.md",
+      "waivable": true
+    },
+    "ADP-INTEGRITY": {
+      "owner": "ADOPTION.md",
+      "waivable": false
+    },
+    "ADP-STRUCTURE": {
+      "owner": "ADOPTION.md",
+      "waivable": false
+    },
+    "ADP-EXCEPT": {
+      "owner": "ADOPTION.md",
+      "waivable": false
+    },
+    "ADP-UPGRADE": {
+      "owner": "ADOPTION.md",
+      "waivable": false
+    }
+  }
+}

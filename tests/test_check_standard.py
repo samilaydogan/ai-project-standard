@@ -1,0 +1,250 @@
+"""Synthetic isolated integrity/waiver/approval regression cases; no runtime imports."""
+
+from __future__ import annotations
+
+import json
+import shutil
+import subprocess
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+import check_standard as checker
+import generate_release
+
+
+class StandardTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.standard = self.root / "standard"
+        source = Path(__file__).resolve().parents[1]
+        for name in checker.DISTRIBUTION:
+            target = self.standard / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source / name, target)
+        self.write_release()
+        self.consumer = self.root / "consumer"
+        for name in checker.INVARIANTS:
+            target = self.consumer / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(self.standard / name, target)
+        for name in checker.PROJECT_DOCUMENTS | {"docs/evidence.md"}:
+            target = self.consumer / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text("Synthetic fixture, not real acceptance.\n")
+        self.adoption = {
+            "schema_version": 2,
+            "standard": "ai-project-standard",
+            "version": "0.1.0",
+            "adopted_on": "2026-01-01",
+            "source_reference": "synthetic isolated content snapshot",
+            "release_manifest_sha256": checker.digest(self.standard / "standard-release.json"),
+            "invariants": {
+                name: checker.digest(self.standard / name) for name in checker.INVARIANTS
+            },
+            "project_owned": sorted(checker.PROJECT_DOCUMENTS | {"docs/evidence.md"}),
+            "exceptions": [],
+            "semantic_acceptance": {"status": "PENDING"},
+        }
+        self.save()
+
+    def write_release(self):
+        (self.standard / "standard-release.json").write_text(
+            json.dumps(generate_release.payload(self.standard, "FINAL"), indent=2) + "\n"
+        )
+
+    def save(self):
+        (self.consumer / "standard-adoption.json").write_text(json.dumps(self.adoption))
+
+    def exception(self, rid="WF-COMMANDS"):
+        registry = json.loads((self.standard / "POLICY_RULES.json").read_text())
+        return {
+            "id": "fixture-exception",
+            "rule": rid,
+            "path": registry["rules"][rid]["owner"],
+            "scope": "synthetic isolated check",
+            "reason": "fixture reason",
+            "risk": "fixture risk",
+            "compensating_control": "fixture control",
+            "approved_by": "Synthetic fixture authority",
+            "approved_on": "2026-01-01",
+            "review_on": "2099-01-01",
+            "status": "APPROVED",
+        }
+
+    def rejected(self, message=None):
+        self.save()
+        with self.assertRaisesRegex(ValueError, message or "ADP-|GOV-"):
+            checker.check(self.standard, self.consumer)
+
+    def test_valid_structure_is_not_semantic_approval(self):
+        result = checker.check(self.standard, self.consumer)
+        self.assertEqual(result["structure"], "PASS")
+        self.assertEqual(result["semantic"], "PENDING")
+        self.assertEqual(result["runtime_release"], "NOT ASSESSED")
+
+    def test_missing_pin(self):
+        del self.adoption["release_manifest_sha256"]
+        self.rejected("invalid SHA-256")
+
+    def test_wrong_pin(self):
+        self.adoption["release_manifest_sha256"] = "0" * 64
+        self.rejected("release pin mismatch")
+
+    def test_wrong_version(self):
+        self.adoption["version"] = "0.2.0"
+        self.rejected("version pin mismatch")
+
+    def test_missing_invariant(self):
+        del self.adoption["invariants"]["ADOPTION.md"]
+        self.rejected("invariant set mismatch")
+
+    def test_missing_required_document_inventory(self):
+        self.adoption["project_owned"].remove("PROJECT_PROFILE.md")
+        self.rejected("required project-owned")
+
+    def test_missing_required_document_bytes(self):
+        (self.consumer / "PROJECT_PROFILE.md").unlink()
+        self.rejected("missing/unsafe")
+
+    def test_nonwaivable_core_exceptions(self):
+        for rid in sorted(checker.CORE):
+            with self.subTest(rule=rid):
+                self.adoption["exceptions"] = [self.exception(rid)]
+                self.rejected("non-waivable")
+
+    def test_unknown_rule(self):
+        row = self.exception()
+        row["rule"] = "WF-NOTREAL"
+        self.adoption["exceptions"] = [row]
+        self.rejected("unknown rule")
+
+    def test_wrong_rule_owner(self):
+        row = self.exception()
+        row["path"] = "DEVELOPMENT_RULES.md"
+        self.adoption["exceptions"] = [row]
+        self.rejected("owner mismatch")
+
+    def test_expired_exception(self):
+        row = self.exception()
+        row["review_on"] = "2026-01-01"
+        self.adoption["exceptions"] = [row]
+        self.rejected("expired/future")
+
+    def test_unapproved_exception(self):
+        row = self.exception()
+        row["status"] = "PENDING"
+        self.adoption["exceptions"] = [row]
+        self.rejected("unapproved")
+
+    def test_duplicate_exception(self):
+        row = self.exception()
+        self.adoption["exceptions"] = [row, row]
+        self.rejected("duplicate")
+
+    def test_allowed_narrow_block_drift(self):
+        target = self.consumer / "AGENT_WORKFLOW.md"
+        target.write_text(
+            target.read_text().replace("await terminal evidence", "await fixture evidence")
+        )
+        row = self.exception()
+        row["expected_sha256"] = checker.digest(target)
+        self.adoption["exceptions"] = [row]
+        self.save()
+        self.assertEqual(checker.check(self.standard, self.consumer)["structure"], "PASS")
+
+    def test_waivable_exception_cannot_hide_core_drift(self):
+        target = self.consumer / "AGENT_WORKFLOW.md"
+        text = target.read_text().replace("await terminal evidence", "await fixture evidence")
+        target.write_text(
+            text.replace("Do not begin NEXT automatically.", "Begin NEXT automatically.")
+        )
+        row = self.exception()
+        row["expected_sha256"] = checker.digest(target)
+        self.adoption["exceptions"] = [row]
+        self.rejected("unapproved block drift")
+
+    def test_tooling_drift(self):
+        target = self.consumer / "scripts/check_standard.py"
+        target.write_text(target.read_text() + "\n# altered synthetic tooling\n")
+        self.rejected("unauthorized drift")
+
+    def test_incomplete_release_inventory_even_if_repinned(self):
+        path = self.standard / "standard-release.json"
+        release = json.loads(path.read_text())
+        del release["files"]["README.md"]
+        path.write_text(json.dumps(release))
+        self.adoption["release_manifest_sha256"] = checker.digest(path)
+        self.rejected("distribution set mismatch")
+
+    def test_registry_cannot_make_core_waivable(self):
+        path = self.standard / "POLICY_RULES.json"
+        registry = json.loads(path.read_text())
+        registry["rules"]["SEC-SAFETY"]["waivable"] = True
+        path.write_text(json.dumps(registry))
+        self.write_release()
+        self.rejected("core is waivable")
+
+    def test_parent_symlink_member(self):
+        external = self.root / "external"
+        external.mkdir()
+        (external / "item.md").write_text("fixture")
+        (self.consumer / "linked").symlink_to(external, target_is_directory=True)
+        with self.assertRaisesRegex(ValueError, "symlink"):
+            checker.member(self.consumer, "linked/item.md")
+
+    def test_absolute_and_traversal_paths(self):
+        for name in ("../item.md", "/item.md"):
+            with self.assertRaisesRegex(ValueError, "unsafe path"):
+                checker.member(self.consumer, name)
+
+    def test_duplicate_json_keys(self):
+        (self.consumer / "standard-adoption.json").write_text(
+            '{"schema_version":2,"schema_version":2}'
+        )
+        with self.assertRaisesRegex(ValueError, "duplicate JSON key"):
+            checker.check(self.standard, self.consumer)
+
+    def test_approved_record_requires_current_pin_and_evidence(self):
+        self.adoption["semantic_acceptance"] = {
+            "status": "APPROVED",
+            "approved_by": "Synthetic fixture authority",
+            "approved_on": "2026-01-01",
+            "decision_reference": "synthetic fixture decision",
+            "scope": "synthetic fixture only",
+            "evidence": "docs/evidence.md",
+            "reviewed_release_manifest_sha256": self.adoption["release_manifest_sha256"],
+        }
+        self.save()
+        self.assertEqual(checker.check(self.standard, self.consumer)["semantic"], "APPROVED")
+        self.adoption["semantic_acceptance"]["reviewed_release_manifest_sha256"] = "0" * 64
+        self.rejected("stale semantic")
+
+    def test_portable_default_without_sibling(self):
+        snapshot = self.consumer / ".project-standard/0.1.0"
+        shutil.copytree(self.standard, snapshot)
+        result = subprocess.run(
+            [sys.executable, "-B", "scripts/check_standard.py"],
+            cwd=self.consumer,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertIn("SEMANTIC ACCEPTANCE PENDING", result.stdout)
+        result = subprocess.run(
+            [sys.executable, "-B", "scripts/check_standard.py", "--require-semantic"],
+            cwd=self.consumer,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertEqual(result.returncode, 1)
+
+
+if __name__ == "__main__":
+    unittest.main()
