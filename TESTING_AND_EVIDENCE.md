@@ -19,9 +19,13 @@ Security acceptance cannot be proven by bypassing the guard being accepted. Cont
 
 Report real command, runtime/context, exit status, passed/failed/skipped counts and limitations. Missing or unavailable evidence is PENDING (or justified NOT APPLICABLE); failed evidence is FAIL; skipped/not-run/stale evidence is never PASS. A suite's aggregate terminal result must disclose skips; an individually skipped requirement remains unverified and blocks acceptance if the local contract requires it. Never fabricate results or approvals. Routine targeted reports need a lightweight source identity only when the local contract requires it, not universal pre/post full fingerprints.
 
+For an active formal test, TEST_DURUM queries only a declared actually-read-only status adapter. TEST_LOG reads/redacts current logs; logs alone cannot prove terminal PASS. Missing adapters/evidence are NOT CONFIGURED/PENDING. Neither token starts, resumes or closes work.
+
 ## TEST-IDENTITY: Formal evidence identity
 
 Formal release/closure gates bind evidence to exact relevant source, runner/tooling, dependency/lock identity and sanitized configuration per the local release contract. Use a documented sorted relative-path/SHA-256 member inventory including relevant tests/dependencies/tools and excluding secrets/runtime/generated state. Record pre/post identity when a gate relies on source stability. Record modes/policy identity when artifact contracts depend on them; preserve stronger local formats and attestations. Separate governance identity if closure-only docs are excluded from release-source identity. HEAD alone does not identify an uncommitted tree. Relevant input changes invalidate evidence; never weaken an existing exact-source gate through adoption.
+
+TEST_DEVAM must verify the terminal result bound to the exact active job and accepted input identity, actual completion, exit and pass/fail/skip counts. PASS resumes only the SAME already-authorized step; RUNNING continues waiting; failures or missing/stale identity do not authorize resume or NEXT. TEST_DURDUR requires exact active-job identity and a declared safe cancellation mechanism with stale/PID-reuse and cross-service protection. Without one, disclose NOT CONFIGURED; do not invent a kill operation. Cancellation is not PASS and must retain a truthful safe checkpoint. Local stronger test/observation contracts remain binding.
 
 ## TEST-CLOSURE: Projected and actual state
 

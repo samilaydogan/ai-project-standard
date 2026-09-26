@@ -15,3 +15,14 @@ Delivery Mode A uses the worktree. Mode B declares a separately provided bootstr
 ## Instantiation record
 
 Declare actual owners, command mappings, modes, paths, applicability, evidence and unresolved debt: {{PROJECT_LOCAL_DECISIONS_OR_PENDING}}. Replace reference facts with current source-backed facts before acceptance.
+
+## New consumer initialization checklist (REL-METADATA / DEV-FOUNDATION)
+
+Use only for a genuinely new consumer; adoption/upgrade of an existing application preserves its current version and never resets it to 0.1.0.
+
+1. Declare the actual project identity and canonical application version source in PROJECT_PROFILE.md; the distributed 0.0.0 project-scaffold is internal/reference-only.
+2. Initialize application 0.1.0 in that source and execution-profile.json foundation.identity, independently of standard VERSION. Instantiate the actual project name/slug and source-backed applicability.
+3. If frozen editable-root lock metadata also carries the application version, set its root identity/version coherently; preserve dependency/hash/source entries unless their separate change is authorized. Review manifest/lock hashes and binding explicitly; this checklist is not a resolver or installer.
+4. Derive PROJECT_STATE.md and optional JSON application version from canonical source facts, not standard version. Keep unknown base/schema facts PENDING/NOT_APPLICABLE.
+5. Validate the pinned companion and new consumer with `python3 -B scripts/check_standard.py --new-consumer` (or explicit --standard/--consumer paths), bounded docs and applicable isolated tests. This check requires application 0.1.0; ordinary consumer validation rejects uninstantiated 0.0.0 and preserves existing nonzero versions. No command mutates versions.
+6. Present completed exact-hash adoption evidence with semantic state PENDING until a real post-result human decision. Installation confirmation concerns delivery eligibility only, not semantic/runtime/release approval.

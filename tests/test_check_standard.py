@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
@@ -61,6 +62,7 @@ class StandardTests(unittest.TestCase):
         (self.consumer / "PROJECT_PROFILE.md").write_text(
             "execution-profile.json EXECUTION_FACADE.md\n"
         )
+        self.application_version("0.1.0")
         self.adoption = {
             "schema_version": 2,
             "standard": "ai-project-standard",
@@ -76,6 +78,69 @@ class StandardTests(unittest.TestCase):
             "semantic_acceptance": {"status": "PENDING"},
         }
         self.save()
+
+    def application_version(self, version):
+        """Explicit disposable consumer instantiation, never a production mutator."""
+        path = self.consumer / 'pyproject.toml'
+        import re
+        path.write_text(re.sub(r'version = "[^"]+"', f'version = "{version}"', path.read_text()))
+        profile_path = self.consumer / 'execution-profile.json'
+        profile = json.loads(profile_path.read_text())
+        profile['foundation']['identity']['application_version'] = version
+        profile['foundation']['toolchain']['manifest_sha256'] = checker.digest(path)
+        profile_path.write_text(json.dumps(profile))
+
+    def test_new_consumer_is_coherent_and_check_is_readonly(self):
+        before = {str(p.relative_to(self.consumer)): (p.read_bytes(), p.stat().st_mode)
+                  for p in self.consumer.rglob('*') if p.is_file()}
+        self.assertEqual(checker.check(self.standard, self.consumer, new_consumer=True)['structure'], 'PASS')
+        profile = json.loads((self.consumer / 'execution-profile.json').read_text())
+        self.assertEqual(profile['foundation']['identity']['application_version'], '0.1.0')
+        self.assertNotEqual('0.1.0', (self.standard / 'VERSION').read_text().strip())
+        after = {str(p.relative_to(self.consumer)): (p.read_bytes(), p.stat().st_mode)
+                 for p in self.consumer.rglob('*') if p.is_file()}
+        self.assertEqual(before, after)
+
+    def test_reference_zero_cannot_leak_into_real_consumer(self):
+        self.application_version('0.0.0')
+        self.rejected('real consumer cannot retain internal/reference')
+
+    def test_existing_consumer_upgrade_preserves_version(self):
+        self.application_version('2.7.9')
+        before = (self.consumer / 'pyproject.toml').read_bytes()
+        self.assertEqual(checker.check(self.standard, self.consumer)['structure'], 'PASS')
+        self.assertEqual(before, (self.consumer / 'pyproject.toml').read_bytes())
+        with self.assertRaisesRegex(ValueError, 'new consumer must initialize'):
+            checker.check(self.standard, self.consumer, new_consumer=True)
+        self.assertEqual(before, (self.consumer / 'pyproject.toml').read_bytes())
+
+    def test_new_consumer_cli_and_missing_context(self):
+        argv = [sys.executable, '-B', str(self.standard / 'scripts/check_standard.py'),
+                '--standard', str(self.standard), '--new-consumer']
+        result = subprocess.run(argv + ['--consumer', str(self.consumer)], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stdout)
+        result = subprocess.run(argv, capture_output=True, text=True)
+        self.assertEqual(result.returncode, 1)
+        self.assertIn('requires consumer context', result.stdout)
+
+    def test_task_permission_does_not_initialize_approval(self):
+        template = json.loads((self.standard / 'standard-adoption.template.json').read_text())
+        self.assertEqual(template['semantic_acceptance'], {'status': 'PENDING'})
+        (self.consumer / 'docs/evidence.md').write_text('Synthetic implementation authorized; result presented for review. No human decision yet.\n')
+        self.assertEqual(checker.check(self.standard, self.consumer)['semantic'], 'PENDING')
+        self.adoption['semantic_acceptance'] = {'status': 'APPROVED', 'decision_reference': 'implementation task'}
+        self.rejected('semantic_acceptance.approved_by')
+
+    def test_os_metadata_release_member_rejected(self):
+        name = '.DS_Store'
+        (self.standard / name).write_bytes(b'synthetic finder metadata')
+        release_path = self.standard / 'standard-release.json'
+        release = json.loads(release_path.read_text())
+        release['files'][name] = checker.digest(self.standard / name)
+        release_path.write_text(json.dumps(release))
+        with patch.object(checker, 'DISTRIBUTION', checker.DISTRIBUTION | {name}):
+            with self.assertRaisesRegex(ValueError, 'excluded release member .DS_Store'):
+                checker.check_release(self.standard)
 
     def write_release(self):
         (self.standard / "standard-release.json").write_text(
@@ -283,9 +348,9 @@ class StandardTests(unittest.TestCase):
     def test_approved_record_requires_current_pin_and_evidence(self):
         self.adoption["semantic_acceptance"] = {
             "status": "APPROVED",
-            "approved_by": "Synthetic fixture authority",
+            "approved_by": "Synthetic human owner (fixture only)",
             "approved_on": "2026-01-01",
-            "decision_reference": "synthetic fixture decision",
+            "decision_reference": "Synthetic post-result human instruction: commit reviewed exact-hash result",
             "scope": "synthetic fixture only",
             "evidence": "docs/evidence.md",
             "reviewed_release_manifest_sha256": self.adoption["release_manifest_sha256"],

@@ -4,6 +4,8 @@
 
 Actual source metadata defines app version, compatible base, schema and migration head. Record absent systems as NOT APPLICABLE/PENDING. Standard and application versions are independent. Documentation alone does not bump the app version unless local policy requires it. Distinguish development migration (not distributed), published migration (distributed history), candidate (frozen artifact awaiting required gates), released artifact (accepted immutable identity), and production acceptance (separate authorized environment/external gates). READY standard content does not itself publish an app or Git release.
 
+A REAL newly instantiated consumer initializes its own application version to 0.1.0, independently of standard VERSION. The distributed project-scaffold application 0.0.0 is explicitly internal/reference-only and must not survive unchanged into a real consumer. PROJECT_PROFILE declares the canonical version source; initialize it, profile identity and any editable-root frozen lock metadata coherently, then project state from those facts. Existing consumer adoption/upgrade preserves its actual application version; it never resets it to 0.1.0. The one-time initialization checklist belongs to INSTALLATION.template.md. This is a NEW generic initialization decision, not an executable installer.
+
 ## REL-MIGRATION: Development and published migrations
 
 Migrations are forward-only/idempotent; verify isolated upgrade/rerun, constraints/backfill and data/configuration preservation. Schema changes are separate from bulk content migration. A create-tables helper is not proof of an upgrade chain. Development migrations may be revised before distribution under verified local contracts. Published migrations are immutable by default: add successors.
@@ -17,6 +19,10 @@ Record backup/source/schema identity before real upgrades. Prefer verified roll-
 ## REL-ARTIFACT: Minimum release evidence
 
 Build from an identified immutable source snapshot; deltas require a verified immutable previous baseline. Minimum evidence records candidate/member inventory and hashes, source/dependency/runner/safe-config identities, app/base/schema/migration metadata, exclusion policy, relevant modes, applicable build/startup/health checks, isolated real upgrade and same-version rerun/preservation results, commands/counts/exits/limits, and required gate statuses. Missing required identity or evidence fails closed. Keep post-build validation/attestation outside frozen candidate identity to avoid self-reference. A mocked launcher is not live container proof. Do not silently rewrite released artifacts. Preserve stronger local fingerprint, format-marker, attestation and reproducibility contracts; generic adoption cannot replace them with weaker evidence.
+
+RELEASE_COMMIT authorizes only committing an already validated candidate. It does not implicitly authorize closure, build, retest, tag, push, production publish/deployment or new feature scope. If a local commit adapter returns nonzero, inspect and report actual HEAD/index: failure exit does not prove no Git mutation. A candidate or closure is not commit authority.
+
+RELEASE_PREVIEW is a separately authorized clean isolated preview of an already committed/pinned release identity with source/config identity recorded. Do not substitute normal dev launch, reset source, copy real secrets or attach shared production data. Missing project-local preview tooling is NOT CONFIGURED/PENDING; no engine is supplied. Owner first-install confirmation establishes delivery eligibility only, never unrelated runtime, formal release or production acceptance.
 
 ## REL-PRODUCTION: Release versus production authorization
 

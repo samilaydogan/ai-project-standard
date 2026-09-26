@@ -266,6 +266,89 @@ class FoundationTests(unittest.TestCase):
         path.write_text(json.dumps(policy))
         self.reject('all source targets')
 
+    def test_new_consumer_editable_root_lock_version_coherence(self):
+        manifest = self.root / 'pyproject.toml'
+        manifest.write_text(manifest.read_text().replace('version = "0.0.0"', 'version = "0.1.0"'))
+        self.f['identity']['application_version'] = '0.1.0'
+        self.f['toolchain']['manifest_sha256'] = hashlib.sha256(manifest.read_bytes()).hexdigest()
+        lock = self.root / 'uv.lock'
+        dependency = '\n[[package]]\nname="synthetic-dependency"\nversion="7.1.2"\nsource={registry="https://example.invalid"}\n'
+        lock.write_text('requires-python=">=3.11"\n[[package]]\nname="project-scaffold"\nversion="0.1.0"\nsource={editable="."}\n' + dependency)
+        self.f['toolchain'].update(lockfile_path='uv.lock', lockfile_format='uv', lock_policy='FROZEN_LOCK',
+            lockfile_sha256=hashlib.sha256(lock.read_bytes()).hexdigest(),
+            lock_binding_manifest_sha256=self.f['toolchain']['manifest_sha256'])
+        before = lock.read_bytes()
+        contract.consumer_identity(self.load(), new_consumer=True)
+        self.assertEqual(before, lock.read_bytes())
+        # Reviewed hashes alone cannot turn wrong editable-root metadata into coherence.
+        lock.write_text(lock.read_text().replace('version="0.1.0"', 'version="0.0.0"'))
+        self.f['toolchain']['lockfile_sha256'] = hashlib.sha256(lock.read_bytes()).hexdigest()
+        self.reject('lock project identity mismatch')
+        self.assertTrue(lock.read_text().endswith(dependency))
+
+    def test_metadata_all_targets_and_no_cleanup(self):
+        policy = json.loads((self.root / 'source-exclusions.json').read_text())
+        rule = next(row for row in policy['rules'] if row['path'] == '.DS_Store')
+        self.assertEqual(rule['category'], 'os_metadata')
+        self.assertEqual(set(rule['targets']), contract.TARGETS)
+        for name in ('.DS_Store', 'scripts/.DS_Store', 'nested/deeper/.DS_Store'):
+            path = self.root / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(b'synthetic metadata')
+            self.assertTrue(contract.excluded(name, policy))
+            self.assertTrue(contract.ignored(name, (self.root / '.gitignore').read_text()))
+            self.assertTrue(contract.ignored(name, (self.root / '.dockerignore').read_text()))
+        self.load()
+        profile_before = (self.root / 'execution-profile.json').read_bytes()
+        before = {str(p.relative_to(self.root)): (p.read_bytes(), p.stat().st_mode)
+                  for p in self.root.rglob('*') if p.is_file()}
+        result = subprocess.run([str(self.root / 'run.sh'), 'doctor'], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        after = {str(p.relative_to(self.root)): (p.read_bytes(), p.stat().st_mode)
+                 for p in self.root.rglob('*') if p.is_file()}
+        self.assertEqual(before, after)
+        self.assertEqual(profile_before, (self.root / 'execution-profile.json').read_bytes())
+
+    def test_missing_metadata_rule_rejected(self):
+        path = self.root / 'source-exclusions.json'
+        policy = json.loads(path.read_text())
+        policy['rules'] = [row for row in policy['rules'] if row['path'] != '.DS_Store']
+        path.write_text(json.dumps(policy))
+        self.reject('canonical .DS_Store exclusion missing')
+
+    def test_each_metadata_target_is_required(self):
+        path = self.root / 'source-exclusions.json'
+        policy = json.loads(path.read_text())
+        rule = next(row for row in policy['rules'] if row['path'] == '.DS_Store')
+        for target in contract.TARGETS:
+            with self.subTest(target=target):
+                rule['targets'] = sorted(contract.TARGETS - {target})
+                path.write_text(json.dumps(policy))
+                self.reject('all source targets')
+
+    def test_metadata_exception_cannot_readmit(self):
+        path = self.root / 'source-exclusions.json'
+        policy = json.loads(path.read_text())
+        for name in ('.DS_Store', 'nested/.DS_Store'):
+            policy['source_exceptions'] = ['.env.example', name]
+            path.write_text(json.dumps(policy))
+            self.assertTrue(contract.excluded(name, policy))
+            self.reject('OS metadata source exception forbidden')
+
+    def test_existing_cache_metadata_category_compatible(self):
+        path = self.root / 'source-exclusions.json'
+        policy = json.loads(path.read_text())
+        next(row for row in policy['rules'] if row['path'] == '.DS_Store')['category'] = 'cache'
+        path.write_text(json.dumps(policy))
+        self.load()
+
+    def test_docker_metadata_recursion_and_late_inclusions_rejected(self):
+        path = self.root / '.dockerignore'
+        original = path.read_text()
+        for invalid in (original.replace('**/.DS_Store', ''), original + '\n!scripts/.DS_Store\n'):
+            path.write_text(invalid)
+            self.reject('Docker root/recursive .DS_Store patterns')
+
     def test_worker_without_entry_rejected(self):
         self.f['background_jobs'].update(mode='worker',persistence_dependency='PENDING',retry_idempotency_owner='project')
         self.reject('worker entry required')

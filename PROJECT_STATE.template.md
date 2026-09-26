@@ -2,7 +2,7 @@
 
 As of {{DATE}}; source {{HEAD_AND_WORKTREE_IDENTITY}}.
 
-- Application version/base: {{SOURCE_METADATA_OR_PENDING}}.
+- Application version/base: {{SOURCE_METADATA_OR_PENDING}}. For a genuinely new initialized consumer, application starts at 0.1.0 from canonical source; existing consumer upgrades preserve its version. Never substitute standard VERSION or internal/reference 0.0.0.
 - Schema/migration: {{ACTUAL_CHAIN_OR_PENDING}}.
 - Adopted standard: {{STANDARD_VERSION_AND_MANIFEST}}.
 - CURRENT/NEXT: see `EXECUTION_PLAN.md`.

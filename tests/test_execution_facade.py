@@ -77,6 +77,33 @@ class ExecutionTests(unittest.TestCase):
         self.save()
         self.assertEqual(self.run_command("doctor").returncode, 0)
 
+    def test_owner_tokens_are_conditional_not_executable_backends(self):
+        source = Path(__file__).resolve().parents[1]
+        workflow = (source / 'AGENT_WORKFLOW.md').read_text()
+        rows = {line.split('|')[1].strip(): line for line in workflow.splitlines()
+                if line.startswith('| TEST_') or line.startswith('| RELEASE_')}
+        expected = {
+            'TEST_DURUM': ('actually-read-only', 'no start/resume/closure', 'NOT CONFIGURED'),
+            'TEST_LOG': ('redact', 'Log text alone', 'identity/exit/count'),
+            'TEST_DEVAM': ('SAME', 'RUNNING', 'NEXT'),
+            'TEST_DURDUR': ('exact active job', 'declared safe cancellation', 'PID reuse', 'cross-service'),
+            'RELEASE_COMMIT': ('ALREADY VALIDATED', 'closure/build/retest/tag/push/production', 'HEAD/index'),
+            'RELEASE_PREVIEW': ('committed/pinned', 'clean isolated', 'secrets', 'production data'),
+        }
+        self.assertEqual(set(rows), set(expected))
+        for token, clauses in expected.items():
+            for clause in clauses:
+                self.assertIn(clause, rows[token])
+            self.assertNotIn(token, self.config['commands'])
+        for token in ('TEST_DURDUR', 'RELEASE_COMMIT', 'RELEASE_PREVIEW', 'release-commit'):
+            before = self.fingerprint()
+            result = self.run_command(token)
+            self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+            self.assertEqual(before, self.fingerprint())
+        for phrase in ('HOLD preserves a safe checkpoint', 'Do not begin NEXT automatically.',
+                       'only bounded CURRENT/already-authorized scope', 'Closure is not RELEASE_COMMIT authorization'):
+            self.assertIn(phrase, workflow)
+
     def test_invalid_and_unavailable(self):
         self.assertEqual(self.run_command("unknown").returncode, 2)
         self.config["commands"]["lint"].update(status="NOT CONFIGURED", argv=[])

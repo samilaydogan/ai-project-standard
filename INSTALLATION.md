@@ -11,3 +11,7 @@ execution-profile.json schema 3 and PROJECT_PROFILE own actual applicability. Th
 Optional Docker: select execution-profile.docker.json deliberately as the active project-owned profile in a separate approved adaptation. Validate `docker compose --env-file .env.example -f compose.yaml config` before runtime acceptance. Its host mapping and container listen address are distinct. Native acceptance and Compose configuration do not prove Docker runtime or production readiness.
 
 Delivery Mode A uses the worktree. Mode B declares a separately provided bootstrap/apply_package.sh and external apply state; the shipped entry is NOT CONFIGURED, not an installer. Review package identity, recovery and private data preservation before use. Installation, production credentials, ports, backups and deployment authorization remain project-owner responsibilities. See [runbook](OPERATIONS_RUNBOOK.md), [recovery](MIGRATION_RECOVERY.md), and [license inventory](THIRD_PARTY_LICENSE_INVENTORY.md).
+
+## Internal reference identity
+
+pyproject.toml and distributed execution profiles deliberately retain project-scaffold application 0.0.0: internal/reference-only, not a real consumer initialization. Standard VERSION is separate. For a REAL new project follow the [initialization checklist](INSTALLATION.template.md) and validate with --new-consumer. Existing consumers preserve their version during adoption/upgrade; these reference assets must be instantiated rather than copied as accepted facts.

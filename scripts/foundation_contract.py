@@ -85,6 +85,8 @@ def matches(path, pattern):
 
 
 def excluded(path, policy):
+    if ".DS_Store" in Path(path).parts:
+        return True  # Non-waivable metadata protection, regardless of source exceptions.
     return path not in policy["source_exceptions"] and any(matches(path, r["path"]) for r in policy["rules"])
 
 
@@ -101,6 +103,27 @@ def ignored(path, patterns):
     return result
 
 
+def consumer_identity(config, *, new_consumer=False):
+    """Read-only real-consumer context; internal reference load remains permitted."""
+    version = config["foundation"]["identity"]["application_version"]
+    require(version != "0.0.0", "real consumer cannot retain internal/reference 0.0.0")
+    if new_consumer:
+        require(version == "0.1.0", "new consumer must initialize application 0.1.0")
+
+
+def metadata_docker_patterns(patterns):
+    """Conservative .DS_Store subset, not a general Docker ignore parser.
+
+    Require both positive patterns AFTER every negation, so a later inclusion
+    cannot undo them. **/.DS_Store covers the root too in Docker/Moby semantics.
+    """
+    lines = [line.strip() for line in patterns.splitlines()
+             if line.strip() and not line.strip().startswith('#')]
+    last_inclusion = max((i for i, line in enumerate(lines) if line.startswith('!')), default=-1)
+    tail = {line.strip('/') for line in lines[last_inclusion + 1:]}
+    return {'.DS_Store', '**/.DS_Store'} <= tail
+
+
 def hygiene(root, row, runtime):
     shape(row, {"policy_path", "gitignore_path", "dockerignore_path"}, "hygiene")
     policy = json_file(root, row["policy_path"])
@@ -108,6 +131,8 @@ def hygiene(root, row, runtime):
     require(type(policy["schema_version"]) is int and policy["schema_version"] == 1, "exclusion schema")
     require(isinstance(policy["source_exceptions"], list) and
             all(isinstance(v, str) for v in policy["source_exceptions"]), "source exception inventory")
+    require(not any('.DS_Store' in Path(v).parts for v in policy["source_exceptions"]),
+            "OS metadata source exception forbidden")
     require(isinstance(policy["rules"], list) and bool(policy["rules"]), "exclusion rules required")
     git = file(root, row["gitignore_path"]).read_text()
     docker = file(root, row["dockerignore_path"]).read_text() if row["dockerignore_path"] != NA else None
@@ -120,7 +145,7 @@ def hygiene(root, row, runtime):
         require(not Path(path).is_absolute() and '..' not in Path(path).parts and path not in seen,
                 "unsafe/duplicate exclusion pattern")
         seen.add(path)
-        require(item["category"] in {"secrets", "cache", "runtime", "database", "backup", "apply", "test", "build"},
+        require(item["category"] in {"secrets", "cache", "runtime", "database", "backup", "apply", "test", "build", "os_metadata"},
                 "exclusion category")
         require(isinstance(item["targets"], list) and set(item["targets"]) == TARGETS and
                 len(item["targets"]) == len(TARGETS), "single policy must cover all source targets")
@@ -134,6 +159,10 @@ def hygiene(root, row, runtime):
                 require(ignored('nested/' + probe, docker), f'Docker nested exclusion missing {path}')
         if docker is not None:
             require(ignored(probe, docker), f"Docker exclusion missing {path}")
+    require(any(item['path'] == '.DS_Store' and item['category'] in {'os_metadata', 'cache'}
+                for item in policy['rules']), "canonical .DS_Store exclusion missing")
+    if docker is not None:
+        require(metadata_docker_patterns(docker), "Docker root/recursive .DS_Store patterns missing or overridden")
     env = runtime["environment"]
     require(excluded(env["env_path"], policy), "runtime env missing from release/fingerprint/handoff exclusion")
     require(env["env_example_path"] in policy["source_exceptions"], "safe environment example source exception")

@@ -19,3 +19,7 @@ package-apply-state/
 .test-state/
 build/
 dist/
+
+# Finder metadata: root and every nested directory
+.DS_Store
+**/.DS_Store

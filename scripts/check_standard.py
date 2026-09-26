@@ -306,7 +306,7 @@ def check_release(standard: Path) -> tuple[dict, dict]:
     return release, registry
 
 
-def check(standard: Path, consumer: Path | None = None) -> dict:
+def check(standard: Path, consumer: Path | None = None, *, new_consumer: bool = False) -> dict:
     release, registry = check_release(standard)
     result = {
         "integrity": "PASS",
@@ -317,6 +317,7 @@ def check(standard: Path, consumer: Path | None = None) -> dict:
         "foundation_debt": [],
     }
     if consumer is None:
+        require(not new_consumer, "REL-METADATA: --new-consumer requires consumer context")
         return result
     adoption = read_json(member(consumer, "standard-adoption.json"))
     require(
@@ -350,7 +351,8 @@ def check(standard: Path, consumer: Path | None = None) -> dict:
     from project_runner import load
 
     consumer_profile = load(consumer)
-    from foundation_contract import validate
+    from foundation_contract import consumer_identity, validate
+    consumer_identity(consumer_profile, new_consumer=new_consumer)
     result["foundation_debt"] = validate(consumer, consumer_profile)
     foundation = consumer_profile["foundation"]
     declared_owned = {foundation["toolchain"]["dependency_manifest_path"],
@@ -462,6 +464,8 @@ def main() -> int:
     parser.add_argument("--standard", type=Path)
     parser.add_argument("--consumer", type=Path)
     parser.add_argument("--require-semantic", action="store_true")
+    parser.add_argument("--new-consumer", action="store_true",
+                        help="One-time real new-consumer application 0.1.0 validation; no mutations")
     args = parser.parse_args()
     try:
         consumer = args.consumer
@@ -475,7 +479,7 @@ def main() -> int:
                 "ADP-INTEGRITY: unsafe snapshot version",
             )
             standard = consumer / ".project-standard" / version
-        result = check(standard, consumer)
+        result = check(standard, consumer, new_consumer=args.new_consumer)
         print(f"INTEGRITY PASS; standard content {result['release_status']}")
         if result["structure"]:
             print("ADOPTION STRUCTURE PASS")

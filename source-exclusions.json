@@ -157,6 +157,17 @@
         "fingerprint",
         "handoff"
       ]
+    },
+    {
+      "path": ".DS_Store",
+      "category": "os_metadata",
+      "targets": [
+        "git",
+        "docker",
+        "release",
+        "fingerprint",
+        "handoff"
+      ]
     }
   ]
 }

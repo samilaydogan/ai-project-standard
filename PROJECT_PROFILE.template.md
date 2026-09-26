@@ -60,3 +60,20 @@ Every section below is required, including explicit NOT_APPLICABLE/NOT_CONFIGURE
 Manifest adapters: PEP 621/npm compare identity/version/range; uv/package-lock compare limited root metadata and dependency declarations. All bind exact bytes; declared other formats and frozen dependency preparation require local review/gates. No resolver or universal compiler/lock parser exists. Data roots match runtime.storage lists (volume:name maps to volume_roots name); source-local data must be excluded across all targets. DB-role Compose services declare x-foundation-role=database; external mode forbids any local declared DB-role service. Arbitrary YAML and undisclosed external tooling cannot be semantically certified by this static adapter.
 
 Record actual application choices and debt: {{FOUNDATION_DECISIONS_OR_PENDING}}. Migration/restore/backup/worker command absence is explicit debt. Doctor reports it; integrity/structure PASS does not imply readiness of those operations, license approval, production health or release acceptance.
+
+## Real consumer initialization and owner adapters
+
+Canonical application version source / initialized version / initialization-versus-upgrade evidence: {{APPLICATION_IDENTITY_RECORD}}. A genuinely new project initializes 0.1.0 per REL-METADATA and INSTALLATION.template.md, then runs --new-consumer once. This JSON template is an internal/reference 0.0.0 scaffold until explicitly instantiated. Existing consumers preserve their actual version; standard upgrades never reset it. Synchronize canonical manifest, profile, any editable-root frozen lock metadata and factual state; refresh reviewed hashes deliberately without dependency resolution merely for root version metadata.
+
+Declare adapter argv/interface, availability, mutability, exact job/release identity and evidence/safety contract for each token below. Omitted/unimplemented mappings mean NOT CONFIGURED, never an inferred backend. These local declarations do not add mandatory execution-profile command keys.
+
+| Token | Local declaration required before execution |
+| --- | --- |
+| TEST_DURUM | {{READONLY_ACTIVE_TEST_STATUS_OR_NOT_CONFIGURED}} |
+| TEST_LOG | {{READONLY_REDACTED_LOG_OR_NOT_CONFIGURED}} |
+| TEST_DEVAM | {{IDENTITY_BOUND_TERMINAL_RESULT_AND_SAME_STEP_RESUME_OR_NOT_CONFIGURED}} |
+| TEST_DURDUR | {{EXACT_JOB_SAFE_CANCELLATION_OR_NOT_CONFIGURED}} |
+| RELEASE_COMMIT | {{VALIDATED_CANDIDATE_COMMIT_ADAPTER_AND_HEAD_INDEX_REPORT_OR_NOT_CONFIGURED}} |
+| RELEASE_PREVIEW | {{COMMITTED_PINNED_ISOLATED_PREVIEW_OR_NOT_CONFIGURED}} |
+
+Keep stronger local user-observation and delivery eligibility protocols explicit. No new generic executor is supplied.

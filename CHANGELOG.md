@@ -1,3 +1,15 @@
+# v0.2.1 — bounded patch candidate (RC)
+
+Awaiting owner review; no publication or consumer adoption. Published v0.2.0 (FINAL) and v0.1.0 Git objects remain immutable. The following retained v0.2.0 heading describes its historical pre-publication checkpoint, not its current published status.
+
+Rule-level provenance / semantic delta:
+- REL-METADATA / DEV-FOUNDATION: NEW generic initialization decision, real new consumer application 0.1.0; independent identities already existed. Internal reference 0.0.0 remains explicit. Existing versions are preserved. Read-only --new-consumer validation adds no schema or installer.
+- ADP-STRUCTURE / ADP-UPGRADE: clarification of existing human approval/truth core. Implementation permission and checker PASS cannot authorize approval; completed exact-hash result stays PENDING until the human decides. Ordinary post-result commit/finalize instructions may be recorded truthfully; no ceremony or invented authority.
+- WF-SCOPE / TEST-REPORT / TEST-IDENTITY / REL-ARTIFACT / EXEC-MUTATION: generalized extraction of six owner conversational tokens and existing bounded execution, terminal evidence, safe cancellation and release/preview boundaries. These conditional contracts do not port source-project executors. Missing adapters remain NOT CONFIGURED/PENDING. Local stronger protocols remain binding.
+- DEV-HYGIENE / DEV-FOUNDATION: enforcement of existing OS metadata exclusion, with NEW canonical .DS_Store inventory/category os_metadata and recursive Docker patterns. Schema 1 stays unchanged; existing cache categorization is accepted. Source exceptions cannot re-admit metadata. No automatic disk/index cleanup.
+
+No new rule IDs, backend engines, policy DSL, schema family or runtime behavior. Existing fixed owners and non-waivable authorization/security/truth rules cover this patch.
+
 # v0.2.0 — unreleased runnable foundation
 
 v0.1.1 SUPERSEDED BEFORE RELEASE: owner selected a broader day-zero foundation. Preserve its facade, delivery/bootstrap/state and runtime work; do not publish a v0.1.1 tag. Published v0.1.0 remains immutable.
