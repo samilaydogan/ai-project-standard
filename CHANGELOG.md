@@ -1,6 +1,6 @@
-# v0.2.1 — bounded patch candidate (RC)
+# v0.2.1 — 2026-09-27 — bounded patch release
 
-Awaiting owner review; no publication or consumer adoption. Published v0.2.0 (FINAL) and v0.1.0 Git objects remain immutable. The following retained v0.2.0 heading describes its historical pre-publication checkpoint, not its current published status.
+Owner authorized finalization/publication after the reviewed candidate. No consumer adoption. Published v0.2.0 (FINAL) and v0.1.0 Git objects remain immutable. The following retained v0.2.0 heading describes its historical pre-publication checkpoint, not its current published status.
 
 Rule-level provenance / semantic delta:
 - REL-METADATA / DEV-FOUNDATION: NEW generic initialization decision, real new consumer application 0.1.0; independent identities already existed. Internal reference 0.0.0 remains explicit. Existing versions are preserved. Read-only --new-consumer validation adds no schema or installer.

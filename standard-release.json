@@ -2,7 +2,7 @@
   "schema_version": 3,
   "standard": "ai-project-standard",
   "version": "0.2.1",
-  "status": "RC",
+  "status": "FINAL",
   "executable_files": [
     "run.sh"
   ],
@@ -29,7 +29,7 @@
     "ADOPTION.md": "666d0f6b1caf0f9ebd8e54ecddce79fa6cf18c504c724ee1ca098c8728ae25b3",
     "AGENT_WORKFLOW.md": "89364cc89bc8755e057632fa5c79140ee3e19e850a4cdf786ff2c0144a7f020a",
     "CAPABILITY_CATALOG.template.md": "fe3c4956b00a3a6df80e74f98ea757f21c60beaf3457fd4718142114a6965960",
-    "CHANGELOG.md": "e414045e3dc96a5eb99aeab382597f3118d7bfaba3f1ccc999174d4c37f104a1",
+    "CHANGELOG.md": "36685691735e13651f125f5220e8423002705f685500c8bd76ff2ecd08ac4a47",
     "DEVELOPMENT_RULES.md": "cd7a47c843778b494b2d47c76ceee486438ca08cd7d7e3f8e2318a6a1b728cf6",
     "DOCUMENT_GOVERNANCE.md": "fec4cb968393800b36c734b4d41e3363f4e07dd4518db9fa69ba2e698f2eebb9",
     "Dockerfile.scaffold": "a4f55d268d1fb38c418aaea4e5dc6dabba5f14d61da1b3be4326fa401a818527",
@@ -48,7 +48,7 @@
     "PROJECT_PROFILE.template.md": "cf235ce445a553beb7e36642d2b9eaad7e19f2878bb42873cf6c000b51d73130",
     "PROJECT_STATE.template.json": "3d846d064f4478410a7c98077c98d865dcde7c87c4acd374a95e25865a81009e",
     "PROJECT_STATE.template.md": "e3cb0f077551b34095c7572c451ea70867b482dfe606094332dc3430b23fa66a",
-    "README.md": "a33816426d92471e3886e25585d8cb0bd12fff10a17872f3e425b553899b295d",
+    "README.md": "b6ef30b9bd5b0e8595c55432e2f5eacd0d1160df9ad61d9cd5fb6989aab92b1c",
     "ROADMAP_CHANGELOG.template.md": "9185ee70c1c32e2b8fd2e1f6594a49897c56d508949f069ffbf80ed7f597f40b",
     "SECURITY_BASELINE.md": "6636d543aed65b3209a13245bab07b3325301db05bf238d2fb6d0dd6cc2de460",
     "STANDARD_ADOPTION_HISTORY.template.md": "8ea3e92052e78d13bafe5abc50519824e6bb616528927061f7088122d6cbbe49",
