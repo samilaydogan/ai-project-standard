@@ -1,0 +1,21 @@
+**
+!scripts/
+!scripts/health_scaffold.py
+!execution-profile.docker.json
+!Dockerfile.scaffold
+
+# Unified private/generated exclusions apply even below opened source directories.
+.env
+.env.*
+.venv/
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+data/
+database-data/
+backups/
+package-apply-state/
+.test-state/
+build/
+dist/

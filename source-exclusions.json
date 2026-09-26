@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "source_exceptions": [
+    ".env.example"
+  ],
+  "rules": [
+    {
+      "path": ".env",
+      "category": "secrets",
+      "targets": [
+        "git",
+        "docker",
+        "release",
+        "fingerprint",
+        "handoff"
+      ]
+    },
+    {
+      "path": ".env.*",
+      "category": "secrets",
+      "targets": [
+        "git",
+        "docker",
+        "release",
+        "fingerprint",
+        "handoff"
+      ]
+    },
+    {
+      "path": ".venv/",
+      "category": "cache",
+      "targets": [
+        "git",
+        "docker",
+        "release",
+        "fingerprint",
+        "handoff"
+      ]
+    },
+    {
+      "path": "node_modules/",
+      "category": "cache",
+      "targets": [
+        "git",
+        "docker",
+        "release",
+        "fingerprint",
+        "handoff"
+      ]
+    },
+    {
+      "path": "__pycache__/",
+      "category": "cache",
+      "targets": [
+        "git",
+        "docker",
+        "release",
+        "fingerprint",
+        "handoff"
+      ]
+    },
+    {
+      "path": "*.pyc",
+      "category": "cache",
+      "targets": [
+        "git",
+        "docker",
+        "release",
+        "fingerprint",
+        "handoff"
+      ]
+    },
+    {
+      "path": ".pytest_cache/",
+      "category": "cache",
+      "targets": [
+        "git",
+        "docker",
+        "release",
+        "fingerprint",
+        "handoff"
+      ]
+    },
+    {
+      "path": "data/",
+      "category": "runtime",
+      "targets": [
+        "git",
+        "docker",
+        "release",
+        "fingerprint",
+        "handoff"
+      ]
+    },
+    {
+      "path": "database-data/",
+      "category": "database",
+      "targets": [
+        "git",
+        "docker",
+        "release",
+        "fingerprint",
+        "handoff"
+      ]
+    },
+    {
+      "path": "backups/",
+      "category": "backup",
+      "targets": [
+        "git",
+        "docker",
+        "release",
+        "fingerprint",
+        "handoff"
+      ]
+    },
+    {
+      "path": "package-apply-state/",
+      "category": "apply",
+      "targets": [
+        "git",
+        "docker",
+        "release",
+        "fingerprint",
+        "handoff"
+      ]
+    },
+    {
+      "path": ".test-state/",
+      "category": "test",
+      "targets": [
+        "git",
+        "docker",
+        "release",
+        "fingerprint",
+        "handoff"
+      ]
+    },
+    {
+      "path": "build/",
+      "category": "build",
+      "targets": [
+        "git",
+        "docker",
+        "release",
+        "fingerprint",
+        "handoff"
+      ]
+    },
+    {
+      "path": "dist/",
+      "category": "build",
+      "targets": [
+        "git",
+        "docker",
+        "release",
+        "fingerprint",
+        "handoff"
+      ]
+    }
+  ]
+}

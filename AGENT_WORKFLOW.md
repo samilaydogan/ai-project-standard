@@ -12,7 +12,7 @@ Act within the authorized CURRENT contract, source truth and verified dependenci
 
 ## WF-COMMANDS: Local execution protocol
 
-Use commands and safe environments owned by PROJECT_PROFILE.md. Run applicable checks, await terminal evidence and diagnose environment failures within a bounded scope. A user-observed long-run protocol applies only when explicitly declared locally. This generic model is a new standard choice; it does not replace a consumer's stronger existing protocol or invent missing tooling.
+Use applicable project-owned commands through the declared execution facade; [EXECUTION_FACADE.md](EXECUTION_FACADE.md) owns dispatch and mutation boundaries. PROJECT_PROFILE.md owns safe environments and stronger local protocols. Run applicable checks, await terminal evidence and diagnose environment failures within a bounded scope. A user-observed long-run protocol applies only when explicitly declared locally. This generic model is a new standard choice; it does not replace a consumer's stronger existing protocol or invent missing tooling.
 
 ## WF-CLOSURE: Closure orchestration
 

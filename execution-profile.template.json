@@ -1,0 +1,309 @@
+{
+  "schema_version": 3,
+  "facade": "run.sh",
+  "default": "help",
+  "commands": {
+    "help": {
+      "status": "READY",
+      "mutability": "read-only",
+      "argv": [],
+      "prerequisites": []
+    },
+    "doctor": {
+      "status": "READY",
+      "mutability": "read-only",
+      "argv": [],
+      "prerequisites": []
+    },
+    "dev": {
+      "status": "READY",
+      "mutability": "mutating",
+      "argv": [
+        "python3",
+        "-B",
+        "./scripts/health_scaffold.py"
+      ],
+      "prerequisites": []
+    },
+    "test": {
+      "status": "READY",
+      "mutability": "mutating",
+      "argv": [
+        "python3",
+        "-B",
+        "./scripts/reference_tests.py"
+      ],
+      "prerequisites": []
+    },
+    "lint": {
+      "status": "READY",
+      "mutability": "read-only",
+      "argv": [
+        "python3",
+        "-B",
+        "./scripts/scaffold_lint.py"
+      ],
+      "prerequisites": []
+    },
+    "start": {
+      "status": "READY",
+      "mutability": "mutating",
+      "argv": [
+        "python3",
+        "-B",
+        "./scripts/health_scaffold.py"
+      ],
+      "prerequisites": []
+    },
+    "status": {
+      "status": "READY",
+      "mutability": "read-only",
+      "argv": [
+        "python3",
+        "-B",
+        "./scripts/scaffold_status.py"
+      ],
+      "prerequisites": []
+    },
+    "health": {
+      "status": "READY",
+      "mutability": "read-only",
+      "argv": [
+        "python3",
+        "-B",
+        "./scripts/scaffold_status.py"
+      ],
+      "prerequisites": []
+    }
+  },
+  "compatibility_launchers": [],
+  "runtime": {
+    "runtime_mode": "native",
+    "execution_facade": "run.sh",
+    "delivery_modes": [
+      "A"
+    ],
+    "package_apply": {
+      "status": "NOT APPLICABLE",
+      "entrypoint": "NOT APPLICABLE",
+      "state_root": "NOT APPLICABLE"
+    },
+    "environment": {
+      "env_example_path": ".env.example",
+      "env_path": ".env",
+      "required_env_keys": [],
+      "optional_env_keys": [
+        "APP_BIND_HOST",
+        "APP_HOST_PORT",
+        "APP_CONTAINER_LISTEN_HOST",
+        "APP_CONTAINER_PORT",
+        "APP_HEALTH_PATH"
+      ],
+      "secret_env_keys": []
+    },
+    "network": {
+      "bind_host": "127.0.0.1",
+      "host_port": 8080,
+      "container_listen_host": "NOT APPLICABLE",
+      "container_port": "NOT APPLICABLE",
+      "health_path": "/health",
+      "health_command": "NOT APPLICABLE"
+    },
+    "docker": {
+      "status": "NOT APPLICABLE",
+      "compose_file": "NOT APPLICABLE",
+      "compose_project_name": "NOT APPLICABLE",
+      "primary_service": "NOT APPLICABLE",
+      "dev_command": "NOT APPLICABLE"
+    },
+    "native": {
+      "status": "READY",
+      "dev_command": "dev"
+    },
+    "storage": {
+      "status": "NOT APPLICABLE",
+      "data_roots": [],
+      "volume_roots": [],
+      "artifact_root": "../project-artifacts"
+    }
+  },
+  "foundation": {
+    "identity": {
+      "project_name": "Base Project",
+      "project_slug": "project-scaffold",
+      "application_version": "0.0.0",
+      "version_source": "pyproject.toml"
+    },
+    "toolchain": {
+      "language": "python",
+      "runtime": "python3",
+      "runtime_version_range": ">=3.11",
+      "dependency_manifest_path": "pyproject.toml",
+      "manifest_format": "pep621",
+      "manifest_sha256": "5d70678c11c3fc46187cab907d1722dfa8ee5777cfb1b21b72bfd117d4cfe778",
+      "lockfile_path": "NOT_APPLICABLE",
+      "lockfile_format": "none",
+      "lockfile_sha256": "NOT_APPLICABLE",
+      "lock_binding_manifest_sha256": "NOT_APPLICABLE",
+      "lock_policy": "NO_THIRD_PARTY_DEPENDENCIES",
+      "build_system": "NOT_APPLICABLE",
+      "test_runner": "stdlib-unittest",
+      "lint_runner": "stdlib-ast",
+      "application_entrypoint": "scripts/health_scaffold.py",
+      "execution_facade": "run.sh"
+    },
+    "database": {
+      "database_mode": "none",
+      "database_engine": "none",
+      "host": "NOT_APPLICABLE",
+      "host_port": "NOT_APPLICABLE",
+      "listen_port": "NOT_APPLICABLE",
+      "name": "NOT_APPLICABLE",
+      "user_env_key": "NOT_APPLICABLE",
+      "password_env_key": "NOT_APPLICABLE",
+      "connection_env_key": "NOT_APPLICABLE",
+      "data_root": "NOT_APPLICABLE",
+      "compose_service": "NOT_APPLICABLE",
+      "health_command": "NOT_APPLICABLE",
+      "required_at_day_zero": false,
+      "test_isolation": "NOT_APPLICABLE"
+    },
+    "migration": {
+      "applicability": "NOT_APPLICABLE",
+      "strategy": "NOT_APPLICABLE",
+      "command": "NOT_APPLICABLE",
+      "preflight_command": "NOT_APPLICABLE",
+      "schema_version_source": "NOT_APPLICABLE",
+      "current_version": "NOT_APPLICABLE",
+      "target_version": "NOT_APPLICABLE",
+      "automatic_down_migration": false,
+      "source_behind_database_fail_closed": true,
+      "backup_required_before_migration": false,
+      "recovery_strategy": "NOT_APPLICABLE",
+      "recovery_command": "NOT_APPLICABLE",
+      "documentation_path": "MIGRATION_RECOVERY.md"
+    },
+    "persistent_data": {
+      "runtime_data_root": "NOT_APPLICABLE",
+      "database_data_root": "NOT_APPLICABLE",
+      "blob_storage_mode": "none",
+      "blob_root": "NOT_APPLICABLE",
+      "retention": "NOT_APPLICABLE",
+      "quota_bytes": "NOT_APPLICABLE",
+      "upload_limit_bytes": "NOT_APPLICABLE"
+    },
+    "hygiene": {
+      "policy_path": "source-exclusions.json",
+      "gitignore_path": ".gitignore",
+      "dockerignore_path": ".dockerignore"
+    },
+    "backup": {
+      "applicability": "NOT_APPLICABLE",
+      "scope": [],
+      "root": "NOT_APPLICABLE",
+      "integrity_metadata_required": true,
+      "verify_command": "NOT_APPLICABLE",
+      "restore_command": "NOT_APPLICABLE",
+      "restore_confirmation_required": true,
+      "pre_restore_backup": true,
+      "retention": "NOT_APPLICABLE",
+      "key_preservation": "required-if-encrypted",
+      "rationale": "Stateless day-zero reference has no retained database/runtime/blob state."
+    },
+    "background_jobs": {
+      "mode": "none",
+      "command": "NOT_APPLICABLE",
+      "compose_service": "NOT_APPLICABLE",
+      "persistence_dependency": "NOT_APPLICABLE",
+      "retry_idempotency_owner": "NOT_APPLICABLE",
+      "health_command": "NOT_APPLICABLE"
+    },
+    "authentication": {
+      "mode": "none",
+      "integration_class": "NOT_APPLICABLE",
+      "callback_url_env_key": "NOT_APPLICABLE",
+      "public_url_env_key": "NOT_APPLICABLE",
+      "session_owner": "NOT_APPLICABLE",
+      "authorization_owner": "project"
+    },
+    "observability": {
+      "logging_format": "jsonl",
+      "logging_strategy": "bounded-request-events",
+      "correlation": "generated-request-id",
+      "redaction": "no-headers-query-body-or-personal-data",
+      "health_command": "health",
+      "readiness_command": "health",
+      "log_destination": "stderr",
+      "retention": "NOT_APPLICABLE"
+    },
+    "testing": {
+      "classes": {
+        "unit": {
+          "status": "APPLICABLE",
+          "command": "test",
+          "timeout_seconds": 180,
+          "network": "loopback-only",
+          "state": "temporary-synthetic"
+        },
+        "integration": {
+          "status": "NOT_APPLICABLE",
+          "command": "NOT_APPLICABLE",
+          "timeout_seconds": "NOT_APPLICABLE",
+          "network": "NOT_APPLICABLE",
+          "state": "NOT_APPLICABLE"
+        },
+        "isolated_acceptance": {
+          "status": "APPLICABLE",
+          "command": "test",
+          "timeout_seconds": 180,
+          "network": "loopback-only",
+          "state": "temporary-synthetic"
+        },
+        "live_acceptance": {
+          "status": "NOT_APPLICABLE",
+          "command": "NOT_APPLICABLE",
+          "timeout_seconds": "NOT_APPLICABLE",
+          "network": "NOT_APPLICABLE",
+          "state": "NOT_APPLICABLE"
+        },
+        "e2e": {
+          "status": "NOT_APPLICABLE",
+          "command": "NOT_APPLICABLE",
+          "timeout_seconds": "NOT_APPLICABLE",
+          "network": "NOT_APPLICABLE",
+          "state": "NOT_APPLICABLE"
+        },
+        "screenshot_qa": {
+          "status": "NOT_APPLICABLE",
+          "command": "NOT_APPLICABLE",
+          "timeout_seconds": "NOT_APPLICABLE",
+          "network": "NOT_APPLICABLE",
+          "state": "NOT_APPLICABLE"
+        }
+      },
+      "production_credentials": "forbidden",
+      "skip_is_pass": false,
+      "mock_is_live": false,
+      "stale_on_identity_change": true
+    },
+    "third_party": {
+      "inventory_path": "THIRD_PARTY_LICENSE_INVENTORY.md",
+      "review_status": "REFERENCE_ONLY",
+      "bundled_assets": [],
+      "rationale": "No third-party package, binary or asset is bundled; runtime/container choices require consumer review before application redistribution."
+    },
+    "ui": {
+      "applicability": "NOT_APPLICABLE",
+      "rationale": "Health-only reference has no user-facing business UI."
+    },
+    "local_stronger_rules": {
+      "references": [],
+      "rationale": "Reference minimum only; consumer records additional owners/gates."
+    },
+    "operations": {
+      "installation_doc": "INSTALLATION.md",
+      "recovery_doc": "MIGRATION_RECOVERY.md",
+      "runbook_doc": "OPERATIONS_RUNBOOK.md"
+    }
+  }
+}

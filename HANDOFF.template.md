@@ -9,3 +9,7 @@ As of {{DATE}}. Resume from current local working tree, preserving unrelated mod
 - Verification evidence and safe commands: {{PROFILE_AND_EVIDENCE_REFERENCE}}.
 
 For another machine/account, transfer sanitized full required source plus exact identity, lockfiles and governance. Do not transfer secrets, runtime data, backups or generated logs; provision test credentials independently. An upgrade delta alone is not a full-source handoff. Never infer release/deployment approval from a handoff document.
+
+## Delivery mode and receiving bootstrap
+
+Record source-backed Mode A direct worktree, Mode B external versioned full/delta APPLICATION delivery, or B-to-A transition. Work/iWork is an optional historical producer example, not dependency authority. A delta delivery is not a self-contained full account-transfer handoff. Mode B receiver needs a separately available apply_package.sh/bootstrap bundle and its validation/preservation/recovery instructions before installed ./run.sh can run. Declare external package-apply and release/handoff roots; preserve historical debt explicitly. Third-party dependency install/resolution is separate from applying application ZIP bytes.

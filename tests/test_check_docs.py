@@ -58,18 +58,19 @@ class DocsTests(unittest.TestCase):
             self.put(name, "[broken](absent) {{name}}")
         self.assertEqual(check_docs.check(self.root)[0], [])
 
-    def test_consumer_vocabulary_not_run(self):
-        self.put("README.md", "Local product name: " + "Auth" + "Hub")
+    def test_normal_consumer_has_no_vocabulary_policy(self):
+        self.put("README.md", "SourceProductAlpha ConsumerProductBeta BusinessEntityExample")
         errors, scope = check_docs.check(self.root)
         self.assertEqual(errors, [])
-        self.assertIsNone(scope["vocabulary"])
+        self.assertEqual(scope, {"markdown": 1, "json": 0})
 
-    def test_distribution_python_vocabulary_checked(self):
-        self.put("tool.py", 'name = "' + "Oper" + 'ationHub"')
+    def test_release_manifest_does_not_enable_a_vocabulary_policy(self):
+        self.put("tool.py", 'name = "SourceProductAlpha"')
+        self.put("README.md", "ConsumerProductBeta BusinessEntityExample")
         self.put("standard-release.json", json.dumps({"files": {"tool.py": "fixture"}}))
         errors, scope = check_docs.check(self.root)
-        self.assertEqual(scope["vocabulary"], 1)
-        self.assertIn("tool.py: ADP-INTEGRITY", errors[0])
+        self.assertEqual(errors, [])
+        self.assertEqual(scope, {"markdown": 1, "json": 1})
 
     def test_explicit_affected_files_scope(self):
         self.put("changed.md", "okay")

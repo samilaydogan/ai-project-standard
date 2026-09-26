@@ -11,10 +11,11 @@ Explicit user authorization defines task scope. Current source, configuration co
 | AGENT_WORKFLOW.md | Execution sequencing, bounded work, closure orchestration summaries |
 | DEVELOPMENT_RULES.md | Code, compatibility, data and repository engineering |
 | DOCUMENT_GOVERNANCE.md | Ownership, precedence, facts versus policy |
-| SECURITY_BASELINE.md | Secrets, security/authentication controls, logging/privacy-security |
+| SECURITY_BASELINE.md | Secrets/environment contract, security/authentication controls, logging/privacy-security |
 | TESTING_AND_EVIDENCE.md | Testing applicability, identity, closure and screenshot evidence |
-| MIGRATION_AND_RELEASE_POLICY.md | Schema/migration and artifact/release/production lifecycle |
+| MIGRATION_AND_RELEASE_POLICY.md | Schema/migration, external apply/artifact state and release/production lifecycle |
 | UI_IMPLEMENTATION_STANDARDS.md | Generic UI implementation and QA applicability |
+| EXECUTION_FACADE.md | Public facade, delivery/runtime/profile/network contracts, diagnostics, mutation boundaries and transition |
 | ADOPTION.md | Standard pin, adoption, upgrades and exceptions |
 | PROJECT_PROFILE.md | Local commands/applicability, stronger policies and local protocols |
 

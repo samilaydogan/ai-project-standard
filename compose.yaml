@@ -1,0 +1,39 @@
+{
+  "name": "project-scaffold",
+  "services": {
+    "scaffold": {
+      "build": {
+        "context": ".",
+        "dockerfile": "Dockerfile.scaffold"
+      },
+      "ports": [
+        "${APP_BIND_HOST:-127.0.0.1}:${APP_HOST_PORT:-8080}:${APP_CONTAINER_PORT:-8080}"
+      ],
+      "environment": {
+        "APP_CONTAINER_LISTEN_HOST": "${APP_CONTAINER_LISTEN_HOST:-0.0.0.0}",
+        "APP_CONTAINER_PORT": "${APP_CONTAINER_PORT:-8080}",
+        "APP_HEALTH_PATH": "${APP_HEALTH_PATH:-/health}"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "python3",
+          "-B",
+          "-c",
+          "import os,urllib.request; urllib.request.urlopen('http://127.0.0.1:'+os.environ['APP_CONTAINER_PORT']+os.environ['APP_HEALTH_PATH'], timeout=2).close()"
+        ],
+        "interval": "5s",
+        "timeout": "3s",
+        "retries": 5,
+        "start_period": "2s"
+      },
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ]
+    }
+  }
+}

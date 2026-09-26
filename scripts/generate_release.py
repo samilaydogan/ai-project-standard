@@ -1,4 +1,4 @@
-"""Deterministic schema-2 manifest; FINAL is a reviewed content label, not publication."""
+"""Deterministic schema-3 manifest; FINAL is a reviewed content label, not publication."""
 
 from __future__ import annotations
 
@@ -11,10 +11,11 @@ from check_standard import DISTRIBUTION, INVARIANTS, digest, member, read_json
 
 def payload(root: Path, status: str) -> dict:
     return {
-        "schema_version": 2,
+        "schema_version": 3,
         "standard": "ai-project-standard",
         "version": member(root, "VERSION").read_text().strip(),
         "status": status,
+        "executable_files": ["run.sh"],
         "invariants": sorted(INVARIANTS),
         "files": {name: digest(member(root, name)) for name in sorted(DISTRIBUTION)},
     }

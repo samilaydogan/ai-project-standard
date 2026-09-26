@@ -12,6 +12,9 @@ from pathlib import Path
 INVARIANTS = frozenset(
     {
         "AGENT_WORKFLOW.md",
+        "EXECUTION_FACADE.md",
+        "scripts/project_runner.py",
+        "scripts/foundation_contract.py",
         "DEVELOPMENT_RULES.md",
         "DOCUMENT_GOVERNANCE.md",
         "SECURITY_BASELINE.md",
@@ -27,6 +30,14 @@ INVARIANTS = frozenset(
 PROJECT_DOCUMENTS = frozenset(
     {
         "PROJECT_PROFILE.md",
+        "source-exclusions.json",
+        "INSTALLATION.md",
+        "MIGRATION_RECOVERY.md",
+        "OPERATIONS_RUNBOOK.md",
+        "THIRD_PARTY_LICENSE_INVENTORY.md",
+        ".gitignore",
+        "run.sh",
+        "execution-profile.json",
         "PROJECT_STATE.md",
         "EXECUTION_PLAN.md",
         "CAPABILITY_CATALOG.md",
@@ -38,6 +49,35 @@ PROJECT_DOCUMENTS = frozenset(
 DISTRIBUTION = INVARIANTS | frozenset(
     {
         "README.md",
+        'pyproject.toml',
+        'source-exclusions.json',
+        'scripts/reference_tests.py',
+        'scripts/test_network_guard.py',
+        'scripts/scaffold_status.py',
+        'tests/test_foundation_contract.py',
+        'INSTALLATION.md',
+        'INSTALLATION.template.md',
+        'MIGRATION_RECOVERY.md',
+        'MIGRATION_RECOVERY.template.md',
+        'OPERATIONS_RUNBOOK.md',
+        'OPERATIONS_RUNBOOK.template.md',
+        'THIRD_PARTY_LICENSE_INVENTORY.md',
+        'THIRD_PARTY_LICENSE_INVENTORY.template.md',
+
+        ".env.example",
+        ".gitignore",
+        ".dockerignore",
+        "compose.yaml",
+        "Dockerfile.scaffold",
+        "execution-profile.docker.json",
+        "OPERATIONAL_TOOLING_SCOPE.md",
+        "tests/test_runtime_contract.py",
+        "run.sh",
+        "execution-profile.json",
+        "execution-profile.template.json",
+        "scripts/health_scaffold.py",
+        "scripts/scaffold_lint.py",
+        "tests/test_execution_facade.py",
         "VERSION",
         "CHANGELOG.md",
         "PROJECT_PROFILE.template.md",
@@ -55,6 +95,7 @@ DISTRIBUTION = INVARIANTS | frozenset(
     }
 )
 OWNER_PREFIXES = {
+    "EXEC": "EXECUTION_FACADE.md",
     "WF": "AGENT_WORKFLOW.md",
     "DEV": "DEVELOPMENT_RULES.md",
     "GOV": "DOCUMENT_GOVERNANCE.md",
@@ -66,6 +107,16 @@ OWNER_PREFIXES = {
 }
 CORE = frozenset(
     {
+        "DEV-FOUNDATION",
+        "REL-DATA-CONTRACT",
+        "TEST-CLASSES",
+        "SEC-FOUNDATION",
+        "EXEC-READONLY",
+        "EXEC-MUTATION",
+        "EXEC-ADOPTION",
+        "EXEC-RUNTIME",
+        "SEC-ENV",
+        "REL-APPLY-STATE",
         "WF-PRESERVE",
         "WF-SCOPE",
         "WF-CLOSURE",
@@ -180,7 +231,7 @@ def rule_blocks(text: str) -> tuple[str, dict[str, str]]:
 def check_release(standard: Path) -> tuple[dict, dict]:
     release = read_json(member(standard, "standard-release.json"))
     require(
-        release.get("schema_version") == 2 and release.get("standard") == "ai-project-standard",
+        release.get("schema_version") == 3 and release.get("standard") == "ai-project-standard",
         "ADP-INTEGRITY: unsupported release contract",
     )
     require(release.get("status") in {"DRAFT", "RC", "FINAL"}, "ADP-INTEGRITY: release status")
@@ -200,6 +251,23 @@ def check_release(standard: Path) -> tuple[dict, dict]:
     for name, expected in files.items():
         hash_value(expected, name)
         require(digest(member(standard, name)) == expected, f"ADP-INTEGRITY: standard drift {name}")
+    require(
+        release.get("executable_files") == ["run.sh"],
+        "EXEC-ADOPTION: executable inventory mismatch",
+    )
+    for name in release["executable_files"]:
+        require(
+            bool(member(standard, name).stat().st_mode & 0o111),
+            f"EXEC-ADOPTION: not executable {name}",
+        )
+    from project_runner import load
+
+    for profile_name in ("execution-profile.json", "execution-profile.template.json", "execution-profile.docker.json"):
+        load(standard, profile_name)
+    from foundation_contract import excluded, json_file
+    policy = json_file(standard, "source-exclusions.json")
+    for name in files:
+        require(not excluded(name, policy), f"DEV-FOUNDATION: excluded release member {name}")
     registry = read_json(member(standard, "POLICY_RULES.json"))
     require(registry.get("schema_version") == 1, "GOV-OWNERS: registry schema")
     require(
@@ -246,6 +314,7 @@ def check(standard: Path, consumer: Path | None = None) -> dict:
         "structure": None,
         "semantic": "NOT ASSESSED",
         "runtime_release": "NOT ASSESSED",
+        "foundation_debt": [],
     }
     if consumer is None:
         return result
@@ -278,6 +347,28 @@ def check(standard: Path, consumer: Path | None = None) -> dict:
     )
     for name in owned:
         member(consumer, name)
+    from project_runner import load
+
+    consumer_profile = load(consumer)
+    from foundation_contract import validate
+    result["foundation_debt"] = validate(consumer, consumer_profile)
+    foundation = consumer_profile["foundation"]
+    declared_owned = {foundation["toolchain"]["dependency_manifest_path"],
+                      foundation["identity"]["version_source"],
+                      foundation["hygiene"]["policy_path"], foundation["hygiene"]["gitignore_path"],
+                      foundation["third_party"]["inventory_path"], *foundation["operations"].values()}
+    if foundation["toolchain"]["lockfile_path"] != "NOT_APPLICABLE":
+        declared_owned.add(foundation["toolchain"]["lockfile_path"])
+    if consumer_profile["runtime"]["docker"]["status"] == "READY":
+        declared_owned.add(foundation["hygiene"]["dockerignore_path"])
+    require(declared_owned <= owned, "DEV-FOUNDATION: declared foundation files must be project-owned")
+    require(consumer_profile["runtime"]["environment"]["env_example_path"] in owned,
+            "SEC-ENV: environment example must be in project-owned inventory")
+    profile = member(consumer, "PROJECT_PROFILE.md").read_text()
+    require(
+        "execution-profile.json" in profile and "EXECUTION_FACADE.md" in profile,
+        "EXEC-ADOPTION: profile must reference execution owner/config",
+    )
     exceptions = adoption.get("exceptions")
     require(isinstance(exceptions, list), "ADP-EXCEPT: exceptions must be a list")
     ids, rule_ids, drift = set(), set(), {}
@@ -393,6 +484,7 @@ def main() -> int:
             "(record only; no authority/evidence authentication)"
         )
         print("RUNTIME/RELEASE ACCEPTANCE NOT ASSESSED")
+        print("FOUNDATION DECLARED DEBT: " + ("; ".join(result["foundation_debt"]) or "none"))
         if args.require_semantic:
             require(result["semantic"] == "APPROVED", "ADP-STRUCTURE: semantic acceptance pending")
     except (OSError, ValueError, KeyError, TypeError, AttributeError) as exc:

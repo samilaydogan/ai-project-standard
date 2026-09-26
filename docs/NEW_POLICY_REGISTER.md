@@ -33,8 +33,35 @@ Classification: A direct, B generalized, C synthesis, D new, E contradiction/reg
 | N25 | README / reports / ADP-STRUCTURE | E/F / corrected | Hash PASS no longer means READY or human semantic approval | REVISED — prior bytes DRAFT/RC; final readiness separately validated |
 | N26 | EXTRACTION_MATRIX / PROVENANCE | F / corrected | Navigation document had business-only label yet informed generic UI | REVISED — only generic route/access principle, no domain navigation imported |
 | N27 | check_standard / ADP-STRUCTURE | D/E | Fixed distribution/invariant/project-owned inventories, registry/exception checks | REVISED — documented integrity/structure/recorded approval boundaries |
-| N28 | check_docs / README | D/F | Bounded supported-link, placeholder and conditional lexical scan | REVISED — exact scope and NOT RUN output; no factual correctness claim |
+| N28 | check_docs / README | D/F | Bounded supported-link, placeholder and historical lexical scan (superseded by N35) | REVISED — exact structural scope; earlier vocabulary branch removed by N35; no factual correctness claim |
 | N29 | ADP-INTEGRITY / consumer profile | F / portability defect | Unversioned sibling dependency removed | REVISED — complete content-pinned companion snapshot and copied checkers |
-| N30 | consumer state/architecture/catalog | E / factual | Reusable bearer tokens and current pending identity selection | REVISED — current source wins; not future implementation |
+| N30 | consumer state/architecture/catalog | E / factual | Unsupported lifecycle/permanence claims corrected against current source | REVISED — current source wins; not future implementation |
 
-No high-impact decision remains pending. Structural exception tooling cannot authenticate a human approval or detect arbitrary semantic evasion inside an approved waivable block: ADP-EXCEPT requires human review against the protected core. Existing local gates survive adoption. New mechanisms are accepted because they serve the requested standard product; removed accidental breadth/permissions are recorded rather than hidden.
+No high-impact Stage 1 reconciliation decision remained pending at that checkpoint; subsequent unreleased candidate scope is separately recorded below. Structural exception tooling cannot authenticate a human approval or detect arbitrary semantic evasion inside an approved waivable block: ADP-EXCEPT requires human review against the protected core. Existing local gates survive adoption. New mechanisms are accepted because they serve the requested standard product; removed accidental breadth/permissions are recorded rather than hidden.
+
+## v0.1.1 authorized scope extension
+
+N31 / EXEC-FACADE, EXEC-DISPATCH: NEW generic facade vocabulary, argv routing and portable profile, explicitly authorized by v0.1.1 request; source run.sh practice generalized, capability absent from 0.1.0. N32 / EXEC-READONLY, EXEC-MUTATION: NEW explicit side-effect boundary, correcting observed bootstrap/version-status hazards rather than inheriting them. N33 / EXEC-ADOPTION: NEW executable identity/static enforcement and compatibility transition. N34: NEW stdlib day-zero health/base validation reference; no business framework. actor-exclusive dependency mutation is rejected as unproven, not silently introduced. Release delta remains an artifact operation. User-observed full-suite/stronger release tooling stays local. These are deliberate new capabilities, not a retroactive claim about 0.1.0.
+
+## N35 — product-independent genericity correction
+
+The current candidate removes the checker’s built-in source/consumer/business/provider denylist. Option 1: generic docs checks cover supported inline links, non-template placeholders and JSON syntax only, explicitly report vocabulary/project neutrality NOT ASSESSED, and never infer lexical policy from a release manifest. Extraction/release neutrality is a separate audit using temporary externally supplied terms. Tests use synthetic source/consumer/entity names. Exact historical extraction evidence is exported outside the current repository; neutral provenance and historical checkpoint summaries retain decision distinctions. No published historical release is rewritten; no version bump is implied by this pre-release correction.
+
+## Final bounded split — N36–N40
+
+Owner authority: explicit FINAL BOUNDED-SPLIT PATCH request. N36 / EXEC-DELIVERY: D new generic A/B/transition/profile/bootstrap policy, informed by B historical application delivery; prior actor-exclusive dependency conclusion was narrowly about resolver authority and misleading when applied to application ZIP delivery. N37 / REL-APPLY-STATE: D new NON-WAIVABLE external state/artifact boundary. The owner says mutable transient snapshots MUST NOT pollute source; this patch chooses enforceable core rather than automatic legacy exceptions. Genuine version-controlled installer code/fixtures are source, not mutable apply state. Preserve historical bytes until authorized migration; a truthful PENDING consumer is preferable to waiving this accepted default. This deliberately differs from the audit's optional ordinary-waiver proposal; no legacy exception is granted.
+
+N38 / SEC-ENV: B existing secret protection + D checked-in env contract/schema/ignore enforcement. N39 / EXEC-RUNTIME: D explicit runtime/IPv4/network/health contract and native/optional Docker reference, preserving existing stdlib health. N40 / deferred scope: B reusable operational patterns, C interfaces, D/E local assumptions and G new safe applier/full-builder design are listed in OPERATIONAL_TOOLING_SCOPE; none implemented in v0.1.1. No consumer adoption/roadmap semantics or source project's runtime changes are accepted by this patch.
+
+## v0.2.0 continuation — owner-approved NEW foundation decisions
+
+The unreleased v0.1.1 candidate is superseded before publication, with its implementation preserved and expanded. Published 0.1.0 remains immutable. DEV-FOUNDATION (toolchain/exclusions), REL-DATA-CONTRACT (DB/persistence/backup/migration applicability), SEC-FOUNDATION (authentication/observability) and TEST-CLASSES (isolated/live dimensions) are NEW generic rules accepted by the owner continuation request, not unchanged extraction. Local data/release/security practices motivate them; the fixed schema, license/ops templates and bounded reference harness are new generic/reference implementations. No universal PostgreSQL, identity provider, business model or consumer gate is introduced. Stronger local rules remain binding. Future generic builders/evidence/recovery/acceptance tooling now belongs to v0.3.0. Historical audit records below/above retain their scoped identities and limitations.
+
+| Rule | Provenance class | Semantic delta | Canonical owner |
+| --- | --- | --- | --- |
+| DEV-FOUNDATION | NEW generic decision / reference implementation | Explicit machine identity/toolchain/dependency/exclusion inventory and bounded static checks | DEVELOPMENT_RULES.md |
+| REL-DATA-CONTRACT | NEW generic contract, synthesis of existing safety principles | Explicit mode/owner/recovery/backup declarations without implementing engines | MIGRATION_AND_RELEASE_POLICY.md |
+| SEC-FOUNDATION | NEW generic contract + minimal reference | Auth/session/authorization/logging applicability and bounded generated-ID events | SECURITY_BASELINE.md |
+| TEST-CLASSES | NEW generic classification/reference harness | Explicit six classes, timeout/state/network declarations, sanitized bounded unittest execution | TESTING_AND_EVIDENCE.md |
+
+No claim is made that historical source already had this exact schema, harness or templates. Earlier 73/73 bounded evidence remains baseline evidence, not proof of the expanded candidate.

@@ -25,28 +25,53 @@ class StandardTests(unittest.TestCase):
         for name in checker.DISTRIBUTION:
             target = self.standard / name
             target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(source / name, target)
+            shutil.copy2(source / name, target)
         self.write_release()
         self.consumer = self.root / "consumer"
         for name in checker.INVARIANTS:
             target = self.consumer / name
             target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(self.standard / name, target)
-        for name in checker.PROJECT_DOCUMENTS | {"docs/evidence.md"}:
+            shutil.copy2(self.standard / name, target)
+        for name in checker.PROJECT_DOCUMENTS | {"docs/evidence.md", ".env.example", ".dockerignore", "pyproject.toml"}:
             target = self.consumer / name
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text("Synthetic fixture, not real acceptance.\n")
+        for name in (
+            '.dockerignore',
+            'pyproject.toml',
+            'source-exclusions.json',
+            'scripts/foundation_contract.py',
+            'scripts/reference_tests.py',
+            'scripts/test_network_guard.py',
+            'scripts/scaffold_status.py',
+            'INSTALLATION.md',
+            'MIGRATION_RECOVERY.md',
+            'OPERATIONS_RUNBOOK.md',
+            'THIRD_PARTY_LICENSE_INVENTORY.md',
+            ".env.example",
+            ".gitignore",
+            "run.sh",
+            "execution-profile.json",
+            "scripts/health_scaffold.py",
+            "scripts/scaffold_lint.py",
+        ):
+            target = self.consumer / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source / name, target)
+        (self.consumer / "PROJECT_PROFILE.md").write_text(
+            "execution-profile.json EXECUTION_FACADE.md\n"
+        )
         self.adoption = {
             "schema_version": 2,
             "standard": "ai-project-standard",
-            "version": "0.1.0",
+            "version": (self.standard / "VERSION").read_text().strip(),
             "adopted_on": "2026-01-01",
             "source_reference": "synthetic isolated content snapshot",
             "release_manifest_sha256": checker.digest(self.standard / "standard-release.json"),
             "invariants": {
                 name: checker.digest(self.standard / name) for name in checker.INVARIANTS
             },
-            "project_owned": sorted(checker.PROJECT_DOCUMENTS | {"docs/evidence.md"}),
+            "project_owned": sorted(checker.PROJECT_DOCUMENTS | {"docs/evidence.md", ".env.example", ".dockerignore", "pyproject.toml"}),
             "exceptions": [],
             "semantic_acceptance": {"status": "PENDING"},
         }
@@ -87,6 +112,52 @@ class StandardTests(unittest.TestCase):
         self.assertEqual(result["semantic"], "PENDING")
         self.assertEqual(result["runtime_release"], "NOT ASSESSED")
 
+    def test_nonexecutable_consumer_facade(self):
+        (self.consumer / "run.sh").chmod(0o644)
+        self.rejected("facade not executable")
+
+    def test_readonly_package_mapping_rejected(self):
+        path = self.consumer / "execution-profile.json"
+        profile = json.loads(path.read_text())
+        profile["commands"]["apply-package"] = {
+            "status": "READY",
+            "mutability": "read-only",
+            "argv": ["python3", "-c", "print('must never execute')"],
+            "prerequisites": [],
+        }
+        path.write_text(json.dumps(profile))
+        self.rejected("must be mutating")
+
+    def test_missing_execution_baseline(self):
+        path = self.consumer / "execution-profile.json"
+        profile = json.loads(path.read_text())
+        del profile["commands"]["doctor"]
+        path.write_text(json.dumps(profile))
+        self.rejected("missing baseline")
+
+    def test_compatibility_removal_boundary_required(self):
+        path = self.consumer / "execution-profile.json"
+        profile = json.loads(path.read_text())
+        profile["compatibility_launchers"] = [{"path": "run.sh", "removal_boundary": ""}]
+        path.write_text(json.dumps(profile))
+        self.rejected("compatibility schema")
+
+    def test_unconfigured_base_test_is_rejected(self):
+        path = self.consumer / "execution-profile.json"
+        profile = json.loads(path.read_text())
+        profile["commands"]["test"].update(status="NOT CONFIGURED", argv=[])
+        path.write_text(json.dumps(profile))
+        self.rejected("configured base validation")
+
+    def test_exact_maintainer_evidence_is_not_distributed(self):
+        evidence = self.standard / "maintainer-only" / "source-evidence.json"
+        evidence.parent.mkdir()
+        evidence.write_text('{"source": "SourceProductAlpha"}')
+        release = generate_release.payload(self.standard, "FINAL")
+        self.assertNotIn("maintainer-only/source-evidence.json", release["files"])
+        self.assertNotIn("maintainer-only/source-evidence.json", release["invariants"])
+        self.assertTrue(all(not name.startswith("docs/") for name in release["files"]))
+
     def test_missing_pin(self):
         del self.adoption["release_manifest_sha256"]
         self.rejected("invalid SHA-256")
@@ -96,7 +167,7 @@ class StandardTests(unittest.TestCase):
         self.rejected("release pin mismatch")
 
     def test_wrong_version(self):
-        self.adoption["version"] = "0.2.0"
+        self.adoption["version"] = "99.0.0"
         self.rejected("version pin mismatch")
 
     def test_missing_invariant(self):
@@ -225,7 +296,7 @@ class StandardTests(unittest.TestCase):
         self.rejected("stale semantic")
 
     def test_portable_default_without_sibling(self):
-        snapshot = self.consumer / ".project-standard/0.1.0"
+        snapshot = self.consumer / ".project-standard" / self.adoption["version"]
         shutil.copytree(self.standard, snapshot)
         result = subprocess.run(
             [sys.executable, "-B", "scripts/check_standard.py"],

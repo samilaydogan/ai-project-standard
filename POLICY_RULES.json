@@ -1,37 +1,60 @@
 {
   "schema_version": 1,
   "invariants": [
+    "ADOPTION.md",
     "AGENT_WORKFLOW.md",
     "DEVELOPMENT_RULES.md",
     "DOCUMENT_GOVERNANCE.md",
+    "EXECUTION_FACADE.md",
+    "MIGRATION_AND_RELEASE_POLICY.md",
+    "POLICY_RULES.json",
     "SECURITY_BASELINE.md",
     "TESTING_AND_EVIDENCE.md",
-    "MIGRATION_AND_RELEASE_POLICY.md",
     "UI_IMPLEMENTATION_STANDARDS.md",
-    "ADOPTION.md",
-    "POLICY_RULES.json",
+    "scripts/check_docs.py",
     "scripts/check_standard.py",
-    "scripts/check_docs.py"
+    "scripts/foundation_contract.py",
+    "scripts/project_runner.py"
   ],
   "required_project_owned": [
+    ".gitignore",
+    "CAPABILITY_CATALOG.md",
+    "EXECUTION_PLAN.md",
+    "HANDOFF.md",
+    "INSTALLATION.md",
+    "MIGRATION_RECOVERY.md",
+    "OPERATIONS_RUNBOOK.md",
     "PROJECT_PROFILE.md",
     "PROJECT_STATE.md",
-    "EXECUTION_PLAN.md",
-    "CAPABILITY_CATALOG.md",
     "ROADMAP_CHANGELOG.md",
-    "HANDOFF.md",
-    "STANDARD_ADOPTION_HISTORY.md"
+    "STANDARD_ADOPTION_HISTORY.md",
+    "THIRD_PARTY_LICENSE_INVENTORY.md",
+    "execution-profile.json",
+    "run.sh",
+    "source-exclusions.json"
   ],
   "distribution_files": [
+    ".dockerignore",
+    ".env.example",
+    ".gitignore",
     "ADOPTION.md",
     "AGENT_WORKFLOW.md",
     "CAPABILITY_CATALOG.template.md",
     "CHANGELOG.md",
     "DEVELOPMENT_RULES.md",
     "DOCUMENT_GOVERNANCE.md",
+    "Dockerfile.scaffold",
+    "EXECUTION_FACADE.md",
     "EXECUTION_PLAN.template.md",
     "HANDOFF.template.md",
+    "INSTALLATION.md",
+    "INSTALLATION.template.md",
     "MIGRATION_AND_RELEASE_POLICY.md",
+    "MIGRATION_RECOVERY.md",
+    "MIGRATION_RECOVERY.template.md",
+    "OPERATIONAL_TOOLING_SCOPE.md",
+    "OPERATIONS_RUNBOOK.md",
+    "OPERATIONS_RUNBOOK.template.md",
     "POLICY_RULES.json",
     "PROJECT_PROFILE.template.md",
     "PROJECT_STATE.template.json",
@@ -41,14 +64,33 @@
     "SECURITY_BASELINE.md",
     "STANDARD_ADOPTION_HISTORY.template.md",
     "TESTING_AND_EVIDENCE.md",
+    "THIRD_PARTY_LICENSE_INVENTORY.md",
+    "THIRD_PARTY_LICENSE_INVENTORY.template.md",
     "UI_IMPLEMENTATION_STANDARDS.md",
     "VERSION",
+    "compose.yaml",
+    "execution-profile.docker.json",
+    "execution-profile.json",
+    "execution-profile.template.json",
+    "pyproject.toml",
+    "run.sh",
     "scripts/check_docs.py",
     "scripts/check_standard.py",
+    "scripts/foundation_contract.py",
     "scripts/generate_release.py",
+    "scripts/health_scaffold.py",
+    "scripts/project_runner.py",
+    "scripts/reference_tests.py",
+    "scripts/scaffold_lint.py",
+    "scripts/scaffold_status.py",
+    "scripts/test_network_guard.py",
+    "source-exclusions.json",
     "standard-adoption.template.json",
     "tests/test_check_docs.py",
-    "tests/test_check_standard.py"
+    "tests/test_check_standard.py",
+    "tests/test_execution_facade.py",
+    "tests/test_foundation_contract.py",
+    "tests/test_runtime_contract.py"
   ],
   "rules": {
     "WF-PRESERVE": {
@@ -201,6 +243,58 @@
     },
     "ADP-UPGRADE": {
       "owner": "ADOPTION.md",
+      "waivable": false
+    },
+    "EXEC-FACADE": {
+      "owner": "EXECUTION_FACADE.md",
+      "waivable": true
+    },
+    "EXEC-READONLY": {
+      "owner": "EXECUTION_FACADE.md",
+      "waivable": false
+    },
+    "EXEC-DISPATCH": {
+      "owner": "EXECUTION_FACADE.md",
+      "waivable": true
+    },
+    "EXEC-MUTATION": {
+      "owner": "EXECUTION_FACADE.md",
+      "waivable": false
+    },
+    "EXEC-ADOPTION": {
+      "owner": "EXECUTION_FACADE.md",
+      "waivable": false
+    },
+    "EXEC-DELIVERY": {
+      "owner": "EXECUTION_FACADE.md",
+      "waivable": true
+    },
+    "EXEC-RUNTIME": {
+      "owner": "EXECUTION_FACADE.md",
+      "waivable": false
+    },
+    "SEC-ENV": {
+      "owner": "SECURITY_BASELINE.md",
+      "waivable": false
+    },
+    "REL-APPLY-STATE": {
+      "owner": "MIGRATION_AND_RELEASE_POLICY.md",
+      "waivable": false
+    },
+    "DEV-FOUNDATION": {
+      "owner": "DEVELOPMENT_RULES.md",
+      "waivable": false
+    },
+    "REL-DATA-CONTRACT": {
+      "owner": "MIGRATION_AND_RELEASE_POLICY.md",
+      "waivable": false
+    },
+    "TEST-CLASSES": {
+      "owner": "TESTING_AND_EVIDENCE.md",
+      "waivable": false
+    },
+    "SEC-FOUNDATION": {
+      "owner": "SECURITY_BASELINE.md",
       "waivable": false
     }
   }

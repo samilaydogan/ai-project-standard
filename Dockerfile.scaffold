@@ -1,0 +1,7 @@
+FROM python:3.11-slim
+WORKDIR /app
+ENV PYTHONDONTWRITEBYTECODE=1
+COPY scripts/health_scaffold.py ./scripts/health_scaffold.py
+COPY execution-profile.docker.json ./execution-profile.json
+USER 65534:65534
+CMD ["python3", "-B", "./scripts/health_scaffold.py"]

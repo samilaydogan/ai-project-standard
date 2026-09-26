@@ -1,4 +1,4 @@
-"""Bounded docs quality: supported inline links/placeholders; optional distribution lexical scan."""
+"""Bounded links, placeholders and JSON syntax; no vocabulary policy."""
 
 from __future__ import annotations
 
@@ -22,13 +22,6 @@ LINK = re.compile(
     r"""(?<!!)\[[^\]\n]+\]\(\s*(?:<([^>\n]+)>|([^\s()\n]+))(?:\s+["'][^"'\n]*["'])?\s*\)"""
 )
 PLACEHOLDER = re.compile(r"\{\{[A-Za-z0-9_]+\}\}")
-# vocabulary-pattern: begin
-VOCABULARY = re.compile(
-    r"\b(?:OperationHub|Tenant|Company|CompanyMembership|invoice|invoices|orders|cargo|"
-    r"Google|AuthHub|eLogo|Nilvera|Tabler|Paraşüt)\b|\b[A-Z][0-9]?/\d{2,3}\b",
-    re.IGNORECASE,
-)
-# vocabulary-pattern: end
 
 
 def prose(text: str) -> str:
@@ -107,36 +100,7 @@ def check(root: Path, files: list[str] | None = None) -> tuple[list[str], dict]:
         if ".template." not in path.name:
             for match in PLACEHOLDER.finditer(text):
                 errors.append(f"{name}: ADP-STRUCTURE unresolved placeholder {match.group()}")
-    release_path = root / "standard-release.json"
-    vocabulary_count = None
-    if release_path.is_file():
-        release = json.loads(release_path.read_text())
-        vocabulary_count = 0
-        for name in sorted(release["files"]):
-            relative = Path(name)
-            path = root / relative
-            if (
-                relative.is_absolute()
-                or ".." in relative.parts
-                or path.is_symlink()
-                or not path.resolve().is_relative_to(root)
-            ):
-                errors.append(f"{name}: ADP-INTEGRITY unsafe lexical scan member")
-                continue
-            if path.suffix not in {".md", ".json", ".py"}:
-                continue
-            vocabulary_count += 1
-            text = path.read_text()
-            if name == "scripts/check_docs.py":
-                text = re.sub(
-                    r"# vocabulary-pattern: begin.*?# vocabulary-pattern: end",
-                    "",
-                    text,
-                    flags=re.DOTALL,
-                )
-            for match in VOCABULARY.finditer(text):
-                errors.append(f"{name}: ADP-INTEGRITY source-project vocabulary {match.group()}")
-    return errors, {"markdown": md_count, "json": json_count, "vocabulary": vocabulary_count}
+    return errors, {"markdown": md_count, "json": json_count}
 
 
 def main() -> int:
@@ -152,17 +116,13 @@ def main() -> int:
     if errors:
         print("\n".join(errors))
         return 1
-    vocabulary = (
-        f"{scope['vocabulary']} distributed text files scanned"
-        if scope["vocabulary"] is not None
-        else "NOT RUN (no standard release manifest)"
-    )
     print(
         f"BOUNDED DOCS QUALITY PASS: {scope['markdown']} Markdown / {scope['json']} JSON; "
-        f"supported inline local links/non-template placeholders; vocabulary {vocabulary}"
+        "supported inline local links/non-template placeholders/JSON syntax"
     )
     print(
-        "NOT ASSESSED: external URLs, anchors, images, reference links, facts or policy acceptance"
+        "NOT ASSESSED: vocabulary/project neutrality, external URLs, anchors, images, "
+        "reference links, facts or policy acceptance"
     )
     return 0
 

@@ -7,13 +7,24 @@
   "release_manifest_sha256": "{{RELEASE_MANIFEST_SHA256}}",
   "invariants": {},
   "project_owned": [
+    ".dockerignore",
+    ".env.example",
+    ".gitignore",
+    "CAPABILITY_CATALOG.md",
+    "EXECUTION_PLAN.md",
+    "HANDOFF.md",
+    "INSTALLATION.md",
+    "MIGRATION_RECOVERY.md",
+    "OPERATIONS_RUNBOOK.md",
     "PROJECT_PROFILE.md",
     "PROJECT_STATE.md",
-    "EXECUTION_PLAN.md",
-    "CAPABILITY_CATALOG.md",
     "ROADMAP_CHANGELOG.md",
-    "HANDOFF.md",
-    "STANDARD_ADOPTION_HISTORY.md"
+    "STANDARD_ADOPTION_HISTORY.md",
+    "THIRD_PARTY_LICENSE_INVENTORY.md",
+    "execution-profile.json",
+    "pyproject.toml",
+    "run.sh",
+    "source-exclusions.json"
   ],
   "exceptions": [],
   "semantic_acceptance": {

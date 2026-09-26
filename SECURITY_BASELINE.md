@@ -15,3 +15,13 @@ Use bounded safe error codes/counts/identifiers. Do not emit raw credential head
 ## SEC-SAFETY: External and persistent-data boundaries
 
 Ordinary development tests use isolated synthetic data and mocked transports, without production credentials, inherited secret environment files, live identity-provider calls or shared persistent database mutations. Separate authorized live acceptance must name safe credentials/environment, scope and data boundaries. Mocks prove local protocol behavior only. Never infer live acceptance or production approval from them. These boundaries cannot be waived by a standard exception.
+
+## SEC-ENV: Checked-in environment contract
+
+Ship .env.example or an equivalent declared env_example_path with safe example values only. Declare required, optional and secret key inventories in the fixed runtime profile; required/optional are disjoint and secret keys are a subset. Secret examples must be empty. Secret-like key names must be classified; key material/literal Compose secrets are prohibited. This bounded fixture check is not a universal secret detector; maintainers review all distributable values.
+
+A real env_path (normally .env) is runtime-local, gitignored and never source-controlled or shipped with real secret values. It may contain secrets; production may instead use protected process environment or secret stores. Never require production secrets in source files, copy an existing local .env into an artifact, or create one during doctor. Static adoption requires only the environment example and ignore contract, not an actual .env. Runtime availability checks report missing required keys without printing values. New day-zero contract makes existing secret-protection practice explicit and adds fixed schema enforcement; secret protection remains non-waivable.
+
+## SEC-FOUNDATION: Authentication, correlation and redaction boundaries
+
+Authentication mode is explicit none/external/project_defined. External integration class, callback/public URL applicability and session ownership are local declarations; business authorization remains project-owned. No identity provider is universal. Schema-3 observability declares logging format/strategy, generated correlation, redaction, health/readiness commands, destination and retention. The reference health server emits bounded status/request-ID JSONL without headers/query/body/personal data; a real application must implement its declared redaction boundary, not merely pass schema validation. No business telemetry or support bundle is provided.

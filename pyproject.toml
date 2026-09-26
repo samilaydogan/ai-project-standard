@@ -1,0 +1,6 @@
+# Source metadata only; no third-party dependencies or install/build backend.
+[project]
+name = "project-scaffold"
+version = "0.0.0"
+requires-python = ">=3.11"
+dependencies = []
