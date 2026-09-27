@@ -1,13 +1,7 @@
 # ai-project-standard current state
 
-As of 2026-09-27. Bootstrap source base HEAD cd2c377318775e1d3477b97297273b5253575e73; bootstrap commit identity is obtained from git log --all -- PROJECT_STATE.md and actual git rev-parse HEAD, avoiding a self-referential commit hash. Before commit, new governance files are the relevant uncommitted diff; inspect git status/index directly.
+2026-09-27; closure source base HEAD 856ed05038cd66c532d3177d62fab652b9f9be73, main. Closure commit identity is obtained from git log -- PROJECT_STATE.md and the closure packet, avoiding a self-referential hash. Standard 0.2.3 FINAL; final manifest and exact source/runner/config evidence are in docs/packets/STD-TEST-01-CLOSURE.md. Closed 0.2.2 Supervisor history at cd2c377318775e1d3477b97297273b5253575e73 remains intact. Reference application remains 0.0.0; no DB/schema/migration. EXECUTION_PLAN.md alone owns live CURRENT/NEXT.
 
-Standard VERSION 0.2.2; manifest FINAL SHA-256 bc2f1bc073c7f608b21d149e291007013b1512332f9f2162649a1d9d92abb9d9 (59 members, 14 invariants). Published remote base v0.2.1 is unchanged. Reference application pyproject.toml remains 0.0.0; no schema/migration/persistent DB applies. Completed Supervisor capability is CLOSED at the base HEAD. CURRENT/NEXT: only EXECUTION_PLAN.md; roadmap bootstrap introduces no implementation.
+STD-TEST-01 CLOSED after actual owner-authorized semantic review and final gates. Optional stdlib adapter/config/facade/docs/tests IMPLEMENTED and locally verified; full and formal suites 179/179 PASS, zero skips. RELEASE adapters NOT STARTED/NOT CONFIGURED. No publication, consumer adoption, production or transport acceptance. The next unit needs a new portable assignment before implementation.
 
-## Current truth and evidence
-
-Implemented: bounded dispatcher/reference test runner, static checks, portable workflow/packet/AGENTS forms and deterministic two-process rehearsal. NOT STARTED: the six executable TEST/RELEASE controls in CAPABILITY_CATALOG.md. Synchronous reference test and health status are not these adapters. ROADMAP_CHANGELOG.md records R1 bootstrap; docs/packets/BOOTSTRAP-001.md records authorization and evidence. Closed-capability validation remains in docs/SUPERVISOR_CAPABILITY_CLOSURE.md; bootstrap results are in the packet after checks. Source/input changes invalidate relevant previous evidence.
-
-## Limits
-
-No tag/push/publication/consumer adoption from bootstrap. No live two-AI runtime acceptance, sender authentication or transport bridge. Operational scope register remains deferred except the explicitly planned units. Source policy/invariant/profile JSON bytes are unchanged by bootstrap. Resume from HANDOFF.md and the plan, never inferred chat memory.
+Cooperative stop/timeout waits for test boundaries; blocked single tests cannot be forcibly interrupted. No PID signaling or hostile-code sandbox. Raw output suppressed, not diagnostic logs. Skips/empty/stale evidence hold eligibility. External private unsigned job evidence authenticates neither human authority nor future liveness. Fresh-session reconstruction: HANDOFF.md, execution plan, roadmap, profile and closure packet.

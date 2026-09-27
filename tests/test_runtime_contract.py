@@ -23,7 +23,9 @@ class RuntimeContractTests(unittest.TestCase):
         self.root = Path(self.temp.name) / "source"
         self.root.mkdir()
         self.source = Path(__file__).resolve().parents[1]
-        for name in ('.dockerignore', 'pyproject.toml', 'source-exclusions.json', 'scripts/foundation_contract.py', 'scripts/reference_tests.py', 'scripts/test_network_guard.py', 'scripts/scaffold_status.py', 'INSTALLATION.md', 'MIGRATION_RECOVERY.md', 'OPERATIONS_RUNBOOK.md', 'THIRD_PARTY_LICENSE_INVENTORY.md', "run.sh", ".env.example", ".gitignore", "execution-profile.json",
+        for name in ('.dockerignore', 'pyproject.toml', 'source-exclusions.json', 'scripts/foundation_contract.py', 'scripts/reference_tests.py',
+            'scripts/test_controls.py',
+            'test-control-profile.json', 'scripts/test_network_guard.py', 'scripts/scaffold_status.py', 'INSTALLATION.md', 'MIGRATION_RECOVERY.md', 'OPERATIONS_RUNBOOK.md', 'THIRD_PARTY_LICENSE_INVENTORY.md', "run.sh", ".env.example", ".gitignore", "execution-profile.json",
                      "compose.yaml", "scripts/project_runner.py", "scripts/health_scaffold.py",
                      "scripts/scaffold_lint.py"):
             target = self.root / name

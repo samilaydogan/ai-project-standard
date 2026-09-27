@@ -74,6 +74,61 @@
         "./scripts/scaffold_status.py"
       ],
       "prerequisites": []
+    },
+    "formal-test": {
+      "status": "READY",
+      "mutability": "mutating",
+      "argv": [
+        "python3",
+        "-B",
+        "./scripts/test_controls.py",
+        "run"
+      ],
+      "prerequisites": []
+    },
+    "test-durum": {
+      "status": "READY",
+      "mutability": "read-only",
+      "argv": [
+        "python3",
+        "-B",
+        "./scripts/test_controls.py",
+        "status"
+      ],
+      "prerequisites": []
+    },
+    "test-log": {
+      "status": "READY",
+      "mutability": "read-only",
+      "argv": [
+        "python3",
+        "-B",
+        "./scripts/test_controls.py",
+        "log"
+      ],
+      "prerequisites": []
+    },
+    "test-devam": {
+      "status": "READY",
+      "mutability": "read-only",
+      "argv": [
+        "python3",
+        "-B",
+        "./scripts/test_controls.py",
+        "continue"
+      ],
+      "prerequisites": []
+    },
+    "test-durdur": {
+      "status": "READY",
+      "mutability": "mutating",
+      "argv": [
+        "python3",
+        "-B",
+        "./scripts/test_controls.py",
+        "stop"
+      ],
+      "prerequisites": []
     }
   },
   "compatibility_launchers": [],

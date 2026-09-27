@@ -1,0 +1,856 @@
+{
+  "schema_version": 1,
+  "scope": "owner-authorized STD-TEST-01 semantic closure; no NEXT implementation or publication",
+  "base_head": "856ed05038cd66c532d3177d62fab652b9f9be73",
+  "version": "0.2.3",
+  "state": "FINAL",
+  "manifest_sha256": "510dc478331f7a875f49c9b83791fce3c0a9309c20a4fcbcf52a4f3ae17ebf92",
+  "terminal_record_sha256": "d89416f8b8c198eb2b534d452c13a96457d6dcd9a73c14193a12753ed66fedd1",
+  "formal_job": {
+    "cancel_requested": false,
+    "counts": {
+      "failed": 0,
+      "passed": 179,
+      "run": 179,
+      "skipped": 0
+    },
+    "events": [
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517900.369018
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517900.419015
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517900.478442
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517900.5343208
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517900.5921779
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517900.6612759
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517900.716913
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517900.7683682
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517900.823114
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517900.8773062
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517900.930038
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790517900.9873831
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517900.995048
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517901.0500631
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517901.102623
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517901.159786
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517901.217551
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517901.2951128
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517901.3471391
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517901.397992
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517901.444844
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517901.496947
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517901.551405
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517901.60387
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517901.6579819
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517901.716654
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517901.776928
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517901.9559228
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790517901.99441
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517902.0343869
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517902.106476
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517902.157186
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517902.204532
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517902.827772
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517902.8893719
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517902.936613
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517902.990577
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790517903.006419
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517903.055967
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517903.1176682
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517903.1694121
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517903.2237089
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517903.270344
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517903.327279
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517903.371721
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517903.418154
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517903.4708679
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517903.522412
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517903.5770218
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517903.711502
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517903.7576241
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517903.8093781
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517903.863639
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517903.9154592
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517903.96821
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790517904.0132768
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517904.0304818
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517904.078613
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517904.1398652
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517904.1908329
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517904.237988
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517904.290381
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517904.335679
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517904.387152
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517904.434027
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517904.486358
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517904.536588
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517904.674369
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517904.806035
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517904.938675
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517904.973233
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517904.992762
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517905.018411
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790517905.023954
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517905.042563
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517905.071384
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517905.781781
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517905.8090181
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517905.839357
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517905.864542
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517905.890422
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517905.90977
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517905.931409
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517905.950497
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517905.9706938
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790517906.037138
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517906.5668192
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517906.592736
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517906.617175
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517906.64681
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517906.6752279
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517906.694282
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517906.7135448
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517906.732638
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517906.805687
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517906.82891
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517906.84835
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517906.873136
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517906.88014
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517906.905267
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517906.921385
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517906.935264
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790517907.040559
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517907.213944
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517907.245816
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517907.2607691
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517907.2739918
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517907.308055
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517907.3231812
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517907.337155
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517907.3519511
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517907.358516
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517907.3748329
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517907.396136
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517907.4137301
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517907.42803
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517907.4445481
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517907.450498
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517907.467781
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517907.485732
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517907.5015109
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517907.516512
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790517908.0472362
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517908.592795
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517908.6097522
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517908.629198
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517908.645932
+      },
+      {
+        "event": "TERMINAL",
+        "time": 1790517908.6598148
+      }
+    ],
+    "exit": 0,
+    "job": "50e31315f74c44c79e3993728ce9c4b6",
+    "pattern": "test_*.py",
+    "schema_version": 1,
+    "source": {
+      "adapter_sha256": "df4c695996b491485add3704e2384814631e286552596cb530550addd1c2d24a",
+      "executable_sha256": "b6d526f0e8b9b1f0e73780f502b39d8708fcfbdfc690440d4ef8de7297b65fad",
+      "members": {
+        ".dockerignore": {
+          "mode": 420,
+          "sha256": "091a7b8556831e249656f15e9e0724f5c8a9c7124cff45c64898d41b88f0e785"
+        },
+        ".env.example": {
+          "mode": 420,
+          "sha256": "f9c07565254f6b8d0f5dc07e6f1a0add7622cec6cfebd4e5495c4287990bb40b"
+        },
+        ".gitignore": {
+          "mode": 420,
+          "sha256": "e4d7664c8242de0375ff78165abf85eb731699ff1c4baeb6a6ea192a827eeb01"
+        },
+        "ADOPTION.md": {
+          "mode": 420,
+          "sha256": "4c71c85f307e86fa22916f18a9a9f21abd99c5f59d75432810da388b624e7029"
+        },
+        "AGENTS.template.md": {
+          "mode": 420,
+          "sha256": "22b84c5120958b3ddd53d09a8cfe225dcc3b428842e87be2181b115ba63777f7"
+        },
+        "AGENT_WORKFLOW.md": {
+          "mode": 420,
+          "sha256": "2bcdb164826cc1e119e831be21fe30e077b76fd9ea634cfd58a04518bf98c79e"
+        },
+        "CAPABILITY_CATALOG.template.md": {
+          "mode": 420,
+          "sha256": "fe3c4956b00a3a6df80e74f98ea757f21c60beaf3457fd4718142114a6965960"
+        },
+        "CHANGELOG.md": {
+          "mode": 420,
+          "sha256": "00c4c93618c5459cf4341aa02fe6f0317ef66c48e2b6245c99b6eefe4b0f1d6c"
+        },
+        "DEVELOPMENT_RULES.md": {
+          "mode": 420,
+          "sha256": "cd7a47c843778b494b2d47c76ceee486438ca08cd7d7e3f8e2318a6a1b728cf6"
+        },
+        "DOCUMENT_GOVERNANCE.md": {
+          "mode": 420,
+          "sha256": "958c8584ab35f28de172d27681bdecc9eaa434ef7df9162657c8c9965b9fbe65"
+        },
+        "Dockerfile.scaffold": {
+          "mode": 420,
+          "sha256": "a4f55d268d1fb38c418aaea4e5dc6dabba5f14d61da1b3be4326fa401a818527"
+        },
+        "EXECUTION_FACADE.md": {
+          "mode": 420,
+          "sha256": "513d2aab2f7f57f24b6dc8c02babef5d84a6ef925ef9e9d2abcca04738b7f7c8"
+        },
+        "EXECUTION_PLAN.template.md": {
+          "mode": 420,
+          "sha256": "56ae3f6e7ae0a6b7154ea12c95d8c7dc5eea4dd8ea37322c77f9fb365138f441"
+        },
+        "HANDOFF.template.md": {
+          "mode": 420,
+          "sha256": "260a93053aa36ea6a51c9a7d6e9ac60762600af45dfc676928d29786f97098c9"
+        },
+        "INSTALLATION.md": {
+          "mode": 420,
+          "sha256": "d63a2fbe69f5adbfc2ba6e3e4b15e29b427aa54b79b4b4149354702d2c3c2c1e"
+        },
+        "INSTALLATION.template.md": {
+          "mode": 420,
+          "sha256": "65c02e1bd53cb24783682dba79ae8fc87777e788d41ecfefb779bcced7e21111"
+        },
+        "MIGRATION_AND_RELEASE_POLICY.md": {
+          "mode": 420,
+          "sha256": "6a21a568d030ac82eecddeb8945f89a21a696e3d8c657fa10cfc5e38b12629e4"
+        },
+        "MIGRATION_RECOVERY.md": {
+          "mode": 420,
+          "sha256": "073b4fc6cc00726e7d94d4bcee5dcc3331876a92d4f7d7e6eb5908b63127a16a"
+        },
+        "MIGRATION_RECOVERY.template.md": {
+          "mode": 420,
+          "sha256": "d6e49a76f1dad996cda773de0aca9d3ef91a72773ed69827f5b87f70c3242f99"
+        },
+        "OPERATIONAL_TOOLING_SCOPE.md": {
+          "mode": 420,
+          "sha256": "15ae09d8d5fdfe0b814fcf4808a06f2b520dee6874b33883596612be96b303ca"
+        },
+        "OPERATIONS_RUNBOOK.md": {
+          "mode": 420,
+          "sha256": "68aae7b73e99f610c3b2f92fac44e3881927608580c90dcdb947b897b4616cda"
+        },
+        "OPERATIONS_RUNBOOK.template.md": {
+          "mode": 420,
+          "sha256": "a522fe61159351b79b63ef40f59291b3eb8e61562f2a6ce0bb14019d1662c9e3"
+        },
+        "POLICY_RULES.json": {
+          "mode": 420,
+          "sha256": "33590b4be6eaee27c71b0d650ed3dca0f2b89729e70d9c190c38d714b18f444f"
+        },
+        "PROJECT_PROFILE.template.md": {
+          "mode": 420,
+          "sha256": "659e22faca1f305c014f6a9e886cf40425f90327b40d486e62a0ff97ee4b587c"
+        },
+        "PROJECT_STATE.template.json": {
+          "mode": 420,
+          "sha256": "3d846d064f4478410a7c98077c98d865dcde7c87c4acd374a95e25865a81009e"
+        },
+        "PROJECT_STATE.template.md": {
+          "mode": 420,
+          "sha256": "0c533f69b8cff8c4c2fb2d484dd1908a556f2b435601490431e4d69b48db124d"
+        },
+        "README.md": {
+          "mode": 420,
+          "sha256": "b0a909d8b1bd4ad301ac0183ffb13b931e4b2014f75435139fc32579f2707fc4"
+        },
+        "ROADMAP_CHANGELOG.template.md": {
+          "mode": 420,
+          "sha256": "9185ee70c1c32e2b8fd2e1f6594a49897c56d508949f069ffbf80ed7f597f40b"
+        },
+        "SECURITY_BASELINE.md": {
+          "mode": 420,
+          "sha256": "6636d543aed65b3209a13245bab07b3325301db05bf238d2fb6d0dd6cc2de460"
+        },
+        "STANDARD_ADOPTION_HISTORY.template.md": {
+          "mode": 420,
+          "sha256": "8ea3e92052e78d13bafe5abc50519824e6bb616528927061f7088122d6cbbe49"
+        },
+        "SUPERVISOR_PACKET.template.md": {
+          "mode": 420,
+          "sha256": "ec8a31b9db2089c01ba808edc780a21cb3c80cebab7cd382d878e67f896a99fb"
+        },
+        "TESTING_AND_EVIDENCE.md": {
+          "mode": 420,
+          "sha256": "fe19276d43baffde6d0d9fd691ac144124bd6134b00cd08d44e417b55777cd39"
+        },
+        "TEST_CONTROL_EXECUTION.md": {
+          "mode": 420,
+          "sha256": "70aa50c9b2295119236f33f12c17d8f1126de5f4b6c6fa502302ba673b01e331"
+        },
+        "THIRD_PARTY_LICENSE_INVENTORY.md": {
+          "mode": 420,
+          "sha256": "3fc980fec0b01eaf0145e25d726386afa7d5339fe60df94cbea7c6dd83b74bb4"
+        },
+        "THIRD_PARTY_LICENSE_INVENTORY.template.md": {
+          "mode": 420,
+          "sha256": "5252cc3fdf2938a7da412346bf409ea472700f987e0f1eb97ca5c6c986c9f741"
+        },
+        "UI_IMPLEMENTATION_STANDARDS.md": {
+          "mode": 420,
+          "sha256": "076d7cf927b8fefffde505745691b6ef277b14c77616ba5172d084e1289de8d7"
+        },
+        "VERSION": {
+          "mode": 420,
+          "sha256": "3ab94c04d24986f3af288ba1cda2c0bbddbc5a89dff097182805f54578e1ea75"
+        },
+        "compose.yaml": {
+          "mode": 420,
+          "sha256": "1d503ccc05b6ee342884a444e8a46fcef2f006bb8b0b902c0b1c9054cf591225"
+        },
+        "execution-profile.docker.json": {
+          "mode": 420,
+          "sha256": "c269c2f55036a417806ac30bfe9cd072740b9b9a3ac194301d4f03b297228552"
+        },
+        "execution-profile.json": {
+          "mode": 420,
+          "sha256": "e384adca79d9280431e2280409cc1a6ad995384a907ea109d3755110e1d07a5c"
+        },
+        "execution-profile.template.json": {
+          "mode": 420,
+          "sha256": "9202c462948c401b4d59f295a4284b87f803911ebd5fc9e3d3d54df9bc8e0da7"
+        },
+        "pyproject.toml": {
+          "mode": 420,
+          "sha256": "5d70678c11c3fc46187cab907d1722dfa8ee5777cfb1b21b72bfd117d4cfe778"
+        },
+        "run.sh": {
+          "mode": 493,
+          "sha256": "6a8095bbacc2a8f0c8d1a4797f3edd1e1260cff0aff7b24205c72b550be60635"
+        },
+        "scripts/check_docs.py": {
+          "mode": 420,
+          "sha256": "138e33961e44929ddb387d1a8a9cc1445287b17490dfbfeff5d4b9dcec5c02d2"
+        },
+        "scripts/check_standard.py": {
+          "mode": 420,
+          "sha256": "2e708c30d6843ecbebcd51754c3a521679faa079db2c3fcf4cf5b5afc2d408ef"
+        },
+        "scripts/foundation_contract.py": {
+          "mode": 420,
+          "sha256": "0b57babf212c1e01b5dc2c62a6527b86ddf4a2ade1d99b283b927197bbd9fa3f"
+        },
+        "scripts/generate_release.py": {
+          "mode": 420,
+          "sha256": "23fc913ebbb645bfd232e83f870746a71f41435e525b23b8a8189afc34fef65b"
+        },
+        "scripts/health_scaffold.py": {
+          "mode": 420,
+          "sha256": "e556317d0763041130364d0c82e7e09a67adcde01c535f91cb937adc0271f58a"
+        },
+        "scripts/project_runner.py": {
+          "mode": 420,
+          "sha256": "e768ef08079785a73213cf7a6b7b8eb341667139727fbca5b6e3f0e32eb62710"
+        },
+        "scripts/reference_tests.py": {
+          "mode": 420,
+          "sha256": "738bf662db89a71f5cbb6c99d6917d7a7cb1d0b52e350f228748b9647dae30da"
+        },
+        "scripts/scaffold_lint.py": {
+          "mode": 420,
+          "sha256": "1a25876e7bb36eba9b0ccd5cd19d1dd72c6ba91a9e05827507b75733bc1dca6a"
+        },
+        "scripts/scaffold_status.py": {
+          "mode": 420,
+          "sha256": "83ad5589044c0feead0ba2088ccbafbc15745a8ace027d812c08ee5012194a21"
+        },
+        "scripts/test_controls.py": {
+          "mode": 420,
+          "sha256": "df4c695996b491485add3704e2384814631e286552596cb530550addd1c2d24a"
+        },
+        "scripts/test_network_guard.py": {
+          "mode": 420,
+          "sha256": "a763df81b5a0c763977f6353a92ba1c6f0373c721a4f4e201646d02df1f0a742"
+        },
+        "source-exclusions.json": {
+          "mode": 420,
+          "sha256": "9acd53cb7187767eca64d89b94172c939bdab09ce005f97c191711902ea7e8a6"
+        },
+        "standard-adoption.template.json": {
+          "mode": 420,
+          "sha256": "1e971d13dc5666a820fd24a9c42fbd2bdc0bf24ec17d8097fe13c8b29a6b6e8b"
+        },
+        "standard-release.json": {
+          "mode": 420,
+          "sha256": "510dc478331f7a875f49c9b83791fce3c0a9309c20a4fcbcf52a4f3ae17ebf92"
+        },
+        "test-control-profile.json": {
+          "mode": 420,
+          "sha256": "4fb23cc6acc43ffcd87ec08942f5f2b4ddffd5c5af6d2f4bb6c52b608f56dffd"
+        },
+        "tests/test_check_docs.py": {
+          "mode": 420,
+          "sha256": "ff2289a784d6444913ad282e1673b5d5aa1654cdfe6b402a5a890bcf43e6612c"
+        },
+        "tests/test_check_standard.py": {
+          "mode": 420,
+          "sha256": "a31711de5c44f775b3a0787c94649985287266f6a62732feadd373934c9eceeb"
+        },
+        "tests/test_execution_facade.py": {
+          "mode": 420,
+          "sha256": "5db4ea4cf279fc2e18e72d1e3e34c9cc95d9c42912194c1af8f90384c8729bbd"
+        },
+        "tests/test_foundation_contract.py": {
+          "mode": 420,
+          "sha256": "63a7d248f56306c0730edfbb8f7778a60893a2cd450d5f1c03b8c1b5c354adcd"
+        },
+        "tests/test_portable_packet_rehearsal.py": {
+          "mode": 420,
+          "sha256": "79526e30c5c1b936eb50bf51ad4f0934e608c2d77fcd3b7c068a4884448db968"
+        },
+        "tests/test_runtime_contract.py": {
+          "mode": 420,
+          "sha256": "7386e1ff8aed3ef6f4eeea43b0d9f772a109cb3b4c7a5e157df1ff9c12a5e787"
+        },
+        "tests/test_test_controls.py": {
+          "mode": 420,
+          "sha256": "de020a7d0a4de7424dfbf53255c90b5d79c575949088ba88583e13146c045697"
+        }
+      },
+      "runtime": "3.15.0rc1 (v3.15.0rc1:37e98da7c19, Aug  4 2026, 07:37:26) [Clang 21.0.0 (clang-2100.1.1.101)]"
+    },
+    "started": 1790517884.829149,
+    "status": "PASS",
+    "step": "FINAL-CLOSURE-VALIDATION",
+    "updated": 1790517908.6598148,
+    "work_unit": "STD-TEST-01",
+    "worker_updated": 1790517908.6598148
+  },
+  "governance_identity": {
+    "STANDARD_ROADMAP.md": "0607b5816be11844d6e47d2f7a1daeefe1a9fbbdb76b6299e199d5bc7839a9a0",
+    "EXECUTION_PLAN.md": "4958ae89a11ebf9c13d04d568a2f0d87b924b7d10802ff6edadc91143bb3e0a3",
+    "PROJECT_PROFILE.md": "308cb93bdab2fd8414b4a4961fde1d566a12ff594c843a9964c4719e21914771",
+    "PROJECT_STATE.md": "706971afc1f6112e1c0586d9f3a163e8eb6518d961e01e3f666bbb2f81af1e51",
+    "HANDOFF.md": "2544a76e3e42ade5d33627eb3566490816e22862cc5304ddb0f15b0c6f3d5217",
+    "CAPABILITY_CATALOG.md": "1990f4ae0c9490302a91b0cea4ca7306923ef90230956cf7b67aad55578211df",
+    "ROADMAP_CHANGELOG.md": "7fdc2fea52d8c0d05f561d13820f33f68ee12ae3e07cca85195928c0fda99bc4",
+    "STANDARD_ADOPTION_HISTORY.md": "03785262d32119e7026fbb38445ab49cb68224084b8be3952cae7353fa14793a",
+    "docs/PROVENANCE.md": "a852c932372787fd8cccbd4b68017f2160e20ddcf58eec4b3c0064c58013b5ab",
+    "docs/NEW_POLICY_REGISTER.md": "09156e09a34f056553df33c658067aacbf84b8076ba6407fb5a814a64aa38e05"
+  },
+  "dogfood": {
+    "initial_assignments": 1,
+    "interim_supervisor_checkpoints": 0,
+    "interim_owner_decisions": 0,
+    "closure_candidates": 1
+  },
+  "validation": {
+    "focused": {
+      "command": "python3 -B -m unittest tests.test_check_standard tests.test_test_controls tests.test_portable_packet_rehearsal",
+      "passed": 69,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0
+    },
+    "full": {
+      "command": "./run.sh test",
+      "passed": 179,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0
+    },
+    "formal": {
+      "command": "./run.sh formal-test --work-unit STD-TEST-01 --step FINAL-CLOSURE-VALIDATION",
+      "passed": 179,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0
+    }
+  },
+  "limitations": [
+    "cooperative test-boundary cancellation/timeout; blocked single test cannot be forcibly interrupted",
+    "allowlisted logs suppress raw diagnostics",
+    "unsigned private state does not authenticate owner authority",
+    "unsupported runners NOT CONFIGURED; no live consumer/transport/production acceptance"
+  ]
+}

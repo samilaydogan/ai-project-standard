@@ -38,8 +38,8 @@
     ".env.example",
     ".gitignore",
     "ADOPTION.md",
-    "AGENT_WORKFLOW.md",
     "AGENTS.template.md",
+    "AGENT_WORKFLOW.md",
     "CAPABILITY_CATALOG.template.md",
     "CHANGELOG.md",
     "DEVELOPMENT_RULES.md",
@@ -66,6 +66,7 @@
     "STANDARD_ADOPTION_HISTORY.template.md",
     "SUPERVISOR_PACKET.template.md",
     "TESTING_AND_EVIDENCE.md",
+    "TEST_CONTROL_EXECUTION.md",
     "THIRD_PARTY_LICENSE_INVENTORY.md",
     "THIRD_PARTY_LICENSE_INVENTORY.template.md",
     "UI_IMPLEMENTATION_STANDARDS.md",
@@ -85,14 +86,17 @@
     "scripts/reference_tests.py",
     "scripts/scaffold_lint.py",
     "scripts/scaffold_status.py",
+    "scripts/test_controls.py",
     "scripts/test_network_guard.py",
     "source-exclusions.json",
     "standard-adoption.template.json",
+    "test-control-profile.json",
     "tests/test_check_docs.py",
     "tests/test_check_standard.py",
     "tests/test_execution_facade.py",
     "tests/test_foundation_contract.py",
-    "tests/test_runtime_contract.py"
+    "tests/test_runtime_contract.py",
+    "tests/test_test_controls.py"
   ],
   "rules": {
     "WF-PRESERVE": {

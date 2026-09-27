@@ -43,6 +43,8 @@ class StandardTests(unittest.TestCase):
             'source-exclusions.json',
             'scripts/foundation_contract.py',
             'scripts/reference_tests.py',
+            'scripts/test_controls.py',
+            'test-control-profile.json',
             'scripts/test_network_guard.py',
             'scripts/scaffold_status.py',
             'INSTALLATION.md',

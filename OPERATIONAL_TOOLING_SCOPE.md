@@ -27,3 +27,5 @@ Generic core L2 uses fixed profile/config L3; normative owners L1 retain gates; 
 | Optional audit integrity | G integrity chain/retention/recovery design; no cryptographic claim yet |
 
 All rows remain NOT IMPLEMENTED in the generic standard. Reference status, log events and bounded unittest subprocess are v0.2.0 minimum support; no worker/progress/trace/screenshot/backup/package-apply engine has been extracted or claimed.
+
+STD-TEST-01 DRAFT implements a narrow optional cooperative unittest job/control adapter (TEST_CONTROL_EXECUTION.md), not the complete broader worker/trace/acceptance framework in this deferred register. The official repository roadmap owns its execution order; release orchestration and all other rows remain deferred. No extraction or final acceptance of those broader engines is claimed.

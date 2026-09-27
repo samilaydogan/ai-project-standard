@@ -1,0 +1,842 @@
+{
+  "schema_version": 1,
+  "scope": "STD-TEST-01 uncommitted implementation candidate; no closure authority",
+  "base_head": "856ed05038cd66c532d3177d62fab652b9f9be73",
+  "candidate_version": "0.2.3",
+  "candidate_state": "DRAFT",
+  "manifest_sha256": "f386dbe4e417cf79934a0a44c86e594aa70b534c873a64860a2f0f2ea7cd3dfc",
+  "terminal_record_sha256": "082265960c9e6b5e27842315a2095fd32b84454fac012e45b15b0226b987c746",
+  "formal_job": {
+    "cancel_requested": false,
+    "counts": {
+      "failed": 0,
+      "passed": 177,
+      "run": 177,
+      "skipped": 0
+    },
+    "events": [
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517186.636346
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517186.6984751
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517186.76125
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517186.819423
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517186.876288
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517186.938621
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790517186.966055
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517187.00859
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517187.0730329
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517187.135373
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517187.193183
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517187.2521229
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517187.310218
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517187.373261
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517187.426825
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517187.4801931
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517187.541893
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517187.623816
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517187.685434
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517187.74886
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517187.8031769
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517187.857526
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517187.9198568
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790517187.975376
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517187.980932
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517188.045274
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517188.125558
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517188.187666
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517188.341931
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517188.398352
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517188.46806
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517188.529496
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517188.58402
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790517188.985495
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517189.555989
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517189.617595
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517189.671284
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517189.7249138
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517189.782393
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517189.837128
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517189.8987288
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517189.969305
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790517189.996415
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517190.049437
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517190.131625
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517190.204648
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517190.273438
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517190.3521779
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517190.5459
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517190.609951
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517190.765951
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517190.817801
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517190.8804328
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517190.9386408
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517190.9965088
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790517191.008383
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517191.057346
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517191.112397
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517191.162786
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517191.2177038
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517191.288384
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517191.3704991
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517191.456488
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517191.534722
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517191.62478
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517191.685497
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517191.745095
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517191.801745
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517191.938571
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790517192.0198421
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517192.077596
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517192.211064
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517192.2459059
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517192.268058
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517192.291656
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517192.315292
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517192.344822
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790517193.031826
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517193.282594
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517193.310997
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517193.3412638
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517193.370052
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517193.398866
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517193.419807
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517193.444206
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517193.4640691
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517193.485657
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790517194.04233
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517194.162573
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517194.192981
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517194.2353768
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517194.4287848
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517194.493563
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517194.5292811
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517194.560032
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517194.5896971
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517194.717352
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517194.7561321
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517194.785816
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517194.796337
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517194.8291469
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517194.849159
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517194.865291
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790517195.055833
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517195.1664
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517195.192338
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517195.2084842
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517195.222049
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517195.260576
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517195.2768378
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517195.292372
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517195.31016
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517195.317182
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517195.3357031
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517195.360524
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517195.379607
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517195.3975492
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517195.416407
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517195.426255
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517195.445039
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517195.46424
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517195.481827
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517195.497571
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790517196.0639849
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517196.5703628
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517196.58723
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790517196.6075149
+      },
+      {
+        "event": "TERMINAL",
+        "time": 1790517196.6241548
+      }
+    ],
+    "exit": 0,
+    "job": "c9a5ca4e6a1b489cb290503dd1cd29af",
+    "pattern": "test_*.py",
+    "schema_version": 1,
+    "source": {
+      "adapter_sha256": "96f9f4486771b3cce6f74a5ad35f455dd08cd34ba2b97c7fc2252c4a41df83bd",
+      "executable_sha256": "b6d526f0e8b9b1f0e73780f502b39d8708fcfbdfc690440d4ef8de7297b65fad",
+      "members": {
+        ".dockerignore": {
+          "mode": 420,
+          "sha256": "091a7b8556831e249656f15e9e0724f5c8a9c7124cff45c64898d41b88f0e785"
+        },
+        ".env.example": {
+          "mode": 420,
+          "sha256": "f9c07565254f6b8d0f5dc07e6f1a0add7622cec6cfebd4e5495c4287990bb40b"
+        },
+        ".gitignore": {
+          "mode": 420,
+          "sha256": "e4d7664c8242de0375ff78165abf85eb731699ff1c4baeb6a6ea192a827eeb01"
+        },
+        "ADOPTION.md": {
+          "mode": 420,
+          "sha256": "4c71c85f307e86fa22916f18a9a9f21abd99c5f59d75432810da388b624e7029"
+        },
+        "AGENTS.template.md": {
+          "mode": 420,
+          "sha256": "22b84c5120958b3ddd53d09a8cfe225dcc3b428842e87be2181b115ba63777f7"
+        },
+        "AGENT_WORKFLOW.md": {
+          "mode": 420,
+          "sha256": "2bcdb164826cc1e119e831be21fe30e077b76fd9ea634cfd58a04518bf98c79e"
+        },
+        "CAPABILITY_CATALOG.template.md": {
+          "mode": 420,
+          "sha256": "fe3c4956b00a3a6df80e74f98ea757f21c60beaf3457fd4718142114a6965960"
+        },
+        "CHANGELOG.md": {
+          "mode": 420,
+          "sha256": "3b7268789b93745ef257005577199dabcde97281d44f81dec4c7926061b1276d"
+        },
+        "DEVELOPMENT_RULES.md": {
+          "mode": 420,
+          "sha256": "cd7a47c843778b494b2d47c76ceee486438ca08cd7d7e3f8e2318a6a1b728cf6"
+        },
+        "DOCUMENT_GOVERNANCE.md": {
+          "mode": 420,
+          "sha256": "958c8584ab35f28de172d27681bdecc9eaa434ef7df9162657c8c9965b9fbe65"
+        },
+        "Dockerfile.scaffold": {
+          "mode": 420,
+          "sha256": "a4f55d268d1fb38c418aaea4e5dc6dabba5f14d61da1b3be4326fa401a818527"
+        },
+        "EXECUTION_FACADE.md": {
+          "mode": 420,
+          "sha256": "513d2aab2f7f57f24b6dc8c02babef5d84a6ef925ef9e9d2abcca04738b7f7c8"
+        },
+        "EXECUTION_PLAN.template.md": {
+          "mode": 420,
+          "sha256": "56ae3f6e7ae0a6b7154ea12c95d8c7dc5eea4dd8ea37322c77f9fb365138f441"
+        },
+        "HANDOFF.template.md": {
+          "mode": 420,
+          "sha256": "260a93053aa36ea6a51c9a7d6e9ac60762600af45dfc676928d29786f97098c9"
+        },
+        "INSTALLATION.md": {
+          "mode": 420,
+          "sha256": "d63a2fbe69f5adbfc2ba6e3e4b15e29b427aa54b79b4b4149354702d2c3c2c1e"
+        },
+        "INSTALLATION.template.md": {
+          "mode": 420,
+          "sha256": "65c02e1bd53cb24783682dba79ae8fc87777e788d41ecfefb779bcced7e21111"
+        },
+        "MIGRATION_AND_RELEASE_POLICY.md": {
+          "mode": 420,
+          "sha256": "6a21a568d030ac82eecddeb8945f89a21a696e3d8c657fa10cfc5e38b12629e4"
+        },
+        "MIGRATION_RECOVERY.md": {
+          "mode": 420,
+          "sha256": "073b4fc6cc00726e7d94d4bcee5dcc3331876a92d4f7d7e6eb5908b63127a16a"
+        },
+        "MIGRATION_RECOVERY.template.md": {
+          "mode": 420,
+          "sha256": "d6e49a76f1dad996cda773de0aca9d3ef91a72773ed69827f5b87f70c3242f99"
+        },
+        "OPERATIONAL_TOOLING_SCOPE.md": {
+          "mode": 420,
+          "sha256": "15ae09d8d5fdfe0b814fcf4808a06f2b520dee6874b33883596612be96b303ca"
+        },
+        "OPERATIONS_RUNBOOK.md": {
+          "mode": 420,
+          "sha256": "68aae7b73e99f610c3b2f92fac44e3881927608580c90dcdb947b897b4616cda"
+        },
+        "OPERATIONS_RUNBOOK.template.md": {
+          "mode": 420,
+          "sha256": "a522fe61159351b79b63ef40f59291b3eb8e61562f2a6ce0bb14019d1662c9e3"
+        },
+        "POLICY_RULES.json": {
+          "mode": 420,
+          "sha256": "33590b4be6eaee27c71b0d650ed3dca0f2b89729e70d9c190c38d714b18f444f"
+        },
+        "PROJECT_PROFILE.template.md": {
+          "mode": 420,
+          "sha256": "659e22faca1f305c014f6a9e886cf40425f90327b40d486e62a0ff97ee4b587c"
+        },
+        "PROJECT_STATE.template.json": {
+          "mode": 420,
+          "sha256": "3d846d064f4478410a7c98077c98d865dcde7c87c4acd374a95e25865a81009e"
+        },
+        "PROJECT_STATE.template.md": {
+          "mode": 420,
+          "sha256": "0c533f69b8cff8c4c2fb2d484dd1908a556f2b435601490431e4d69b48db124d"
+        },
+        "README.md": {
+          "mode": 420,
+          "sha256": "593d249da017ae21afdffbc78b4314cbd6f6661e80f26f63e45c8d67f0c9f97d"
+        },
+        "ROADMAP_CHANGELOG.template.md": {
+          "mode": 420,
+          "sha256": "9185ee70c1c32e2b8fd2e1f6594a49897c56d508949f069ffbf80ed7f597f40b"
+        },
+        "SECURITY_BASELINE.md": {
+          "mode": 420,
+          "sha256": "6636d543aed65b3209a13245bab07b3325301db05bf238d2fb6d0dd6cc2de460"
+        },
+        "STANDARD_ADOPTION_HISTORY.template.md": {
+          "mode": 420,
+          "sha256": "8ea3e92052e78d13bafe5abc50519824e6bb616528927061f7088122d6cbbe49"
+        },
+        "SUPERVISOR_PACKET.template.md": {
+          "mode": 420,
+          "sha256": "ec8a31b9db2089c01ba808edc780a21cb3c80cebab7cd382d878e67f896a99fb"
+        },
+        "TESTING_AND_EVIDENCE.md": {
+          "mode": 420,
+          "sha256": "fe19276d43baffde6d0d9fd691ac144124bd6134b00cd08d44e417b55777cd39"
+        },
+        "TEST_CONTROL_EXECUTION.md": {
+          "mode": 420,
+          "sha256": "2b4430be58b9d34e9a304182b5eee5fe19eb493934c43cb608053401bbd9f476"
+        },
+        "THIRD_PARTY_LICENSE_INVENTORY.md": {
+          "mode": 420,
+          "sha256": "3fc980fec0b01eaf0145e25d726386afa7d5339fe60df94cbea7c6dd83b74bb4"
+        },
+        "THIRD_PARTY_LICENSE_INVENTORY.template.md": {
+          "mode": 420,
+          "sha256": "5252cc3fdf2938a7da412346bf409ea472700f987e0f1eb97ca5c6c986c9f741"
+        },
+        "UI_IMPLEMENTATION_STANDARDS.md": {
+          "mode": 420,
+          "sha256": "076d7cf927b8fefffde505745691b6ef277b14c77616ba5172d084e1289de8d7"
+        },
+        "VERSION": {
+          "mode": 420,
+          "sha256": "3ab94c04d24986f3af288ba1cda2c0bbddbc5a89dff097182805f54578e1ea75"
+        },
+        "compose.yaml": {
+          "mode": 420,
+          "sha256": "1d503ccc05b6ee342884a444e8a46fcef2f006bb8b0b902c0b1c9054cf591225"
+        },
+        "execution-profile.docker.json": {
+          "mode": 420,
+          "sha256": "c269c2f55036a417806ac30bfe9cd072740b9b9a3ac194301d4f03b297228552"
+        },
+        "execution-profile.json": {
+          "mode": 420,
+          "sha256": "e384adca79d9280431e2280409cc1a6ad995384a907ea109d3755110e1d07a5c"
+        },
+        "execution-profile.template.json": {
+          "mode": 420,
+          "sha256": "9202c462948c401b4d59f295a4284b87f803911ebd5fc9e3d3d54df9bc8e0da7"
+        },
+        "pyproject.toml": {
+          "mode": 420,
+          "sha256": "5d70678c11c3fc46187cab907d1722dfa8ee5777cfb1b21b72bfd117d4cfe778"
+        },
+        "run.sh": {
+          "mode": 493,
+          "sha256": "6a8095bbacc2a8f0c8d1a4797f3edd1e1260cff0aff7b24205c72b550be60635"
+        },
+        "scripts/check_docs.py": {
+          "mode": 420,
+          "sha256": "138e33961e44929ddb387d1a8a9cc1445287b17490dfbfeff5d4b9dcec5c02d2"
+        },
+        "scripts/check_standard.py": {
+          "mode": 420,
+          "sha256": "2e708c30d6843ecbebcd51754c3a521679faa079db2c3fcf4cf5b5afc2d408ef"
+        },
+        "scripts/foundation_contract.py": {
+          "mode": 420,
+          "sha256": "0b57babf212c1e01b5dc2c62a6527b86ddf4a2ade1d99b283b927197bbd9fa3f"
+        },
+        "scripts/generate_release.py": {
+          "mode": 420,
+          "sha256": "23fc913ebbb645bfd232e83f870746a71f41435e525b23b8a8189afc34fef65b"
+        },
+        "scripts/health_scaffold.py": {
+          "mode": 420,
+          "sha256": "e556317d0763041130364d0c82e7e09a67adcde01c535f91cb937adc0271f58a"
+        },
+        "scripts/project_runner.py": {
+          "mode": 420,
+          "sha256": "e768ef08079785a73213cf7a6b7b8eb341667139727fbca5b6e3f0e32eb62710"
+        },
+        "scripts/reference_tests.py": {
+          "mode": 420,
+          "sha256": "738bf662db89a71f5cbb6c99d6917d7a7cb1d0b52e350f228748b9647dae30da"
+        },
+        "scripts/scaffold_lint.py": {
+          "mode": 420,
+          "sha256": "1a25876e7bb36eba9b0ccd5cd19d1dd72c6ba91a9e05827507b75733bc1dca6a"
+        },
+        "scripts/scaffold_status.py": {
+          "mode": 420,
+          "sha256": "83ad5589044c0feead0ba2088ccbafbc15745a8ace027d812c08ee5012194a21"
+        },
+        "scripts/test_controls.py": {
+          "mode": 420,
+          "sha256": "96f9f4486771b3cce6f74a5ad35f455dd08cd34ba2b97c7fc2252c4a41df83bd"
+        },
+        "scripts/test_network_guard.py": {
+          "mode": 420,
+          "sha256": "a763df81b5a0c763977f6353a92ba1c6f0373c721a4f4e201646d02df1f0a742"
+        },
+        "source-exclusions.json": {
+          "mode": 420,
+          "sha256": "9acd53cb7187767eca64d89b94172c939bdab09ce005f97c191711902ea7e8a6"
+        },
+        "standard-adoption.template.json": {
+          "mode": 420,
+          "sha256": "1e971d13dc5666a820fd24a9c42fbd2bdc0bf24ec17d8097fe13c8b29a6b6e8b"
+        },
+        "standard-release.json": {
+          "mode": 420,
+          "sha256": "f386dbe4e417cf79934a0a44c86e594aa70b534c873a64860a2f0f2ea7cd3dfc"
+        },
+        "test-control-profile.json": {
+          "mode": 420,
+          "sha256": "4fb23cc6acc43ffcd87ec08942f5f2b4ddffd5c5af6d2f4bb6c52b608f56dffd"
+        },
+        "tests/test_check_docs.py": {
+          "mode": 420,
+          "sha256": "ff2289a784d6444913ad282e1673b5d5aa1654cdfe6b402a5a890bcf43e6612c"
+        },
+        "tests/test_check_standard.py": {
+          "mode": 420,
+          "sha256": "a31711de5c44f775b3a0787c94649985287266f6a62732feadd373934c9eceeb"
+        },
+        "tests/test_execution_facade.py": {
+          "mode": 420,
+          "sha256": "5db4ea4cf279fc2e18e72d1e3e34c9cc95d9c42912194c1af8f90384c8729bbd"
+        },
+        "tests/test_foundation_contract.py": {
+          "mode": 420,
+          "sha256": "63a7d248f56306c0730edfbb8f7778a60893a2cd450d5f1c03b8c1b5c354adcd"
+        },
+        "tests/test_portable_packet_rehearsal.py": {
+          "mode": 420,
+          "sha256": "79526e30c5c1b936eb50bf51ad4f0934e608c2d77fcd3b7c068a4884448db968"
+        },
+        "tests/test_runtime_contract.py": {
+          "mode": 420,
+          "sha256": "7386e1ff8aed3ef6f4eeea43b0d9f772a109cb3b4c7a5e157df1ff9c12a5e787"
+        },
+        "tests/test_test_controls.py": {
+          "mode": 420,
+          "sha256": "7d90b598481da714a00baadb9e1842ef47552bf512d80b5e0ab935cdaa44175b"
+        }
+      },
+      "runtime": "3.15.0rc1 (v3.15.0rc1:37e98da7c19, Aug  4 2026, 07:37:26) [Clang 21.0.0 (clang-2100.1.1.101)]"
+    },
+    "started": 1790517169.808921,
+    "status": "PASS",
+    "step": "FINAL-CANDIDATE-VALIDATION",
+    "updated": 1790517196.6241548,
+    "work_unit": "STD-TEST-01",
+    "worker_updated": 1790517196.6241548
+  },
+  "validation": {
+    "focused_command": "python3 -B -m unittest tests.test_check_standard tests.test_test_controls tests.test_portable_packet_rehearsal",
+    "focused_counts": {
+      "passed": 67,
+      "failed": 0,
+      "skipped": 0
+    },
+    "full_command": "./run.sh test",
+    "full_counts": {
+      "passed": 177,
+      "failed": 0,
+      "skipped": 0
+    },
+    "formal_command": "./run.sh formal-test --work-unit STD-TEST-01 --step FINAL-CANDIDATE-VALIDATION",
+    "loopback_permission": "local loopback used; no external service acceptance",
+    "manifest_check_exit": 0,
+    "standard_integrity": "PASS; DRAFT; semantic/runtime NOT ASSESSED",
+    "lint_exit": 0,
+    "docs_check_exit": 0,
+    "diff_check_exit": 0
+  },
+  "limits": [
+    "cooperative test-boundary cancellation/timeout only",
+    "strict structured log, raw diagnostics discarded",
+    "unsigned private state is not human authentication",
+    "no automated resume/NEXT/closure/release",
+    "local stdlib adapter only"
+  ],
+  "intervention_observation": {
+    "interim_owner_decisions_requested": 0,
+    "supervisor_checkpoints": 0,
+    "scope": "this assignment turn only; automated tool permissions not human decisions"
+  }
+}

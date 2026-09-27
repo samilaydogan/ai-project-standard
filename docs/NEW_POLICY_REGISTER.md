@@ -74,3 +74,7 @@ No claim is made that historical source already had this exact schema, harness o
 | N42 / GOV-PLAN-AUTHORITY | DOCUMENT_GOVERNANCE.md | D NEW explicit external planning declaration/direct-verification distinction and repository projection reconciliation | Non-waivable; EXECUTION_PLAN remains sole live pointer, external artifact is not technical truth |
 
 Supporting project templates add references and honest PENDING states without making their fields second policy authorities. The optional AGENTS template is a reading map. No consumer, roadmap, tooling backend or published version is changed by this candidate.
+
+## 0.2.3 FINAL — STD-TEST-01 implementation
+
+Optional test-control infrastructure implements existing TEST/WF invariants; it creates no new mandatory policy ID. Configuration is local, supporting distribution files are not new consumer invariants, and approval/closure semantics do not change. Strict allowlisted logs, conservative skip eligibility and cooperative boundary cancellation are declared adapter behavior with explicit limitations, not stronger universal mandates or unchanged source-executor extraction.

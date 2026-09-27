@@ -4,14 +4,14 @@ Revision: R1. Date: 2026-09-27. Planning authority: this repository-owned file, 
 
 ## Ordered work-unit map
 
-| ID | Title | Bootstrap status | Dependencies |
+| ID | Title | Recorded execution status | Dependencies |
 | --- | --- | --- | --- |
 | STD-SUP-01 | Portable Supervisor-controlled development baseline | CLOSED | none |
-| STD-TEST-01 | Generic executable TEST controls | NOT STARTED | STD-SUP-01 CLOSED |
+| STD-TEST-01 | Generic executable TEST controls | CLOSED | STD-SUP-01 CLOSED |
 | STD-REL-01 | Explicit validated-candidate commit control | NOT STARTED | STD-TEST-01 CLOSED |
 | STD-REL-02 | Isolated committed-identity preview control | NOT STARTED | STD-REL-01 CLOSED |
 
-Statuses above describe the bootstrap snapshot; consult EXECUTION_PLAN.md and PROJECT_STATE.md for later execution facts. Completed units are retained. No code implementation is authorized by selecting a unit.
+Statuses above reflect the owner-authorized closure record; consult EXECUTION_PLAN.md for sole live CURRENT/NEXT and PROJECT_STATE.md for technical facts. Completed units are retained. No code implementation is authorized by selecting a unit.
 
 ## STD-SUP-01 — completed baseline
 
@@ -22,6 +22,8 @@ CLOSED at standard 0.2.2 FINAL, commit cd2c377318775e1d3477b97297273b5253575e73.
 Each planned unit starts NOT STARTED; a separate owner assignment is required for IN PROGRESS. Closure requires actual acceptance evidence, source/dependency/runner/config identity per TEST-IDENTITY, positive and negative tests, full ./run.sh test for code/control changes, lint, checker/docs/manifest coherence, truthful counts/exits/skips, preservation, projected/actual transition and owner-authorized closure. Failed/missing/stale evidence holds closure; no automatic NEXT start. Project profile defines applicability. Use a portable assignment/checkpoint/closure packet under WF-PORTABLE. Supervisor recommends; approved owner channel authorizes protected actions. Implementation, closure, commit, preview, tag/push/publication and production are distinct permissions. Changes to distributed bytes require deliberate candidate/version/manifest handling under existing owners; R1 does not predetermine a release number or publish a release.
 
 ## STD-TEST-01 — generic executable TEST controls
+
+CLOSED: 0.2.3 FINAL local content; owner-authorized closure decision and final exact evidence in [closure record](docs/packets/STD-TEST-01-CLOSURE.md). Commit identity is the Git commit carrying that record; no self-referential hash. Contract below is retained unchanged.
 
 Purpose: implement the already-defined TEST_DURUM, TEST_LOG, TEST_DEVAM and TEST_DURDUR behavior with one coherent active-job identity and terminal-evidence contract. Baseline: run.sh/project_runner dispatch and reference_tests.py offer bounded synchronous unittest execution; scaffold_status.py queries health, not an active formal test. No executable token adapters exist.
 
