@@ -91,3 +91,11 @@ The optional cooperative unittest job/evidence adapter is new generic reference 
 ## 0.2.4 FINAL — STD-REL-01
 
 The optional staged-candidate Git adapter is new generic reference infrastructure under existing REL-ARTIFACT, WF-SCOPE, TEST-IDENTITY and EXEC-MUTATION owners, not extracted historical executor behavior. Local gates/lifecycle/message/approval applicability stay project-owned; no new invariant IDs, mandatory consumer files, human authentication or delegated approval authority. Strict scope/config/evidence binding, private index/CAS and unsupported hook/signing handling are adapter restrictions, not universal policy changes.
+
+## 0.2.5 DRAFT — STD-REL-02
+
+The committed-blob preview adapter and stateless HTTP reference validator are new generic reference infrastructure implementing existing WF-SCOPE/REL-ARTIFACT/TEST-IDENTITY/EXEC-MUTATION isolation, authorization and evidence boundaries. They are not unchanged extraction of a historical executor. Committed profile, separate PREVIEW record, trusted single-process/stdlib-only support, bounded evidence/output suppression and source snapshots are optional adapter contracts, not new invariant policy owners or protected approval powers. No consumer requirements, production acceptance or general deployment/sandbox engine are claimed.
+
+## 0.2.5 FINAL closure review
+
+Owner authorizes bounded correction and finalization after exact candidate review. Portable drive/metadata/device-alias rejection closes an implementation path-boundary defect, not a new policy owner or protected power. Prior DRAFT packet/evidence remains historical; corrected final input hashes and real owner decision are recorded separately in docs/packets/STD-REL-02-CLOSURE.md. Reference committed fixtures prove the optional adapter, not real publication/production acceptance or a mandatory consumer runtime.

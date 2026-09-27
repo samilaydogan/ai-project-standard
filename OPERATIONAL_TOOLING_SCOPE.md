@@ -30,4 +30,6 @@ All rows remain NOT IMPLEMENTED in the generic standard. Reference status, log e
 
 Closed STD-TEST-01 implements a narrow optional cooperative unittest job/control adapter (TEST_CONTROL_EXECUTION.md), not the complete broader worker/trace/acceptance framework in this deferred register. The official repository roadmap owns its execution order; release orchestration and all other rows remain deferred. No extraction or final acceptance of those broader engines is claimed.
 
-STD-REL-01 supplies only a narrow opt-in validated staged-candidate commit adapter (RELEASE_COMMIT_EXECUTION.md). Preview, broader release orchestration and signing/approval authentication remain deferred. No deferred row is claimed fully implemented.
+STD-REL-01 supplies only a narrow opt-in validated staged-candidate commit adapter (RELEASE_COMMIT_EXECUTION.md). At the closed 0.2.4 baseline preview remained deferred; broader release orchestration and signing/approval authentication still remain deferred. No deferred row is claimed fully implemented.
+
+STD-REL-02 reviewed 0.2.5 FINAL adds optional trusted stdlib committed-preview execution (RELEASE_PREVIEW_EXECUTION.md); isolated reference acceptance does not implement general deployment, package installation, container orchestration, hostile-code containment or transport. Canonical WF-SCOPE/REL-ARTIFACT owners remain unchanged.

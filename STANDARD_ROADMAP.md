@@ -9,7 +9,7 @@ Revision: R1. Date: 2026-09-27. Planning authority: this repository-owned file, 
 | STD-SUP-01 | Portable Supervisor-controlled development baseline | CLOSED | none |
 | STD-TEST-01 | Generic executable TEST controls | CLOSED | STD-SUP-01 CLOSED |
 | STD-REL-01 | Explicit validated-candidate commit control | CLOSED | STD-TEST-01 CLOSED |
-| STD-REL-02 | Isolated committed-identity preview control | NOT STARTED | STD-REL-01 CLOSED |
+| STD-REL-02 | Isolated committed-identity preview control | CLOSED | STD-REL-01 CLOSED |
 
 Statuses above reflect the owner-authorized closure record; consult EXECUTION_PLAN.md for sole live CURRENT/NEXT and PROJECT_STATE.md for technical facts. Completed units are retained. No code implementation is authorized by selecting a unit.
 
@@ -46,6 +46,8 @@ Acceptance/evidence: disposable Git tests prove validated authorized success, ab
 Protected boundary/exclusions: semantic adoption, exceptions and production need their own approvals; no tag/push/release/build/preview, automatic staging of unrelated work, signing identity assertion or generic authority authentication service. Implementation approval cannot authorize the protected commit being tested on a real repository.
 
 ## STD-REL-02 — committed-identity isolated preview control
+
+CLOSED: 0.2.5 FINAL local reviewed content; owner decision and final evidence in [closure record](docs/packets/STD-REL-02-CLOSURE.md). Known R1 executable units are fully CLOSED; deferred protocol-stability/transport decision remains separate. Original contract below is retained unchanged.
 
 Purpose: implement RELEASE_PREVIEW as a separately authorized isolated preview, not normal development launch. Dependencies: STD-REL-01 CLOSED and preview-specific owner assignment. Baseline: health scaffold and local commands exist, clean release preview adapter does not.
 

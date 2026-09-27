@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "adapter": "trusted-stdlib-python-validation",
+  "entrypoint": "scripts/preview_health.py",
+  "args": [],
+  "timeout_seconds": 15,
+  "prerequisites": ["scripts/health_scaffold.py"],
+  "version_path": "VERSION",
+  "standard_path": "standard-release.json"
+}

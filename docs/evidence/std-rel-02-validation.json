@@ -1,0 +1,1019 @@
+{
+  "branch": "main",
+  "commands": [
+    {
+      "command": "python3 -B scripts/generate_release.py --check",
+      "exit": 0,
+      "result": "PASS deterministic manifest"
+    },
+    {
+      "command": "python3 -B scripts/check_standard.py --standard .",
+      "exit": 0,
+      "result": "INTEGRITY PASS / DRAFT; semantic/runtime NOT ASSESSED"
+    },
+    {
+      "command": "python3 -B scripts/check_docs.py .",
+      "exit": 0,
+      "result": "BOUNDED DOCS QUALITY PASS"
+    },
+    {
+      "command": "./run.sh doctor",
+      "exit": 0,
+      "result": "BASELINE CHECKS PASS"
+    },
+    {
+      "command": "./run.sh lint",
+      "exit": 0,
+      "result": "BOUNDED LINT PASS"
+    },
+    {
+      "command": "python3 -B -m unittest tests.test_release_preview tests.test_check_standard tests.test_portable_packet_rehearsal",
+      "exit": 0,
+      "result": "66/66 PASS zero skips"
+    },
+    {
+      "command": "./run.sh test",
+      "exit": 0,
+      "result": "233/233 PASS zero skips"
+    },
+    {
+      "command": "./run.sh formal-test --work-unit STD-REL-02 --step FINAL-CANDIDATE-VALIDATION",
+      "exit": 0,
+      "result": "233/233 PASS zero skips"
+    },
+    {
+      "command": "git diff --check",
+      "exit": 0,
+      "result": "PASS"
+    }
+  ],
+  "distribution_members": 72,
+  "dogfood": {
+    "closure_candidates": 1,
+    "initial_assignments": 1,
+    "interim_owner_decisions": 0,
+    "interim_supervisor_checkpoints": 0
+  },
+  "evidence_kind": "STD-REL-02-CLOSURE-CANDIDATE",
+  "formal_archive_sha256": "81bd196cfab937a046c6cd13b39fe9a8f6dc8eb9322a581f208f7b7167ab3ea2",
+  "formal_record": {
+    "cancel_requested": false,
+    "counts": {
+      "failed": 0,
+      "passed": 233,
+      "run": 233,
+      "skipped": 0
+    },
+    "events": [
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522239.595617
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522240.053695
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522240.3832982
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522241.066045
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522241.975363
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522242.07478
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522243.081315
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522244.0672379
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522244.089762
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522244.828414
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522245.101161
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522246.1080089
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522246.975991
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522247.117376
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522248.1246562
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522249.133196
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522249.369267
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522250.145314
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522250.866294
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522251.1505358
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522252.159008
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522253.153889
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522253.168919
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522254.179842
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522255.188256
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522255.347053
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522256.203566
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522256.944226
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522257.2249112
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522258.24149
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522259.25204
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522259.333666
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522260.2634509
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522261.272798
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522261.4671412
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522262.283797
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522263.297267
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522264.308206
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522265.317476
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522265.562504
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522266.326829
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522266.623054
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522267.336216
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522268.122826
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522268.347968
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522269.360818
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522270.371472
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522271.3863301
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522272.3950489
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522273.4046311
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522274.416228
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522275.432114
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522276.4431858
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522277.471575
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522278.515809
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522278.646425
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522279.525028
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522279.705315
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522280.535636
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522280.8861382
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522281.548651
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522282.5581381
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522283.5667992
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522284.1696699
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522284.577371
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522284.8836422
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522285.588351
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522286.1985679
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522286.253927
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522286.289721
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522286.38366
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522286.42258
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522286.4735758
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522286.595285
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522287.60522
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522287.745601
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522287.794521
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522287.852164
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522287.902276
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522287.955777
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522287.995119
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522288.0476968
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522288.085375
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522288.124029
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522288.614431
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522289.0917702
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522289.137003
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522289.185987
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522289.25172
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522289.3178408
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522289.361998
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522289.407187
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522289.451821
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522289.581625
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522289.621757
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522289.634549
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522289.6756039
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522289.71854
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522289.734428
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522289.78831
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522289.8209789
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522289.853536
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522290.343031
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522290.392101
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522290.440193
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522290.465785
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522290.533035
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522290.564448
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522290.590026
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522290.618766
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522290.629626
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522290.6396868
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522290.67246
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522290.710954
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522290.746549
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522290.776619
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522290.807816
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522290.820061
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522290.8518121
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522290.885838
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522290.914539
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522290.942121
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790522291.635515
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522292.057877
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522292.154879
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522292.294685
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790522292.5645719
+      },
+      {
+        "event": "TERMINAL",
+        "time": 1790522292.61801
+      }
+    ],
+    "exit": 0,
+    "job": "657791ecbbe047998f232f9f2ce1c496",
+    "pattern": "test_*.py",
+    "schema_version": 1,
+    "source": {
+      "adapter_sha256": "df4c695996b491485add3704e2384814631e286552596cb530550addd1c2d24a",
+      "executable_sha256": "b6d526f0e8b9b1f0e73780f502b39d8708fcfbdfc690440d4ef8de7297b65fad",
+      "members": {
+        ".dockerignore": {
+          "mode": 420,
+          "sha256": "091a7b8556831e249656f15e9e0724f5c8a9c7124cff45c64898d41b88f0e785"
+        },
+        ".env.example": {
+          "mode": 420,
+          "sha256": "f9c07565254f6b8d0f5dc07e6f1a0add7622cec6cfebd4e5495c4287990bb40b"
+        },
+        ".gitignore": {
+          "mode": 420,
+          "sha256": "e4d7664c8242de0375ff78165abf85eb731699ff1c4baeb6a6ea192a827eeb01"
+        },
+        "ADOPTION.md": {
+          "mode": 420,
+          "sha256": "4c71c85f307e86fa22916f18a9a9f21abd99c5f59d75432810da388b624e7029"
+        },
+        "AGENTS.template.md": {
+          "mode": 420,
+          "sha256": "22b84c5120958b3ddd53d09a8cfe225dcc3b428842e87be2181b115ba63777f7"
+        },
+        "AGENT_WORKFLOW.md": {
+          "mode": 420,
+          "sha256": "2bcdb164826cc1e119e831be21fe30e077b76fd9ea634cfd58a04518bf98c79e"
+        },
+        "CAPABILITY_CATALOG.template.md": {
+          "mode": 420,
+          "sha256": "fe3c4956b00a3a6df80e74f98ea757f21c60beaf3457fd4718142114a6965960"
+        },
+        "CHANGELOG.md": {
+          "mode": 420,
+          "sha256": "fc6b8d04f5f0b9fcb8735348fb9f12bf7c24a163814184c980bd53b88d50c83b"
+        },
+        "DEVELOPMENT_RULES.md": {
+          "mode": 420,
+          "sha256": "cd7a47c843778b494b2d47c76ceee486438ca08cd7d7e3f8e2318a6a1b728cf6"
+        },
+        "DOCUMENT_GOVERNANCE.md": {
+          "mode": 420,
+          "sha256": "958c8584ab35f28de172d27681bdecc9eaa434ef7df9162657c8c9965b9fbe65"
+        },
+        "Dockerfile.scaffold": {
+          "mode": 420,
+          "sha256": "a4f55d268d1fb38c418aaea4e5dc6dabba5f14d61da1b3be4326fa401a818527"
+        },
+        "EXECUTION_FACADE.md": {
+          "mode": 420,
+          "sha256": "513d2aab2f7f57f24b6dc8c02babef5d84a6ef925ef9e9d2abcca04738b7f7c8"
+        },
+        "EXECUTION_PLAN.template.md": {
+          "mode": 420,
+          "sha256": "56ae3f6e7ae0a6b7154ea12c95d8c7dc5eea4dd8ea37322c77f9fb365138f441"
+        },
+        "HANDOFF.template.md": {
+          "mode": 420,
+          "sha256": "260a93053aa36ea6a51c9a7d6e9ac60762600af45dfc676928d29786f97098c9"
+        },
+        "INSTALLATION.md": {
+          "mode": 420,
+          "sha256": "d63a2fbe69f5adbfc2ba6e3e4b15e29b427aa54b79b4b4149354702d2c3c2c1e"
+        },
+        "INSTALLATION.template.md": {
+          "mode": 420,
+          "sha256": "65c02e1bd53cb24783682dba79ae8fc87777e788d41ecfefb779bcced7e21111"
+        },
+        "MIGRATION_AND_RELEASE_POLICY.md": {
+          "mode": 420,
+          "sha256": "6a21a568d030ac82eecddeb8945f89a21a696e3d8c657fa10cfc5e38b12629e4"
+        },
+        "MIGRATION_RECOVERY.md": {
+          "mode": 420,
+          "sha256": "073b4fc6cc00726e7d94d4bcee5dcc3331876a92d4f7d7e6eb5908b63127a16a"
+        },
+        "MIGRATION_RECOVERY.template.md": {
+          "mode": 420,
+          "sha256": "d6e49a76f1dad996cda773de0aca9d3ef91a72773ed69827f5b87f70c3242f99"
+        },
+        "OPERATIONAL_TOOLING_SCOPE.md": {
+          "mode": 420,
+          "sha256": "0d60a42ced537eb380f94ecdd3cd3b4aa3c3c4aa3ea5381cc5484a3acd44b7ad"
+        },
+        "OPERATIONS_RUNBOOK.md": {
+          "mode": 420,
+          "sha256": "68aae7b73e99f610c3b2f92fac44e3881927608580c90dcdb947b897b4616cda"
+        },
+        "OPERATIONS_RUNBOOK.template.md": {
+          "mode": 420,
+          "sha256": "a522fe61159351b79b63ef40f59291b3eb8e61562f2a6ce0bb14019d1662c9e3"
+        },
+        "POLICY_RULES.json": {
+          "mode": 420,
+          "sha256": "e87d3597a652146db11786a9a84bc34ebd9930d39d3663da4a1b68b87fc125ca"
+        },
+        "PROJECT_PROFILE.template.md": {
+          "mode": 420,
+          "sha256": "659e22faca1f305c014f6a9e886cf40425f90327b40d486e62a0ff97ee4b587c"
+        },
+        "PROJECT_STATE.template.json": {
+          "mode": 420,
+          "sha256": "3d846d064f4478410a7c98077c98d865dcde7c87c4acd374a95e25865a81009e"
+        },
+        "PROJECT_STATE.template.md": {
+          "mode": 420,
+          "sha256": "0c533f69b8cff8c4c2fb2d484dd1908a556f2b435601490431e4d69b48db124d"
+        },
+        "README.md": {
+          "mode": 420,
+          "sha256": "a7403a8bd549d69505ce61a6156a9e791507e715219ff23aeea562cc5d862ace"
+        },
+        "RELEASE_COMMIT_EXECUTION.md": {
+          "mode": 420,
+          "sha256": "d9146ab92cd8534e9c725de1fa98e9ffbc73cd23066f2e082b1eb5ccab9fafd4"
+        },
+        "RELEASE_PREVIEW_EXECUTION.md": {
+          "mode": 420,
+          "sha256": "a69165cfbeb6ce9d1497fec97bbf92a74cd1f647fe9ac7e3b30c9535bac15ca0"
+        },
+        "ROADMAP_CHANGELOG.template.md": {
+          "mode": 420,
+          "sha256": "9185ee70c1c32e2b8fd2e1f6594a49897c56d508949f069ffbf80ed7f597f40b"
+        },
+        "SECURITY_BASELINE.md": {
+          "mode": 420,
+          "sha256": "6636d543aed65b3209a13245bab07b3325301db05bf238d2fb6d0dd6cc2de460"
+        },
+        "STANDARD_ADOPTION_HISTORY.template.md": {
+          "mode": 420,
+          "sha256": "8ea3e92052e78d13bafe5abc50519824e6bb616528927061f7088122d6cbbe49"
+        },
+        "SUPERVISOR_PACKET.template.md": {
+          "mode": 420,
+          "sha256": "ec8a31b9db2089c01ba808edc780a21cb3c80cebab7cd382d878e67f896a99fb"
+        },
+        "TESTING_AND_EVIDENCE.md": {
+          "mode": 420,
+          "sha256": "fe19276d43baffde6d0d9fd691ac144124bd6134b00cd08d44e417b55777cd39"
+        },
+        "TEST_CONTROL_EXECUTION.md": {
+          "mode": 420,
+          "sha256": "70aa50c9b2295119236f33f12c17d8f1126de5f4b6c6fa502302ba673b01e331"
+        },
+        "THIRD_PARTY_LICENSE_INVENTORY.md": {
+          "mode": 420,
+          "sha256": "3fc980fec0b01eaf0145e25d726386afa7d5339fe60df94cbea7c6dd83b74bb4"
+        },
+        "THIRD_PARTY_LICENSE_INVENTORY.template.md": {
+          "mode": 420,
+          "sha256": "5252cc3fdf2938a7da412346bf409ea472700f987e0f1eb97ca5c6c986c9f741"
+        },
+        "UI_IMPLEMENTATION_STANDARDS.md": {
+          "mode": 420,
+          "sha256": "076d7cf927b8fefffde505745691b6ef277b14c77616ba5172d084e1289de8d7"
+        },
+        "VERSION": {
+          "mode": 420,
+          "sha256": "e959f750e92dbb7614ae28ac96f0a37272caed81d8bbb758791af7bfbb6106a0"
+        },
+        "compose.yaml": {
+          "mode": 420,
+          "sha256": "1d503ccc05b6ee342884a444e8a46fcef2f006bb8b0b902c0b1c9054cf591225"
+        },
+        "execution-profile.docker.json": {
+          "mode": 420,
+          "sha256": "c269c2f55036a417806ac30bfe9cd072740b9b9a3ac194301d4f03b297228552"
+        },
+        "execution-profile.json": {
+          "mode": 420,
+          "sha256": "17e064960555410b1a6c8fedf0cb37f6fe0c849c03b7a54cd84cd6f67861116e"
+        },
+        "execution-profile.template.json": {
+          "mode": 420,
+          "sha256": "9202c462948c401b4d59f295a4284b87f803911ebd5fc9e3d3d54df9bc8e0da7"
+        },
+        "pyproject.toml": {
+          "mode": 420,
+          "sha256": "5d70678c11c3fc46187cab907d1722dfa8ee5777cfb1b21b72bfd117d4cfe778"
+        },
+        "release-commit-profile.json": {
+          "mode": 420,
+          "sha256": "aeec1cff3aeee34fdd26ddcc1ecc461ec435df42c4febc263dc9a1bb7e92d0de"
+        },
+        "release-preview-profile.json": {
+          "mode": 420,
+          "sha256": "6604bc48b77651df619535396c48919f1687d4dd067226582c11163b3a7c8fbd"
+        },
+        "run.sh": {
+          "mode": 493,
+          "sha256": "6a8095bbacc2a8f0c8d1a4797f3edd1e1260cff0aff7b24205c72b550be60635"
+        },
+        "scripts/check_docs.py": {
+          "mode": 420,
+          "sha256": "138e33961e44929ddb387d1a8a9cc1445287b17490dfbfeff5d4b9dcec5c02d2"
+        },
+        "scripts/check_standard.py": {
+          "mode": 420,
+          "sha256": "0cc81922ff169df0fd8e5be4c4a2b198922ea47ab2fd3cd5854748e7af42f238"
+        },
+        "scripts/foundation_contract.py": {
+          "mode": 420,
+          "sha256": "0b57babf212c1e01b5dc2c62a6527b86ddf4a2ade1d99b283b927197bbd9fa3f"
+        },
+        "scripts/generate_release.py": {
+          "mode": 420,
+          "sha256": "23fc913ebbb645bfd232e83f870746a71f41435e525b23b8a8189afc34fef65b"
+        },
+        "scripts/health_scaffold.py": {
+          "mode": 420,
+          "sha256": "e556317d0763041130364d0c82e7e09a67adcde01c535f91cb937adc0271f58a"
+        },
+        "scripts/preview_health.py": {
+          "mode": 420,
+          "sha256": "7ef6dbfc831929e975a15068bedb608135c27d63af0a2bc0da19293913bf39de"
+        },
+        "scripts/project_runner.py": {
+          "mode": 420,
+          "sha256": "e768ef08079785a73213cf7a6b7b8eb341667139727fbca5b6e3f0e32eb62710"
+        },
+        "scripts/reference_tests.py": {
+          "mode": 420,
+          "sha256": "738bf662db89a71f5cbb6c99d6917d7a7cb1d0b52e350f228748b9647dae30da"
+        },
+        "scripts/release_commit.py": {
+          "mode": 420,
+          "sha256": "d5784732304e9981cf146ac75ae0764d1d1bc5d871d633d9e36f8a11c1239eb8"
+        },
+        "scripts/release_preview.py": {
+          "mode": 420,
+          "sha256": "6197312d39f65f42f43e9ece22302915f86d90e9ad9f74b1aa56d3ad55ac068b"
+        },
+        "scripts/scaffold_lint.py": {
+          "mode": 420,
+          "sha256": "1a25876e7bb36eba9b0ccd5cd19d1dd72c6ba91a9e05827507b75733bc1dca6a"
+        },
+        "scripts/scaffold_status.py": {
+          "mode": 420,
+          "sha256": "83ad5589044c0feead0ba2088ccbafbc15745a8ace027d812c08ee5012194a21"
+        },
+        "scripts/test_controls.py": {
+          "mode": 420,
+          "sha256": "df4c695996b491485add3704e2384814631e286552596cb530550addd1c2d24a"
+        },
+        "scripts/test_network_guard.py": {
+          "mode": 420,
+          "sha256": "a763df81b5a0c763977f6353a92ba1c6f0373c721a4f4e201646d02df1f0a742"
+        },
+        "source-exclusions.json": {
+          "mode": 420,
+          "sha256": "9acd53cb7187767eca64d89b94172c939bdab09ce005f97c191711902ea7e8a6"
+        },
+        "standard-adoption.template.json": {
+          "mode": 420,
+          "sha256": "1e971d13dc5666a820fd24a9c42fbd2bdc0bf24ec17d8097fe13c8b29a6b6e8b"
+        },
+        "standard-release.json": {
+          "mode": 420,
+          "sha256": "78f263fea56d1e3063574547f7f9e793834ed1bd0f6fe5556e6bf9b95046643b"
+        },
+        "test-control-profile.json": {
+          "mode": 420,
+          "sha256": "3c712fa7ab93ee1d4d34a26e162f3257861c018109a635bc4d2be4b3220600c3"
+        },
+        "tests/test_check_docs.py": {
+          "mode": 420,
+          "sha256": "ff2289a784d6444913ad282e1673b5d5aa1654cdfe6b402a5a890bcf43e6612c"
+        },
+        "tests/test_check_standard.py": {
+          "mode": 420,
+          "sha256": "bddad72dc374201ed63deaceff7f86249bf83bb96265f56de906b97172e96707"
+        },
+        "tests/test_execution_facade.py": {
+          "mode": 420,
+          "sha256": "113f521708243b13e0407590d210f1be23d663236b9f6c84366358819cd96f8c"
+        },
+        "tests/test_foundation_contract.py": {
+          "mode": 420,
+          "sha256": "63a7d248f56306c0730edfbb8f7778a60893a2cd450d5f1c03b8c1b5c354adcd"
+        },
+        "tests/test_portable_packet_rehearsal.py": {
+          "mode": 420,
+          "sha256": "79526e30c5c1b936eb50bf51ad4f0934e608c2d77fcd3b7c068a4884448db968"
+        },
+        "tests/test_release_commit.py": {
+          "mode": 420,
+          "sha256": "13aa68db7bc82665f9e73ae04769661d330a8683eeaa90b0d97499d122123c70"
+        },
+        "tests/test_release_preview.py": {
+          "mode": 420,
+          "sha256": "7a42fb8d65cff93e6ea69151896f7d750318a4f4f8f03340ab60e7981259c4d8"
+        },
+        "tests/test_runtime_contract.py": {
+          "mode": 420,
+          "sha256": "a9fdbff5f3efce1e594ef46562c58f1320bfbf234b8a4341b838f8d209e5ced6"
+        },
+        "tests/test_test_controls.py": {
+          "mode": 420,
+          "sha256": "de020a7d0a4de7424dfbf53255c90b5d79c575949088ba88583e13146c045697"
+        }
+      },
+      "runtime": "3.15.0rc1 (v3.15.0rc1:37e98da7c19, Aug  4 2026, 07:37:26) [Clang 21.0.0 (clang-2100.1.1.101)]"
+    },
+    "started": 1790522141.0303948,
+    "status": "PASS",
+    "step": "FINAL-CANDIDATE-VALIDATION",
+    "updated": 1790522292.61801,
+    "work_unit": "STD-REL-02",
+    "worker_updated": 1790522292.61801
+  },
+  "governance": {
+    "CAPABILITY_CATALOG.md": {
+      "mode": 420,
+      "sha256": "8af3156998dd4251b65218d85806e89b695298ea43bb5232579b3fc54c20df8f"
+    },
+    "EXECUTION_PLAN.md": {
+      "mode": 420,
+      "sha256": "c9d955bfc9908f5867c356f83fa317b3eb0cf4ec1d2c9037bb6e90226926598c"
+    },
+    "HANDOFF.md": {
+      "mode": 420,
+      "sha256": "7409ff4dbf239ea533f520e6de1708895c849170f4dddc60349fba182dcc205e"
+    },
+    "PROJECT_PROFILE.md": {
+      "mode": 420,
+      "sha256": "00880775c007131a90b623fa8a18514bbc02e3405b118e5477b2e8d5ffae407c"
+    },
+    "PROJECT_STATE.md": {
+      "mode": 420,
+      "sha256": "f5945e51c91c3f9d034870cb53017dda7d2d9101278bac7c6801da2e01e341b0"
+    },
+    "STANDARD_ROADMAP.md": {
+      "mode": 420,
+      "sha256": "59db434f43de7bc945c79d35aea319e44387d75c2d94779dd5da14b19fca8b50"
+    },
+    "docs/PROVENANCE.md": {
+      "mode": 420,
+      "sha256": "3d3a1b66c8f96209781672fe0bb2ffe21047a47eb50fc20e1f758f035b20308f"
+    },
+    "docs/packets/STD-REL-02-CLOSURE-CANDIDATE.md": {
+      "mode": 420,
+      "sha256": "1010684103e302038f88f83c9c454495f9223b80d43320035995ff59fc54c84a"
+    },
+    "docs/packets/SUP-STD-REL-02-001.md": {
+      "mode": 420,
+      "sha256": "06164d95c4eb1999d3ba9b5b46e1308d9573d276907cfa744c122da807d337c6"
+    }
+  },
+  "head": "f3eed451f4894d2cf1da92df4178121870a1b815",
+  "intentional_untracked": {
+    "RELEASE_PREVIEW_EXECUTION.md": {
+      "mode": 420,
+      "sha256": "a69165cfbeb6ce9d1497fec97bbf92a74cd1f647fe9ac7e3b30c9535bac15ca0"
+    },
+    "docs/evidence/std-rel-02-preview.json": {
+      "mode": 420,
+      "sha256": "dd67dd89f99e27de13cac85f8eba16485b548e367e1ce107161d735dba2ac12a"
+    },
+    "docs/packets/STD-REL-02-CLOSURE-CANDIDATE.md": {
+      "mode": 420,
+      "sha256": "1010684103e302038f88f83c9c454495f9223b80d43320035995ff59fc54c84a"
+    },
+    "docs/packets/SUP-STD-REL-02-001.md": {
+      "mode": 420,
+      "sha256": "06164d95c4eb1999d3ba9b5b46e1308d9573d276907cfa744c122da807d337c6"
+    },
+    "release-preview-profile.json": {
+      "mode": 420,
+      "sha256": "6604bc48b77651df619535396c48919f1687d4dd067226582c11163b3a7c8fbd"
+    },
+    "scripts/preview_health.py": {
+      "mode": 420,
+      "sha256": "7ef6dbfc831929e975a15068bedb608135c27d63af0a2bc0da19293913bf39de"
+    },
+    "scripts/release_preview.py": {
+      "mode": 420,
+      "sha256": "6197312d39f65f42f43e9ece22302915f86d90e9ad9f74b1aa56d3ad55ac068b"
+    },
+    "tests/test_release_preview.py": {
+      "mode": 420,
+      "sha256": "7a42fb8d65cff93e6ea69151896f7d750318a4f4f8f03340ab60e7981259c4d8"
+    }
+  },
+  "invariants": 14,
+  "lifecycle": "DRAFT",
+  "local_loopback_permission_used": true,
+  "manifest_sha256": "78f263fea56d1e3063574547f7f9e793834ed1bd0f6fe5556e6bf9b95046643b",
+  "non_interference": {
+    "ai-auth-hub": {
+      "branch": "main",
+      "head": "5d939900c293f7288599a0570ec315a038f23f34",
+      "index_sha256": "6b0f18385d42c14ba6a484430f2e8cd178fe1716477394085b6241a558fa1cb6",
+      "inventory_sha256": "2d662102aabfa0ac6c556991d3010e414083e2254ced0eaeac3fa62938693d90",
+      "members": 403,
+      "snapshot_identical": true,
+      "status": ""
+    },
+    "ai-operation-hub": {
+      "branch": "main",
+      "head": "367b78141ec10f8e7636c778254991f7495c307f",
+      "index_sha256": "8c707b336e1e866d72f3f43901bea86ea5ebe68b216fc3cf04f81b717445cdae",
+      "inventory_sha256": "101f30a6dfb0944ae0fc77c1a346318a144e7b9b437bad5bee7dc771432892be",
+      "members": 617,
+      "snapshot_identical": true,
+      "status": " M EXECUTION_PLAN.md\n M HANDOFF.md\n M PROJECT_STATE.md\n M operation_hub/adapter_sdk.py\n M operation_hub/channel_adapters.py\n M operation_hub/db.py\n M operation_hub/integrations.py\n M operation_hub/invoicing.py\n M operation_hub/main.py\n M operation_hub/postgres_repository.py\n M operation_hub/provider_conformance.py\n M operation_hub/provider_contracts.py\n M operation_hub/provider_guidance.py\n M operation_hub/templates/integration_detail.html\n M operation_hub/templates/invoice_draft_detail.html\n M operation_hub/templates/order_detail.html\n M operation_hub/text_catalog.json\n M scripts/release_source_fingerprint.py\n M tests/test_company_operational_routing.py\n M tests/test_edocument_provider_u6.py\n M tests/test_provider_conformance_p1.py\n M tests/test_provider_contracts.py\n M tests/test_provider_guidance.py\n M tests/test_provider_onboarding.py\n?? docs/ELOGO_PHASE_A.md\n?? operation_hub/elogo_fiscal_payload.py\n?? operation_hub/elogo_fiscal_state.py\n?? operation_hub/elogo_postbox.py\n?? operation_hub/elogo_preacceptance.py\n?? operation_hub/templates/elogo_fiscal_draft.html\n?? operation_hub/templates/elogo_readiness.html\n?? scripts/elogo_demo_probe.py\n?? scripts/elogo_demo_self_query.py\n?? tests/test_elogo_demo_probe.py\n?? tests/test_elogo_demo_self_query.py\n?? tests/test_elogo_phase_a.py\n?? tests/test_elogo_phase_b.py\n?? tests/test_elogo_phase_c.py\n?? tests/test_elogo_phase_d2.py\n?? tests/test_elogo_phase_e.py\n"
+    }
+  },
+  "publication": "NONE",
+  "real_commits_created": 0,
+  "real_preflight": {
+    "after": {
+      "head": "f3eed451f4894d2cf1da92df4178121870a1b815",
+      "index_sha256": "e68991e382dfca21b681b72f48b20b55d77ae4c95b6dae229e706a3fe1beb9cd",
+      "inventory_sha256": "1cab4a7acfcc1b3e07805bb07e6d0f7e9fd3ba0f9a1a6d8c989c60c080be7821",
+      "refs_sha256": "e70cc2cb632e5a88f3772fe1e7e4306b6804a18c0069e0e35eb32d8e6aafab69"
+    },
+    "before": {
+      "head": "f3eed451f4894d2cf1da92df4178121870a1b815",
+      "index_sha256": "e68991e382dfca21b681b72f48b20b55d77ae4c95b6dae229e706a3fe1beb9cd",
+      "inventory_sha256": "1cab4a7acfcc1b3e07805bb07e6d0f7e9fd3ba0f9a1a6d8c989c60c080be7821",
+      "refs_sha256": "e70cc2cb632e5a88f3772fe1e7e4306b6804a18c0069e0e35eb32d8e6aafab69"
+    },
+    "command": "./run.sh preview-preflight --commit f3eed451f4894d2cf1da92df4178121870a1b815 --work-unit STD-REL-02",
+    "exit": 3,
+    "result": {
+      "reason": "IDENTITY_CONFIG_AUTHORIZATION_OR_STATE_UNPROVEN",
+      "status": "PENDING"
+    },
+    "source_unchanged": true
+  },
+  "semantic_closure": "PENDING_OWNER_REVIEW",
+  "staged_diff_empty": true,
+  "tracked_diff_sha256": "ff14f7d4d6adef722ef18ae723fa50ceae17eebdc2adfcc7d4cec0a4308174a3",
+  "version": "0.2.5"
+}
