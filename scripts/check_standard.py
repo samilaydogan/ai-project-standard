@@ -49,6 +49,8 @@ PROJECT_DOCUMENTS = frozenset(
 DISTRIBUTION = INVARIANTS | frozenset(
     {
         "README.md",
+        "AGENTS.template.md",
+        "SUPERVISOR_PACKET.template.md",
         'pyproject.toml',
         'source-exclusions.json',
         'scripts/reference_tests.py',
@@ -119,11 +121,13 @@ CORE = frozenset(
         "REL-APPLY-STATE",
         "WF-PRESERVE",
         "WF-SCOPE",
+        "WF-PORTABLE",
         "WF-CLOSURE",
         "DEV-CHANGE",
         "DEV-HYGIENE",
         "DEV-BOUNDARY",
         "GOV-TRUTH",
+        "GOV-PLAN-AUTHORITY",
         "GOV-OWNERS",
         "GOV-PRECEDENCE",
         "SEC-SECRETS",

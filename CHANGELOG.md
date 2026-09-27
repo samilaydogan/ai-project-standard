@@ -1,3 +1,7 @@
+# v0.2.2 — FINAL local content — portable Supervisor/coding-agent capability
+
+NEW generic policy: WF-PORTABLE makes correctness-critical assignment, decision, evidence and resumption state recoverable without shared account/session history; GOV-PLAN-AUTHORITY distinguishes external planning declarations/direct verification from the single repository execution projection. Existing WF-SCOPE/TEST-CLOSURE/release/human approval boundaries remain in force. One transport-neutral packet template and one optional thin AGENTS template are supporting distribution files, not policy or pointer owners. Project templates expose local planning/decision references and safe fresh-session resumption. No transport backend, executable TEST/RELEASE controls, consumer adoption, standard roadmap or protected Supervisor AI approval is delivered. Owner explicitly authorized semantic closure and a validated local commit after reviewing stabilized DRAFT manifest 260bb12deb328095a197265ca68a4821c561d7344f369dd71e57bd1326523250. FINAL records accepted local content, not tag/publication or consumer adoption; published v0.2.1 remains immutable. Closure evidence is recorded in docs/SUPERVISOR_CAPABILITY_CLOSURE.md.
+
 # v0.2.1 — 2026-09-27 — bounded patch release
 
 Owner authorized finalization/publication after the reviewed candidate. No consumer adoption. Published v0.2.0 (FINAL) and v0.1.0 Git objects remain immutable. The following retained v0.2.0 heading describes its historical pre-publication checkpoint, not its current published status.

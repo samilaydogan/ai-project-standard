@@ -177,6 +177,27 @@ class StandardTests(unittest.TestCase):
         self.assertEqual(result["semantic"], "PENDING")
         self.assertEqual(result["runtime_release"], "NOT ASSESSED")
 
+    def test_portable_forms_are_distributed_but_not_policy_or_required_project_files(self):
+        for name in ("AGENTS.template.md", "SUPERVISOR_PACKET.template.md"):
+            self.assertIn(name, checker.DISTRIBUTION)
+            self.assertNotIn(name, checker.INVARIANTS)
+            self.assertNotIn(name, checker.PROJECT_DOCUMENTS)
+        self.assertNotIn("AGENTS.md", checker.PROJECT_DOCUMENTS)
+        self.assertEqual(checker.check(self.standard, self.consumer)["structure"], "PASS")
+
+    def test_missing_portable_form_fails_distribution_integrity(self):
+        (self.standard / "SUPERVISOR_PACKET.template.md").unlink()
+        self.rejected("missing/unsafe member SUPERVISOR_PACKET.template.md")
+
+    def test_portable_authority_rules_cannot_be_waived(self):
+        for rid, owner in (("WF-PORTABLE", "AGENT_WORKFLOW.md"),
+                           ("GOV-PLAN-AUTHORITY", "DOCUMENT_GOVERNANCE.md")):
+            with self.subTest(rule=rid):
+                registry = json.loads((self.standard / "POLICY_RULES.json").read_text())
+                self.assertEqual(registry["rules"][rid], {"owner": owner, "waivable": False})
+                self.adoption["exceptions"] = [self.exception(rid)]
+                self.rejected("non-waivable")
+
     def test_nonexecutable_consumer_facade(self):
         (self.consumer / "run.sh").chmod(0o644)
         self.rejected("facade not executable")

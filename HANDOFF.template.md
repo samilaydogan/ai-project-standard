@@ -7,6 +7,11 @@ As of {{DATE}}. Resume from current local working tree, preserving unrelated mod
 - Known debt/risks and missing evidence: {{CURRENT_LIMITATIONS}}.
 - Next governance checkpoint: {{AUTHORIZED_NEXT_CHECKPOINT_OR_PENDING}}.
 - Verification evidence and safe commands: {{PROFILE_AND_EVIDENCE_REFERENCE}}.
+- Latest assignment, investigation, checkpoint or closure-candidate packet IDs and durable locations: {{LATEST_PACKET_REFERENCES_OR_PENDING}}.
+- Latest actual authorized decision, scope, authority channel/reference and remaining authorized work: {{DECISION_AND_REMAINING_SCOPE_OR_PENDING}}.
+- Exact safe resumption step and stop/review triggers for a new account/session: {{SAFE_RESUMPTION_STEP_AND_TRIGGERS}}.
+
+This handoff summarizes EXECUTION_PLAN.md; it does not own CURRENT/NEXT or authorize NEXT. A packet or remembered conversation cannot replace source/plan inspection. If the decision cannot be verified through the approved channel, report PENDING and continue only independently safe work.
 
 For another machine/account, transfer sanitized full required source plus exact identity, lockfiles and governance. Do not transfer secrets, runtime data, backups or generated logs; provision test credentials independently. An upgrade delta alone is not a full-source handoff. Never infer release/deployment approval from a handoff document.
 

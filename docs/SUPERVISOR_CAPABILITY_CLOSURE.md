@@ -1,0 +1,19 @@
+# Supervisor-controlled capability closure
+
+## Owner decision and scope
+
+On 2026-09-27 the owner explicitly authorized semantic closure, repository finalization and a gated local commit of the stabilized Supervisor-Controlled AI Development capability. Decision reference: the user request titled “Finalize and close the current ai-project-standard Supervisor-Controlled AI Development capability candidate”, attachment 34770819-9313-4c12-ab14-c6dd962c2f43 in this task. Reviewed DRAFT manifest SHA-256: `260bb12deb328095a197265ca68a4821c561d7344f369dd71e57bd1326523250`; base published version v0.2.1, source HEAD `5105b251d18d40189e6c785e1c479adc926adaa5` with the reviewed 19-file candidate diff. This is an owner decision, not AI self-approval or consumer semantic adoption.
+
+The accepted capability consists of WF-PORTABLE, GOV-PLAN-AUTHORITY, supporting packet/AGENTS forms, project-template references, adoption guidance, registry/checker integration and reproducible synthetic rehearsal. Canonical evidence, release, adoption and human authorization owners remain unchanged. Finalization changes only lifecycle wording and this record; VERSION stays 0.2.2. FINAL means validated local content under ADP-INTEGRITY, not published Git history. The deterministic final distribution identity is in [standard-release.json](../standard-release.json); this repository-only record is excluded from that manifest to avoid evidence self-reference.
+
+## Closure evidence and disposition
+
+Acceptance checklist: singular canonical ownership; no shared account/history dependency; transport-neutral bounded packet; declared/directly-verified planning distinction; single EXECUTION_PLAN pointer; no packet closure/NEXT transition; no protected Supervisor AI approval power; genericity; distribution/registry coherence; positive and negative checker tests; clean diff formatting. All must pass before the authorized commit. Required final commands are manifest generation with --status FINAL and --check, check_standard.py --standard ., check_docs.py ., ./run.sh lint, focused checker/rehearsal unittest, complete ./run.sh test and git diff --check. Final command outcomes are reported with the resulting commit in the task closure report; a failing gate blocks commit/closure.
+
+Projected disposition: SUPERVISOR_CONTROLLED_CAPABILITY_CLOSED and ROADMAP_BOOTSTRAP_READY, with no live roadmap pointer instantiated. Actual disposition after successful final gates: the same closed capability and bootstrap readiness; no CURRENT/NEXT transition is performed. This governance-only comparison is recorded here, not a substitute for any consumer's required closure gate.
+
+Live two-AI runtime acceptance is future dogfood evidence, not performed by the deterministic two-process rehearsal. Transport automation and consumer adoption are not implemented. TEST/RELEASE executors, roadmap creation, tag/push/publication and production actions remain outside this authorization. The next separately authorized task may bootstrap the official standard roadmap and execution documents for TEST controls followed by RELEASE controls.
+
+## Final validation results
+
+Final manifest SHA-256: `bc2f1bc073c7f608b21d149e291007013b1512332f9f2162649a1d9d92abb9d9` (0.2.2 FINAL; 59 members; 14 invariants). Generation/check, standard integrity, bounded docs quality, lint and diff formatting passed with exit 0. `python3 -B -m unittest tests.test_check_standard tests.test_portable_packet_rehearsal` passed 41 tests; the three fresh-process scenarios are included. `./run.sh test` passed 151 tests with exit 0 and no skips, using the local loopback permission required by the existing health test. The checker reports semantic/runtime acceptance NOT ASSESSED; it does not authenticate this owner decision. No runtime/source-policy changes followed these results; this results paragraph is repository-only governance evidence.

@@ -77,3 +77,9 @@ The unreleased v0.1.1 candidate is superseded before publication, with its imple
 | TEST-CLASSES | NEW generic classification/reference harness | Explicit six classes, timeout/state/network declarations, sanitized bounded unittest execution | TESTING_AND_EVIDENCE.md |
 
 No claim is made that historical source already had this exact schema, harness or templates. Earlier 73/73 bounded evidence remains baseline evidence, not proof of the expanded candidate.
+
+## v0.2.2 FINAL portable collaboration provenance
+
+WF-PORTABLE and GOV-PLAN-AUTHORITY are D NEW generic decisions from the explicitly authorized Supervisor-controlled capability, not unchanged source extraction. Existing bounded CURRENT, source truth, truthful evidence, handoff and external-roadmap permissiveness are reused under their established owners. The new requirements are portable packets, no hidden shared-session dependency, declared-versus-directly-verified planning revisions and a single repository projection. SUPERVISOR_PACKET.template.md and AGENTS.template.md are supporting forms; no consumer-specific plan, external tool brand, provider, database or business workflow is imported. No protected AI approval or transport implementation is inferred.
+
+The maintainer-only `tests/test_portable_packet_rehearsal.py` is a reproducible synthetic two-process protocol rehearsal. It is not a distributed standard member, live two-AI acceptance, sender authentication or external planning-service evidence.

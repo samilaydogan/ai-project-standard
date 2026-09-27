@@ -6,6 +6,7 @@ As of {{DATE}}; source {{HEAD_AND_WORKTREE_IDENTITY}}.
 - Schema/migration: {{ACTUAL_CHAIN_OR_PENDING}}.
 - Adopted standard: {{STANDARD_VERSION_AND_MANIFEST}}.
 - CURRENT/NEXT: see `EXECUTION_PLAN.md`.
+- Latest actual authorization and portable packet/evidence references: {{DECISION_PACKET_AND_AUTHORITY_OR_PENDING}}. This summarizes facts; it does not grant authority or move the plan pointer.
 
 ## Current truth
 
@@ -14,6 +15,8 @@ As of {{DATE}}; source {{HEAD_AND_WORKTREE_IDENTITY}}.
 ## Validation
 
 {{COMMAND_RUNTIME_SOURCE_FINGERPRINT_COUNTS_EXIT_AND_LIMITATIONS}}
+
+Evidence status and source/dependency/config identity needed by a new session, with stale/missing gates explicit: {{RECONSTRUCTABLE_EVIDENCE_REFERENCES_OR_PENDING}}.
 
 ## Debt and unknowns
 

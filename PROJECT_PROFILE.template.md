@@ -2,7 +2,10 @@
 
 - Technical authority: current local source and actual release metadata.
 - Product roadmap authority: {{ROADMAP_AUTHORITY_OR_PENDING}}.
-- Architecture/ownership boundary: {{SOURCE_BACKED_BOUNDARY}}.
+- Planning authority type (repository/external), stable locator, responsible owner and declared revision/identity: {{PLANNING_AUTHORITY_DECLARATION}}.
+- Last directly verified planning revision, date/evidence and accessibility/access limitation: {{DIRECT_VERIFICATION_OR_UNVERIFIED_WITH_REASON}}. A declaration is not verification; see GOV-PLAN-AUTHORITY.
+- Architecture/ownership boundary and project-local architectural invariants: {{SOURCE_BACKED_BOUNDARY_AND_REFERENCES}}.
+- Project-local approval channel and reserved owner/human decisions: {{ACTUAL_AUTHORITY_BOUNDARY_OR_PENDING}}. A Supervisor AI recommendation is not protected-action approval.
 - Safe commands and isolated environment: {{COMMANDS_OR_PENDING}}.
 - Formal application release definition and configured suite/gates (TEST-FORMAL): {{RELEASE_CONTRACT_OR_PENDING}}.
 - Exact formal evidence scope/exclusions/config/runner identities (TEST-IDENTITY, REL-ARTIFACT): {{IDENTITY_POLICY}}.

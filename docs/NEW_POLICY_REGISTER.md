@@ -65,3 +65,12 @@ The unreleased v0.1.1 candidate is superseded before publication, with its imple
 | TEST-CLASSES | NEW generic classification/reference harness | Explicit six classes, timeout/state/network declarations, sanitized bounded unittest execution | TESTING_AND_EVIDENCE.md |
 
 No claim is made that historical source already had this exact schema, harness or templates. Earlier 73/73 bounded evidence remains baseline evidence, not proof of the expanded candidate.
+
+## v0.2.2 FINAL — portable Supervisor/coding-agent decisions
+
+| Decision | Canonical owner | Class and semantic delta | Boundary |
+| --- | --- | --- | --- |
+| N41 / WF-PORTABLE | AGENT_WORKFLOW.md | D NEW generic account/session-independent packet and reconstructability contract; existing WF-SCOPE/WF-CLOSURE supply bounded execution and closure separation | Non-waivable; template is transport only, no sender authentication or new approval authority |
+| N42 / GOV-PLAN-AUTHORITY | DOCUMENT_GOVERNANCE.md | D NEW explicit external planning declaration/direct-verification distinction and repository projection reconciliation | Non-waivable; EXECUTION_PLAN remains sole live pointer, external artifact is not technical truth |
+
+Supporting project templates add references and honest PENDING states without making their fields second policy authorities. The optional AGENTS template is a reading map. No consumer, roadmap, tooling backend or published version is changed by this candidate.

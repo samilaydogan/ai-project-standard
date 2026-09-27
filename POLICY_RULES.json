@@ -39,6 +39,7 @@
     ".gitignore",
     "ADOPTION.md",
     "AGENT_WORKFLOW.md",
+    "AGENTS.template.md",
     "CAPABILITY_CATALOG.template.md",
     "CHANGELOG.md",
     "DEVELOPMENT_RULES.md",
@@ -63,6 +64,7 @@
     "ROADMAP_CHANGELOG.template.md",
     "SECURITY_BASELINE.md",
     "STANDARD_ADOPTION_HISTORY.template.md",
+    "SUPERVISOR_PACKET.template.md",
     "TESTING_AND_EVIDENCE.md",
     "THIRD_PARTY_LICENSE_INVENTORY.md",
     "THIRD_PARTY_LICENSE_INVENTORY.template.md",
@@ -113,6 +115,10 @@
       "owner": "AGENT_WORKFLOW.md",
       "waivable": true
     },
+    "WF-PORTABLE": {
+      "owner": "AGENT_WORKFLOW.md",
+      "waivable": false
+    },
     "DEV-BOUNDARY": {
       "owner": "DEVELOPMENT_RULES.md",
       "waivable": false
@@ -148,6 +154,10 @@
     "GOV-STATE": {
       "owner": "DOCUMENT_GOVERNANCE.md",
       "waivable": true
+    },
+    "GOV-PLAN-AUTHORITY": {
+      "owner": "DOCUMENT_GOVERNANCE.md",
+      "waivable": false
     },
     "SEC-SECRETS": {
       "owner": "SECURITY_BASELINE.md",
