@@ -87,3 +87,7 @@ The maintainer-only `tests/test_portable_packet_rehearsal.py` is a reproducible 
 ## 0.2.3 FINAL STD-TEST-01
 
 The optional cooperative unittest job/evidence adapter is new generic reference infrastructure implementing existing WF-SCOPE/TEST-REPORT/TEST-IDENTITY semantics; not unchanged extraction of a source project's executor. Source scoping/state/selection are project-owned configuration. No new canonical policy owner, protected approval power or mandatory external runner is introduced. Raw-output suppression and cooperative test-boundary cancellation are explicit implementation limits; no live multi-AI/production/service acceptance is inferred.
+
+## 0.2.4 FINAL — STD-REL-01
+
+The optional staged-candidate Git adapter is new generic reference infrastructure under existing REL-ARTIFACT, WF-SCOPE, TEST-IDENTITY and EXEC-MUTATION owners, not extracted historical executor behavior. Local gates/lifecycle/message/approval applicability stay project-owned; no new invariant IDs, mandatory consumer files, human authentication or delegated approval authority. Strict scope/config/evidence binding, private index/CAS and unsupported hook/signing handling are adapter restrictions, not universal policy changes.

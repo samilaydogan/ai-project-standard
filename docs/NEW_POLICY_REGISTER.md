@@ -78,3 +78,7 @@ Supporting project templates add references and honest PENDING states without ma
 ## 0.2.3 FINAL — STD-TEST-01 implementation
 
 Optional test-control infrastructure implements existing TEST/WF invariants; it creates no new mandatory policy ID. Configuration is local, supporting distribution files are not new consumer invariants, and approval/closure semantics do not change. Strict allowlisted logs, conservative skip eligibility and cooperative boundary cancellation are declared adapter behavior with explicit limitations, not stronger universal mandates or unchanged source-executor extraction.
+
+## 0.2.4 FINAL — STD-REL-01
+
+The optional staged-candidate Git adapter is new generic reference infrastructure under existing REL-ARTIFACT, WF-SCOPE, TEST-IDENTITY and EXEC-MUTATION owners, not extracted historical executor behavior. Local gates/lifecycle/message/approval applicability stay project-owned; no new invariant IDs, mandatory consumer files, human authentication or delegated approval authority. Strict scope/config/evidence binding, private index/CAS and unsupported hook/signing handling are adapter restrictions, not universal policy changes.

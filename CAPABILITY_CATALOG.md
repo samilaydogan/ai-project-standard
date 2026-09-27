@@ -8,7 +8,7 @@ Source-backed local catalog, not planning or CURRENT/NEXT authority. Implementat
 | Native reference runner/facade | run.sh, scripts/project_runner.py, scripts/reference_tests.py | IMPLEMENTED | Synchronous bounded suite, not persistent formal-job control |
 | Reference status/health | scripts/scaffold_status.py | IMPLEMENTED | Health only, not TEST_DURUM |
 | TEST_DURUM / TEST_LOG / TEST_DEVAM / TEST_DURDUR | STD-TEST-01 roadmap contract | IMPLEMENTED | CLOSED 0.2.3 FINAL; 179/179 local formal suite; cooperative limits, closure evidence in docs/packets/STD-TEST-01-CLOSURE.md |
-| RELEASE_COMMIT | STD-REL-01 roadmap contract | NOT STARTED | Executable adapter NOT CONFIGURED; Git CLI alone is not adapter acceptance |
+| RELEASE_COMMIT | STD-REL-01 roadmap contract | IMPLEMENTED | CLOSED 0.2.4 FINAL; 208/208 local formal suite, disposable Git acceptance; no human authentication; docs/packets/STD-REL-01-CLOSURE.md |
 | RELEASE_PREVIEW | STD-REL-02 roadmap contract | NOT STARTED | Executable adapter NOT CONFIGURED |
 
 Broader OPERATIONAL_TOOLING_SCOPE.md engines, transport and live two-AI integration remain deferred. No consumer adoption is claimed.

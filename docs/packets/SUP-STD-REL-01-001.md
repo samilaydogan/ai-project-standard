@@ -1,0 +1,9 @@
+# SUP-STD-REL-01-001 — assignment
+
+Packet kind ASSIGNMENT; project ai-project-standard; task STD-REL-01; date 2026-09-27. Actual owner task-channel instruction “SUPERVISOR ASSIGNMENT — STD-REL-01” authorizes bounded inspection, implementation/debug/testing/evidence and Closure Candidate only. It does not authorize this candidate's real commit, semantic closure, NEXT, preview, roadmap changes, transport, consumers, production, push/tag/publication. This record is not sender authentication or a competing pointer owner.
+
+Base HEAD dc32405a9ba3c5fa7491cbabcae0a73aa6228343, main, directly observed clean index/worktree. Active standard 0.2.3 FINAL at assignment start; later development metadata is an unapproved candidate. Planning authority STANDARD_ROADMAP.md R1 directly read locally, SHA-256 0607b5816be11844d6e47d2f7a1daeefe1a9fbbdb76b6299e199d5bc7839a9a0; no external access limit/material discrepancy. EXECUTION_PLAN.md alone owns CURRENT/NEXT; dependency STD-TEST-01 CLOSED.
+
+Scope/acceptance: existing STD-REL-01/shared roadmap contracts. Actual source/index identity, trusted recorded validation, human commit/semantic requirements, exact approved bounded staged scope, failure/race/after-HEAD/index reporting and isolated Git tests. Required focused/full/manifest/checker/docs/lint/diff gates; no skipped required tests. Distinguish observations from role/hash assertions: private records are not human authentication. No real branch mutation may be used as fixture. Closure review is separate from implementation authorization.
+
+Safe work pending review: source/evidence reconstruction and bounded diagnostics. Material architecture/authority/scope contradiction needs a meaningful checkpoint; routine tests/debug proceed autonomously. Requested next decision is owner closure review after returned candidate, never automatic closure. No secrets/raw private logs/shared session dependency.

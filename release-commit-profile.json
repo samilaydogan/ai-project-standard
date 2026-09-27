@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "state_root": "../project-commit-state",
+  "version_path": "VERSION",
+  "lifecycle_path": "standard-release.json",
+  "allowed_states": [
+    "DRAFT",
+    "RC",
+    "FINAL"
+  ],
+  "required_gates": [
+    "full",
+    "focused",
+    "lint",
+    "standard",
+    "docs",
+    "manifest",
+    "diff"
+  ],
+  "required_approvals": [
+    "COMMIT",
+    "SEMANTIC"
+  ],
+  "message_pattern": "[A-Z][^\\n]{9,199}",
+  "test_gates": [
+    "full",
+    "focused"
+  ]
+}

@@ -1,0 +1,939 @@
+{
+  "schema_version": 1,
+  "scope": "STD-REL-01 uncommitted Closure Candidate; no real commit/closure approval",
+  "base_head": "dc32405a9ba3c5fa7491cbabcae0a73aa6228343",
+  "candidate_version": "0.2.4",
+  "candidate_state": "DRAFT",
+  "manifest_sha256": "200c9e4e9cc5d59ab21853d26251abcefe5627b7a721a9aa92173eaa4f78af0c",
+  "terminal_record_sha256": "830f9792a133971709545cb8071f14f73bc4398a8655de3a63f2a8359769b0b4",
+  "formal_job": {
+    "cancel_requested": false,
+    "counts": {
+      "failed": 0,
+      "passed": 207,
+      "run": 207,
+      "skipped": 0
+    },
+    "events": [
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519501.349932
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519501.596647
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519502.294403
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519502.6106849
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519502.943712
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519503.6231859
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519504.0723252
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519504.636168
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519505.64551
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519506.656568
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519507.538815
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519507.6612968
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519508.363169
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519508.674933
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519509.685518
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519510.351792
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519510.69764
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519510.976537
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519511.710476
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519512.171178
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519512.7276
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519513.7441752
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519513.934398
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519514.632649
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519514.7575412
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519515.3791401
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519515.7690592
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519516.333023
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519516.783112
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519517.6948879
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519517.797311
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519518.3851662
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519518.8128908
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519519.0402648
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519519.828865
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519520.430016
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519520.840906
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519521.852351
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519522.8585238
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519523.2274828
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519523.8695538
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519524.88237
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519525.1388109
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519525.8963368
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519525.912384
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519526.903711
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519527.9173949
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519528.601426
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519528.9307368
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519529.938143
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519530.9495838
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519531.36593
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519531.957986
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519532.968222
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519533.711735
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519534.003974
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519534.4033432
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519535.02435
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519535.050612
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519536.037963
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519536.357365
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519537.049335
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519537.5810182
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519538.058872
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519539.0669608
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519540.080081
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519540.502343
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519541.083682
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519541.599398
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519541.644633
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519541.670719
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519541.702049
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519541.73326
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519541.773484
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519542.0973382
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519542.736795
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519542.7796412
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519542.838315
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519542.9139159
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519542.9681191
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519543.014498
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519543.064219
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519543.104403
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519543.108856
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519543.151344
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519543.935814
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519543.9700842
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.012417
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.055042
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.096585
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519544.117596
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.1255538
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.154853
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.182722
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.2822258
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.313647
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.340283
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.371419
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.381261
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.4138649
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.433532
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.4518242
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.7868018
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.820145
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.838937
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.8558059
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.900026
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.919332
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.937043
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.956748
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.96562
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519544.986753
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519545.0167758
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519545.0408661
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519545.0597708
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519545.081859
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519545.089524
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519545.111865
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519545.1288068
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519545.1364539
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519545.1567512
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519545.184435
+      },
+      {
+        "event": "HEARTBEAT",
+        "time": 1790519546.1389482
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519546.271007
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519546.2915149
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519546.3131561
+      },
+      {
+        "event": "TEST_FINISHED",
+        "time": 1790519546.3335428
+      },
+      {
+        "event": "TERMINAL",
+        "time": 1790519546.352862
+      }
+    ],
+    "exit": 0,
+    "job": "17acf6cf2c184755ab324fa139fa3285",
+    "pattern": "test_*.py",
+    "schema_version": 1,
+    "source": {
+      "adapter_sha256": "df4c695996b491485add3704e2384814631e286552596cb530550addd1c2d24a",
+      "executable_sha256": "b6d526f0e8b9b1f0e73780f502b39d8708fcfbdfc690440d4ef8de7297b65fad",
+      "members": {
+        ".dockerignore": {
+          "mode": 420,
+          "sha256": "091a7b8556831e249656f15e9e0724f5c8a9c7124cff45c64898d41b88f0e785"
+        },
+        ".env.example": {
+          "mode": 420,
+          "sha256": "f9c07565254f6b8d0f5dc07e6f1a0add7622cec6cfebd4e5495c4287990bb40b"
+        },
+        ".gitignore": {
+          "mode": 420,
+          "sha256": "e4d7664c8242de0375ff78165abf85eb731699ff1c4baeb6a6ea192a827eeb01"
+        },
+        "ADOPTION.md": {
+          "mode": 420,
+          "sha256": "4c71c85f307e86fa22916f18a9a9f21abd99c5f59d75432810da388b624e7029"
+        },
+        "AGENTS.template.md": {
+          "mode": 420,
+          "sha256": "22b84c5120958b3ddd53d09a8cfe225dcc3b428842e87be2181b115ba63777f7"
+        },
+        "AGENT_WORKFLOW.md": {
+          "mode": 420,
+          "sha256": "2bcdb164826cc1e119e831be21fe30e077b76fd9ea634cfd58a04518bf98c79e"
+        },
+        "CAPABILITY_CATALOG.template.md": {
+          "mode": 420,
+          "sha256": "fe3c4956b00a3a6df80e74f98ea757f21c60beaf3457fd4718142114a6965960"
+        },
+        "CHANGELOG.md": {
+          "mode": 420,
+          "sha256": "081006f9db48bed9177d6db6cde529acac5b4e18abc2c3b770fe9ed22bdf54ff"
+        },
+        "DEVELOPMENT_RULES.md": {
+          "mode": 420,
+          "sha256": "cd7a47c843778b494b2d47c76ceee486438ca08cd7d7e3f8e2318a6a1b728cf6"
+        },
+        "DOCUMENT_GOVERNANCE.md": {
+          "mode": 420,
+          "sha256": "958c8584ab35f28de172d27681bdecc9eaa434ef7df9162657c8c9965b9fbe65"
+        },
+        "Dockerfile.scaffold": {
+          "mode": 420,
+          "sha256": "a4f55d268d1fb38c418aaea4e5dc6dabba5f14d61da1b3be4326fa401a818527"
+        },
+        "EXECUTION_FACADE.md": {
+          "mode": 420,
+          "sha256": "513d2aab2f7f57f24b6dc8c02babef5d84a6ef925ef9e9d2abcca04738b7f7c8"
+        },
+        "EXECUTION_PLAN.template.md": {
+          "mode": 420,
+          "sha256": "56ae3f6e7ae0a6b7154ea12c95d8c7dc5eea4dd8ea37322c77f9fb365138f441"
+        },
+        "HANDOFF.template.md": {
+          "mode": 420,
+          "sha256": "260a93053aa36ea6a51c9a7d6e9ac60762600af45dfc676928d29786f97098c9"
+        },
+        "INSTALLATION.md": {
+          "mode": 420,
+          "sha256": "d63a2fbe69f5adbfc2ba6e3e4b15e29b427aa54b79b4b4149354702d2c3c2c1e"
+        },
+        "INSTALLATION.template.md": {
+          "mode": 420,
+          "sha256": "65c02e1bd53cb24783682dba79ae8fc87777e788d41ecfefb779bcced7e21111"
+        },
+        "MIGRATION_AND_RELEASE_POLICY.md": {
+          "mode": 420,
+          "sha256": "6a21a568d030ac82eecddeb8945f89a21a696e3d8c657fa10cfc5e38b12629e4"
+        },
+        "MIGRATION_RECOVERY.md": {
+          "mode": 420,
+          "sha256": "073b4fc6cc00726e7d94d4bcee5dcc3331876a92d4f7d7e6eb5908b63127a16a"
+        },
+        "MIGRATION_RECOVERY.template.md": {
+          "mode": 420,
+          "sha256": "d6e49a76f1dad996cda773de0aca9d3ef91a72773ed69827f5b87f70c3242f99"
+        },
+        "OPERATIONAL_TOOLING_SCOPE.md": {
+          "mode": 420,
+          "sha256": "ec367522b4949afa59f10d234b3cbe6df240274dd890762f1bf1d9084e62c236"
+        },
+        "OPERATIONS_RUNBOOK.md": {
+          "mode": 420,
+          "sha256": "68aae7b73e99f610c3b2f92fac44e3881927608580c90dcdb947b897b4616cda"
+        },
+        "OPERATIONS_RUNBOOK.template.md": {
+          "mode": 420,
+          "sha256": "a522fe61159351b79b63ef40f59291b3eb8e61562f2a6ce0bb14019d1662c9e3"
+        },
+        "POLICY_RULES.json": {
+          "mode": 420,
+          "sha256": "d23c55f65356505589496d2ae4c3152057200c47d5ee510f1979ed565cef21e6"
+        },
+        "PROJECT_PROFILE.template.md": {
+          "mode": 420,
+          "sha256": "659e22faca1f305c014f6a9e886cf40425f90327b40d486e62a0ff97ee4b587c"
+        },
+        "PROJECT_STATE.template.json": {
+          "mode": 420,
+          "sha256": "3d846d064f4478410a7c98077c98d865dcde7c87c4acd374a95e25865a81009e"
+        },
+        "PROJECT_STATE.template.md": {
+          "mode": 420,
+          "sha256": "0c533f69b8cff8c4c2fb2d484dd1908a556f2b435601490431e4d69b48db124d"
+        },
+        "README.md": {
+          "mode": 420,
+          "sha256": "c3c4373f1ecc1c624abb431ee843c179a4214f38556ff32b96742a2999eb6bb8"
+        },
+        "RELEASE_COMMIT_EXECUTION.md": {
+          "mode": 420,
+          "sha256": "8f5534d46fc34e71ceca9b8ad7f8dd65c8b1e25b57b4fc02177f9b73b3368d97"
+        },
+        "ROADMAP_CHANGELOG.template.md": {
+          "mode": 420,
+          "sha256": "9185ee70c1c32e2b8fd2e1f6594a49897c56d508949f069ffbf80ed7f597f40b"
+        },
+        "SECURITY_BASELINE.md": {
+          "mode": 420,
+          "sha256": "6636d543aed65b3209a13245bab07b3325301db05bf238d2fb6d0dd6cc2de460"
+        },
+        "STANDARD_ADOPTION_HISTORY.template.md": {
+          "mode": 420,
+          "sha256": "8ea3e92052e78d13bafe5abc50519824e6bb616528927061f7088122d6cbbe49"
+        },
+        "SUPERVISOR_PACKET.template.md": {
+          "mode": 420,
+          "sha256": "ec8a31b9db2089c01ba808edc780a21cb3c80cebab7cd382d878e67f896a99fb"
+        },
+        "TESTING_AND_EVIDENCE.md": {
+          "mode": 420,
+          "sha256": "fe19276d43baffde6d0d9fd691ac144124bd6134b00cd08d44e417b55777cd39"
+        },
+        "TEST_CONTROL_EXECUTION.md": {
+          "mode": 420,
+          "sha256": "70aa50c9b2295119236f33f12c17d8f1126de5f4b6c6fa502302ba673b01e331"
+        },
+        "THIRD_PARTY_LICENSE_INVENTORY.md": {
+          "mode": 420,
+          "sha256": "3fc980fec0b01eaf0145e25d726386afa7d5339fe60df94cbea7c6dd83b74bb4"
+        },
+        "THIRD_PARTY_LICENSE_INVENTORY.template.md": {
+          "mode": 420,
+          "sha256": "5252cc3fdf2938a7da412346bf409ea472700f987e0f1eb97ca5c6c986c9f741"
+        },
+        "UI_IMPLEMENTATION_STANDARDS.md": {
+          "mode": 420,
+          "sha256": "076d7cf927b8fefffde505745691b6ef277b14c77616ba5172d084e1289de8d7"
+        },
+        "VERSION": {
+          "mode": 420,
+          "sha256": "1725bfa6524c5265e7c171cf06568417d39b947fff49c242f03859479c82334b"
+        },
+        "compose.yaml": {
+          "mode": 420,
+          "sha256": "1d503ccc05b6ee342884a444e8a46fcef2f006bb8b0b902c0b1c9054cf591225"
+        },
+        "execution-profile.docker.json": {
+          "mode": 420,
+          "sha256": "c269c2f55036a417806ac30bfe9cd072740b9b9a3ac194301d4f03b297228552"
+        },
+        "execution-profile.json": {
+          "mode": 420,
+          "sha256": "1ae29de416d6158a968157dc2e5499c5713ba99a1f4ecc00acfd939acf218c38"
+        },
+        "execution-profile.template.json": {
+          "mode": 420,
+          "sha256": "9202c462948c401b4d59f295a4284b87f803911ebd5fc9e3d3d54df9bc8e0da7"
+        },
+        "pyproject.toml": {
+          "mode": 420,
+          "sha256": "5d70678c11c3fc46187cab907d1722dfa8ee5777cfb1b21b72bfd117d4cfe778"
+        },
+        "release-commit-profile.json": {
+          "mode": 420,
+          "sha256": "aeec1cff3aeee34fdd26ddcc1ecc461ec435df42c4febc263dc9a1bb7e92d0de"
+        },
+        "run.sh": {
+          "mode": 493,
+          "sha256": "6a8095bbacc2a8f0c8d1a4797f3edd1e1260cff0aff7b24205c72b550be60635"
+        },
+        "scripts/check_docs.py": {
+          "mode": 420,
+          "sha256": "138e33961e44929ddb387d1a8a9cc1445287b17490dfbfeff5d4b9dcec5c02d2"
+        },
+        "scripts/check_standard.py": {
+          "mode": 420,
+          "sha256": "a4cfc7fd9aa4fd1246c9fc699e67de0bb9ac8d5ab4dbdef5171fc491d46c5599"
+        },
+        "scripts/foundation_contract.py": {
+          "mode": 420,
+          "sha256": "0b57babf212c1e01b5dc2c62a6527b86ddf4a2ade1d99b283b927197bbd9fa3f"
+        },
+        "scripts/generate_release.py": {
+          "mode": 420,
+          "sha256": "23fc913ebbb645bfd232e83f870746a71f41435e525b23b8a8189afc34fef65b"
+        },
+        "scripts/health_scaffold.py": {
+          "mode": 420,
+          "sha256": "e556317d0763041130364d0c82e7e09a67adcde01c535f91cb937adc0271f58a"
+        },
+        "scripts/project_runner.py": {
+          "mode": 420,
+          "sha256": "e768ef08079785a73213cf7a6b7b8eb341667139727fbca5b6e3f0e32eb62710"
+        },
+        "scripts/reference_tests.py": {
+          "mode": 420,
+          "sha256": "738bf662db89a71f5cbb6c99d6917d7a7cb1d0b52e350f228748b9647dae30da"
+        },
+        "scripts/release_commit.py": {
+          "mode": 420,
+          "sha256": "7d3f129506be411268dcb7ade0f8a55a86034f48a73c4d246dd28975b8121940"
+        },
+        "scripts/scaffold_lint.py": {
+          "mode": 420,
+          "sha256": "1a25876e7bb36eba9b0ccd5cd19d1dd72c6ba91a9e05827507b75733bc1dca6a"
+        },
+        "scripts/scaffold_status.py": {
+          "mode": 420,
+          "sha256": "83ad5589044c0feead0ba2088ccbafbc15745a8ace027d812c08ee5012194a21"
+        },
+        "scripts/test_controls.py": {
+          "mode": 420,
+          "sha256": "df4c695996b491485add3704e2384814631e286552596cb530550addd1c2d24a"
+        },
+        "scripts/test_network_guard.py": {
+          "mode": 420,
+          "sha256": "a763df81b5a0c763977f6353a92ba1c6f0373c721a4f4e201646d02df1f0a742"
+        },
+        "source-exclusions.json": {
+          "mode": 420,
+          "sha256": "9acd53cb7187767eca64d89b94172c939bdab09ce005f97c191711902ea7e8a6"
+        },
+        "standard-adoption.template.json": {
+          "mode": 420,
+          "sha256": "1e971d13dc5666a820fd24a9c42fbd2bdc0bf24ec17d8097fe13c8b29a6b6e8b"
+        },
+        "standard-release.json": {
+          "mode": 420,
+          "sha256": "200c9e4e9cc5d59ab21853d26251abcefe5627b7a721a9aa92173eaa4f78af0c"
+        },
+        "test-control-profile.json": {
+          "mode": 420,
+          "sha256": "3b7cff13c3f5df345a78e2fe47fbfa00f912920a7b647bc246310b0fe0912cd0"
+        },
+        "tests/test_check_docs.py": {
+          "mode": 420,
+          "sha256": "ff2289a784d6444913ad282e1673b5d5aa1654cdfe6b402a5a890bcf43e6612c"
+        },
+        "tests/test_check_standard.py": {
+          "mode": 420,
+          "sha256": "e9ecd3d96295c2266b40ac189640cfadcb669ee39b1a0025f399bebb09523a78"
+        },
+        "tests/test_execution_facade.py": {
+          "mode": 420,
+          "sha256": "ad293ccb4eaebefa44cc25cfd16a69c53941eb5206cc5655cc23f7007e2faf03"
+        },
+        "tests/test_foundation_contract.py": {
+          "mode": 420,
+          "sha256": "63a7d248f56306c0730edfbb8f7778a60893a2cd450d5f1c03b8c1b5c354adcd"
+        },
+        "tests/test_portable_packet_rehearsal.py": {
+          "mode": 420,
+          "sha256": "79526e30c5c1b936eb50bf51ad4f0934e608c2d77fcd3b7c068a4884448db968"
+        },
+        "tests/test_release_commit.py": {
+          "mode": 420,
+          "sha256": "8e46ee12503c4237724b72a7c15d86c912fc0e93185feb35380b2cc39083ffad"
+        },
+        "tests/test_runtime_contract.py": {
+          "mode": 420,
+          "sha256": "a3c62ae609b081a434837a2cdb8d93514a19f3a55c44f399469754f337a7734e"
+        },
+        "tests/test_test_controls.py": {
+          "mode": 420,
+          "sha256": "de020a7d0a4de7424dfbf53255c90b5d79c575949088ba88583e13146c045697"
+        }
+      },
+      "runtime": "3.15.0rc1 (v3.15.0rc1:37e98da7c19, Aug  4 2026, 07:37:26) [Clang 21.0.0 (clang-2100.1.1.101)]"
+    },
+    "started": 1790519476.330823,
+    "status": "PASS",
+    "step": "FINAL-CANDIDATE-VALIDATION",
+    "updated": 1790519546.352862,
+    "work_unit": "STD-REL-01",
+    "worker_updated": 1790519546.352862
+  },
+  "governance_identity": {
+    "EXECUTION_PLAN.md": "873447e80e9cf421d2d25f81596692f9bb17473a94e67f82b487d35d88a589c3",
+    "PROJECT_PROFILE.md": "739055f02175064256d339503328742cacf52a2de171da41e37a5df5a8931703",
+    "PROJECT_STATE.md": "b00e7dffa4d5b8602f3d4786681812647c0689a4359382b23540b813dd2433eb",
+    "HANDOFF.md": "0bb23dae45a7e7b2fdbb49d6acef9c2b68f7e987b908ef8dbe0d9c9e15ff33af",
+    "CAPABILITY_CATALOG.md": "af1d178349aceb7430f0a75d21f9e72f89db83a83cfd3786671cd9e9b450f065",
+    "STANDARD_ADOPTION_HISTORY.md": "2fc95a51e1ae10e949d54e0f1fe3f436436dca7e0344956d0498175dc5f848b4",
+    "docs/PROVENANCE.md": "052578f4a1a950645e2168cfc81292cd75d44683b27587923c81120a88f3e86d",
+    "docs/NEW_POLICY_REGISTER.md": "2540290bed0957410436cf5900fb04b2bf64d0545e77130e12044545b010f3c3"
+  },
+  "tracked_diff_sha256": "b1b55dbc2e644ea31612677c090ff0346fc1f341dc5d3951c5258608af2b8981",
+  "stable_untracked_identity": {
+    "RELEASE_COMMIT_EXECUTION.md": "8f5534d46fc34e71ceca9b8ad7f8dd65c8b1e25b57b4fc02177f9b73b3368d97",
+    "docs/packets/SUP-STD-REL-01-001.md": "bc4f7e4d86e5902bf888b371a41d78b0d80730a5eeafced1e811fe0fdc4e000d",
+    "release-commit-profile.json": "aeec1cff3aeee34fdd26ddcc1ecc461ec435df42c4febc263dc9a1bb7e92d0de",
+    "scripts/release_commit.py": "7d3f129506be411268dcb7ade0f8a55a86034f48a73c4d246dd28975b8121940",
+    "tests/test_release_commit.py": "8e46ee12503c4237724b72a7c15d86c912fc0e93185feb35380b2cc39083ffad"
+  },
+  "self_reference_exclusions": [
+    "docs/packets/STD-REL-01-CLOSURE-CANDIDATE.md",
+    "docs/evidence/std-rel-01-validation.json"
+  ],
+  "changed_tracked_files": [
+    "CAPABILITY_CATALOG.md",
+    "CHANGELOG.md",
+    "EXECUTION_PLAN.md",
+    "HANDOFF.md",
+    "OPERATIONAL_TOOLING_SCOPE.md",
+    "POLICY_RULES.json",
+    "PROJECT_PROFILE.md",
+    "PROJECT_STATE.md",
+    "README.md",
+    "STANDARD_ADOPTION_HISTORY.md",
+    "VERSION",
+    "docs/NEW_POLICY_REGISTER.md",
+    "docs/PROVENANCE.md",
+    "execution-profile.json",
+    "scripts/check_standard.py",
+    "standard-release.json",
+    "test-control-profile.json",
+    "tests/test_check_standard.py",
+    "tests/test_execution_facade.py",
+    "tests/test_runtime_contract.py"
+  ],
+  "disposable_git_acceptance": {
+    "scope": "DISPOSABLE SYNTHETIC GIT ACCEPTANCE ONLY; not real candidate/owner approval",
+    "receipt": {
+      "status": "COMMITTED",
+      "candidate_sha256": "c2e8b74071073500de52e9be96f1d31d503c2db67ce4053f4a84fe3354052059",
+      "approval_sha256": "5c77312dad8e9a3fac6aee187f4ab956fbeafcec503c2585940498402e3f9803",
+      "before": {
+        "head": "3d800ad965769aac33d7a6a7779ead98ac2a2982",
+        "branch": "refs/heads/fixture-main",
+        "index_sha256": "31d0dfdaeff8eb1b365bbff83c2dcbdc43cd3343272db5cefca9d47ac5d05bda"
+      },
+      "after": {
+        "head": "492f7ede35dc312fc9a630b4993f3c988e734d8e",
+        "branch": "refs/heads/fixture-main",
+        "index_sha256": "31d0dfdaeff8eb1b365bbff83c2dcbdc43cd3343272db5cefca9d47ac5d05bda"
+      },
+      "commit_object": "492f7ede35dc312fc9a630b4993f3c988e734d8e",
+      "attempt_exit": 0,
+      "authority": "NO_CLOSURE_NEXT_PUBLICATION_OR_PRODUCTION_AUTHORITY"
+    },
+    "repeat_status": "ALREADY_COMMITTED",
+    "tag_count": 0,
+    "remote_count": 0,
+    "worktree_clean": true,
+    "index_bytes_preserved": true,
+    "parent_is_approved_head": true,
+    "source_tree_difference_exact": true
+  },
+  "validation": {
+    "focused": {
+      "command": "python3 -B -m unittest tests.test_release_commit tests.test_check_standard tests.test_portable_packet_rehearsal",
+      "passed": 69,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0
+    },
+    "full": {
+      "command": "./run.sh test",
+      "passed": 207,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0
+    },
+    "formal": {
+      "command": "./run.sh formal-test --work-unit STD-REL-01 --step FINAL-CANDIDATE-VALIDATION",
+      "passed": 207,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0
+    },
+    "real_missing_approval_preflight": {
+      "command": "./run.sh commit-preflight --work-unit STD-REL-01",
+      "status": "PENDING",
+      "exit": 3,
+      "head_unchanged": true
+    }
+  },
+  "dogfood": {
+    "initial_assignments": 1,
+    "interim_supervisor_checkpoints": 0,
+    "interim_owner_decisions": 0,
+    "closure_candidates": 1
+  },
+  "limitations": [
+    "unsigned records/operator assertions do not authenticate human authority or truth of validation reports",
+    "unsupported hooks/signing/applicable clean filters/fsmonitor fail closed",
+    "trusted exclusive Git context required; uncooperative writers not sandboxed",
+    "ambiguous attempts retain state/objects and require review; no rollback/automatic retry",
+    "no real candidate approval, commit, closure, NEXT, preview, consumer or publication acceptance"
+  ]
+}

@@ -29,6 +29,8 @@ class ExecutionTests(unittest.TestCase):
             'scripts/foundation_contract.py',
             'scripts/reference_tests.py',
             'scripts/test_controls.py',
+            'scripts/release_commit.py',
+            'release-commit-profile.json',
             'test-control-profile.json',
             'scripts/test_network_guard.py',
             'scripts/scaffold_status.py',

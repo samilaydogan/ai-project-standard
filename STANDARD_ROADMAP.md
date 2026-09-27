@@ -8,7 +8,7 @@ Revision: R1. Date: 2026-09-27. Planning authority: this repository-owned file, 
 | --- | --- | --- | --- |
 | STD-SUP-01 | Portable Supervisor-controlled development baseline | CLOSED | none |
 | STD-TEST-01 | Generic executable TEST controls | CLOSED | STD-SUP-01 CLOSED |
-| STD-REL-01 | Explicit validated-candidate commit control | NOT STARTED | STD-TEST-01 CLOSED |
+| STD-REL-01 | Explicit validated-candidate commit control | CLOSED | STD-TEST-01 CLOSED |
 | STD-REL-02 | Isolated committed-identity preview control | NOT STARTED | STD-REL-01 CLOSED |
 
 Statuses above reflect the owner-authorized closure record; consult EXECUTION_PLAN.md for sole live CURRENT/NEXT and PROJECT_STATE.md for technical facts. Completed units are retained. No code implementation is authorized by selecting a unit.
@@ -34,6 +34,8 @@ Required outcomes/acceptance: status/log do not start/resume/cancel/mutate jobs;
 Closure: shared contract plus reproducible disposable synthetic active/terminal/cancelled job evidence and a fresh-session report; real owner-observed/local stronger protocols remain local. Expected transition: STD-TEST-01 CLOSED makes STD-REL-01 eligible, still NOT STARTED until assigned. Exclusions: TEST/RELEASE implementation during bootstrap; release control code, UI/screenshot engine, distributed worker fleet, provider acceptance, consumer adoption, transport automation, production jobs, broad v0.3.0 operational tooling. No automatic test start merely from status/log tokens.
 
 ## STD-REL-01 — validated-candidate commit control
+
+CLOSED: 0.2.4 FINAL local reviewed content; decision and final evidence in [closure record](docs/packets/STD-REL-01-CLOSURE.md). Source identity is the Git commit carrying that record, avoiding self-reference. Original contract below is retained unchanged.
 
 Purpose: execute RELEASE_COMMIT narrowly against an already validated candidate with actual scoped human authorization. Dependencies: STD-TEST-01 CLOSED. Baseline: conversational contract only; Git CLI exists, generic protected commit adapter does not.
 

@@ -50,7 +50,9 @@
     "run.sh",
     "source-exclusions.json",
     "standard-adoption.template.json",
-    "test-control-profile.json"
+    "test-control-profile.json",
+    "release-commit-profile.json",
+    "RELEASE_COMMIT_EXECUTION.md"
   ],
   "test_directory": "tests",
   "pattern": "test_*.py",
