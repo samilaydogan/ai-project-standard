@@ -58,6 +58,6 @@
   ],
   "test_directory": "tests",
   "pattern": "test_*.py",
-  "timeout_seconds": 180,
+  "timeout_seconds": 360,
   "lease_seconds": 30
 }

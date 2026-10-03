@@ -34,6 +34,166 @@ def local_file(root, name):
 NA = "NOT APPLICABLE"
 ENV_KEY = re.compile(r"[A-Z][A-Z0-9_]*")
 SECRET_NAME = re.compile(r"(?:^|_)(?:SECRET|PASSWORD|TOKEN|CREDENTIAL|PRIVATE_KEY|API_KEY)$")
+COMPOSE_TOOL_KEYS = frozenset({"PATH", "HOME", "LANG", "LC_CTYPE", "TMPDIR", "COMPOSE_DISABLE_ENV_FILE"})
+COMPOSE_REFERENCE = re.compile(r"\$(?:\{([A-Za-z_][A-Za-z0-9_]*)[^}]*\}|([A-Za-z_][A-Za-z0-9_]*))")
+COMPOSE_HOME_PATH = re.compile(r"~(?:[A-Za-z0-9_.-]+)?/")
+STATIC_COMPOSE_ROOT = frozenset({"name", "services", "volumes"})
+STATIC_COMPOSE_SERVICE = frozenset({"image", "ports", "environment", "healthcheck", "volumes",
+                                    "x-foundation-role", "hostname", "read_only", "cap_drop",
+                                    "security_opt", "restart"})
+STATIC_COMPOSE_HEALTH = frozenset({"test", "interval", "timeout", "retries", "start_period"})
+
+
+def strict_compose_json(source):
+    """Parse JSON Compose without losing duplicate members or non-JSON constants."""
+    # Python combines valid surrogate escape pairs into Unicode characters, while
+    # Compose's YAML input parser rejects even those escaped forms. Literal UTF-8
+    # characters remain supported; only source escape syntax is disallowed here.
+    for match in re.finditer(r"(\\+)u([dD][89a-fA-F][0-9a-fA-F]{2})", source):
+        if len(match.group(1)) % 2:
+            raise ValueError("EXEC-RUNTIME: invalid JSON Compose Unicode escape")
+
+    def unique_members(pairs):
+        value = {}
+        for key, item in pairs:
+            if key in value:
+                raise ValueError(f"EXEC-RUNTIME: duplicate JSON Compose member {key!r}")
+            value[key] = item
+        return value
+
+    def invalid_constant(value):
+        raise ValueError(f"EXEC-RUNTIME: invalid JSON Compose constant {value}")
+
+    value = json.loads(source, object_pairs_hook=unique_members, parse_constant=invalid_constant)
+
+    def valid_unicode(item):
+        if isinstance(item, str):
+            if any(0xd800 <= ord(char) <= 0xdfff for char in item):
+                raise ValueError("EXEC-RUNTIME: invalid JSON Compose Unicode escape")
+        elif isinstance(item, dict):
+            for key, member in item.items():
+                valid_unicode(key)
+                valid_unicode(member)
+        elif isinstance(item, list):
+            for member in item:
+                valid_unicode(member)
+
+    valid_unicode(value)
+    return value
+
+
+class ComposeUnavailable(ValueError):
+    """The required read-only Compose verifier cannot run in this environment."""
+
+
+def compose_references(value):
+    """Find real Compose substitutions; paired dollars escape a literal dollar."""
+    if isinstance(value, dict):
+        for key, item in value.items():
+            yield from compose_references(key)
+            yield from compose_references(item)
+    elif isinstance(value, list):
+        for item in value:
+            yield from compose_references(item)
+    elif isinstance(value, str):
+        offset = 0
+        while offset < len(value):
+            if value[offset] != "$":
+                offset += 1
+                continue
+            end = offset
+            while end < len(value) and value[end] == "$":
+                end += 1
+            if (end - offset) % 2:
+                match = COMPOSE_REFERENCE.match(value, end - 1)
+                if match:
+                    yield match.group(1) or match.group(2)
+                    offset = match.end()
+                    continue
+            offset = end
+
+
+def compose_source_values(value):
+    """Walk source values before Compose can normalize machine-local paths."""
+    if isinstance(value, dict):
+        for item in value.values():
+            yield from compose_source_values(item)
+    elif isinstance(value, list):
+        for item in value:
+            yield from compose_source_values(item)
+    else:
+        yield value
+
+
+def static_compose_eligible(value):
+    """A small positive JSON subset with literal, always-active service topology.
+
+    Unsupported Compose features use the effective CLI model, never a raw-source PASS.
+    In particular, profiles, includes, inheritance and service dependencies are not
+    represented here. The CLI's implicit default network is not a verified foundation
+    fact; explicit network configuration therefore requires resolution.
+    """
+    def literal(item, *, allow_empty=False):
+        if isinstance(item, str):
+            return (bool(item) or allow_empty) and "$" not in item and not item.startswith(("./", "../")) \
+                and item not in {".", ".."} and not COMPOSE_HOME_PATH.search(item)
+        return False
+
+    def strings(items):
+        return isinstance(items, list) and all(literal(item) for item in items)
+
+    if (not isinstance(value, dict) or not set(value) <= STATIC_COMPOSE_ROOT
+            or not literal(value.get("name")) or not isinstance(value.get("services"), dict)
+            or not value["services"]):
+        return False
+    volumes = value.get("volumes", {})
+    if not isinstance(volumes, dict) or any(not literal(name) or definition != {}
+                                            for name, definition in volumes.items()):
+        return False
+    for name, service in value["services"].items():
+        if (not literal(name) or not isinstance(service, dict)
+                or not set(service) <= STATIC_COMPOSE_SERVICE
+                or not literal(service.get("image"))):
+            return False
+        if "ports" in service and not strings(service["ports"]):
+            return False
+        if "volumes" in service and not strings(service["volumes"]):
+            return False
+        if "environment" in service:
+            environment = service["environment"]
+            if (not isinstance(environment, dict)
+                    or any(not literal(key) or not literal(item, allow_empty=True)
+                           for key, item in environment.items())):
+                return False
+        if "healthcheck" in service:
+            health = service["healthcheck"]
+            if (not isinstance(health, dict) or not set(health) <= STATIC_COMPOSE_HEALTH
+                    or not strings(health.get("test"))
+                    or any(not literal(health[key]) for key in ("interval", "timeout", "start_period")
+                           if key in health)
+                    or ("retries" in health and (type(health["retries"]) is not int
+                                                 or health["retries"] < 0))):
+                return False
+        if any(not literal(service[key]) for key in ("x-foundation-role", "hostname", "restart")
+               if key in service):
+            return False
+        if "read_only" in service and type(service["read_only"]) is not bool:
+            return False
+        if any(not strings(service[key]) for key in ("cap_drop", "security_opt") if key in service):
+            return False
+    return True
+
+
+def compose_needs_resolution(root, docker, source):
+    """YAML and JSON outside the explicit static subset need the effective model."""
+    path = local_file(root, docker["compose_file"])
+    try:
+        strict_compose_json(path.read_text())
+    except json.JSONDecodeError as exc:
+        if path.suffix.lower() == ".json":
+            raise ValueError("EXEC-RUNTIME: invalid JSON Compose source") from exc
+        return True
+    return not static_compose_eligible(source)
 
 
 def shape(value, keys, label):
@@ -110,18 +270,118 @@ def env_contract(root, env):
     return values
 
 
-def compose_contract(root, docker, network, env_values, secrets):
-    # Compose accepts JSON as YAML. The bounded portable checker supports this subset,
-    # not an arbitrary YAML parser, interpolation executor or runtime launch.
+def compose_source(root, docker):
+    """Parse the actual Compose file; JSON remains usable without Docker installed."""
+    path = local_file(root, docker["compose_file"])
     try:
-        compose = json.loads(local_file(root, docker["compose_file"]).read_text())
-    except ValueError:
-        raise ValueError("EXEC-RUNTIME: static Compose validation requires JSON-compatible YAML") from None
-    if not isinstance(compose, dict) or compose.get("name") != docker["compose_project_name"]:
+        value = strict_compose_json(path.read_text())
+    except json.JSONDecodeError as exc:
+        if path.suffix.lower() == ".json":
+            raise ValueError("EXEC-RUNTIME: invalid JSON Compose source") from exc
+        value = compose_render(root, docker, no_interpolate=True)
+    if not isinstance(value, dict) or not isinstance(value.get("services"), dict):
+        raise ValueError("EXEC-RUNTIME: invalid Compose services")
+    # The declared .env.example is the only environment-file input to static
+    # verification. Compose's service env_file would read arbitrary local bytes.
+    if any(isinstance(service, dict) and "env_file" in service
+           for service in value["services"].values()):
+        raise ValueError("SEC-ENV: Compose service env_file is not a verified input")
+    if any(isinstance(item, str) and COMPOSE_HOME_PATH.search(item)
+           for item in compose_source_values(value)):
+        raise ValueError("SEC-ENV: HOME-relative Compose path is not a verified input")
+    references = set(compose_references(value))
+    if references & COMPOSE_TOOL_KEYS:
+        raise ValueError("SEC-ENV: Compose tool environment is not interpolation authority")
+    return value
+
+
+def compose_render(root, docker, *, no_interpolate=False, override=None, env_values=None, secrets=()):
+    """Read-only Compose rendering; never start services or disclose rendered secrets."""
+    path = local_file(root, docker["compose_file"])
+    # Isolate interpolation from caller overrides and private .env files. Declared
+    # example values, then the single tested override, are the only inputs.
+    environment = {key: os.environ[key] for key in ("PATH", "HOME", "LANG", "LC_CTYPE", "TMPDIR")
+                   if key in os.environ}
+    if env_values is not None:
+        environment.update({key: value for key, value in env_values.items()
+                            if key not in COMPOSE_TOOL_KEYS})
+        for key in secrets:
+            environment[key] = "compose-verification-only"
+    if override is not None:
+        if set(override) & COMPOSE_TOOL_KEYS:
+            raise ValueError("SEC-ENV: Compose tool environment cannot be overridden")
+        environment.update(override)
+    # Consumer values must not re-enable private .env loading or redirect the
+    # Compose project/file/profiles used for the evidence render.
+    for key in tuple(environment):
+        if key.startswith(("COMPOSE_", "DOCKER_")):
+            environment.pop(key)
+    environment["COMPOSE_DISABLE_ENV_FILE"] = "1"
+    if not no_interpolate:
+        # PATH/HOME and locale/temp variables are needed by the CLI on some
+        # platforms, but are never implicit Compose interpolation authority.
+        compose_source(root, docker)
+    if shutil.which("docker", path=environment.get("PATH")) is None:
+        raise ComposeUnavailable("EXEC-RUNTIME: Docker Compose verification unavailable")
+    try:
+        availability = subprocess.run(["docker", "compose", "version"], cwd=root, env=environment,
+                                      capture_output=True, text=True, timeout=20, check=False)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise ComposeUnavailable("EXEC-RUNTIME: Docker Compose verification unavailable") from exc
+    if availability.returncode:
+        raise ComposeUnavailable("EXEC-RUNTIME: Docker Compose verification unavailable")
+    command = ["docker", "compose", "-f", str(path), "config", "--format", "json"]
+    if no_interpolate:
+        command.extend(["--no-interpolate", "--no-normalize", "--no-path-resolution"])
+    try:
+        result = subprocess.run(command, cwd=root, env=environment, capture_output=True,
+                                text=True, timeout=20, check=False)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise ComposeUnavailable("EXEC-RUNTIME: Docker Compose verification unavailable") from exc
+    if result.returncode:
+        raise ValueError("EXEC-RUNTIME: read-only Docker Compose rendering failed")
+    if result.stderr.strip():
+        # Compose may substitute an undefined variable with empty text, warn, and
+        # still exit zero. Any diagnostic makes the effective proof non-accepting.
+        raise ValueError("EXEC-RUNTIME: Docker Compose diagnostics prevent verification")
+    try:
+        value = json.loads(result.stdout)
+    except ValueError as exc:
+        raise ValueError("EXEC-RUNTIME: invalid Docker Compose JSON output") from exc
+    if not isinstance(value, dict):
+        raise ValueError("EXEC-RUNTIME: invalid Docker Compose output")
+    return value
+
+
+def rendered_ports(service):
+    """Normalize Docker Compose's resolved long port records, rejecting ambiguity."""
+    ports = service.get("ports", [])
+    if not isinstance(ports, list):
+        raise ValueError("EXEC-RUNTIME: invalid Compose ports")
+    result = []
+    for row in ports:
+        if not isinstance(row, dict) or row.get("protocol", "tcp") != "tcp":
+            raise ValueError("EXEC-RUNTIME: unsupported Compose port record")
+        try:
+            result.append((row.get("host_ip", ""), int(row["published"]), int(row["target"])))
+        except (KeyError, ValueError, TypeError) as exc:
+            raise ValueError("EXEC-RUNTIME: unresolved Compose port") from exc
+    return result
+
+
+def compose_contract(root, docker, network, env_values, secrets):
+    compose = compose_source(root, docker)
+    rendered = None
+    if compose_needs_resolution(root, docker, compose):
+        rendered = compose_render(root, docker, env_values=env_values, secrets=secrets)
+    if (compose.get("name", rendered.get("name") if rendered else None)
+            != docker["compose_project_name"]):
         raise ValueError("EXEC-RUNTIME: Compose project name mismatch")
     service = compose.get("services", {}).get(docker["primary_service"])
     if not isinstance(service, dict):
         raise ValueError("EXEC-RUNTIME: primary Compose service missing")
+    if rendered is not None and not isinstance(rendered.get("services", {}).get(docker["primary_service"]), dict):
+        raise ValueError("EXEC-RUNTIME: effective primary Compose service missing")
     def expand(text):
         if not isinstance(text, str):
             return text
@@ -132,8 +392,13 @@ def compose_contract(root, docker, network, env_values, secrets):
             return default
         return re.sub(r"\$\{([A-Z][A-Z0-9_]*):-([^}]+)\}", replace, text)
     binding = f"{network['bind_host']}:{network['host_port']}:{network['container_port']}"
-    if binding not in [expand(v) for v in service.get("ports", [])]:
-        raise ValueError("EXEC-RUNTIME: Compose host/container port mapping mismatch")
+    if rendered is None:
+        if binding not in [expand(v) for v in service.get("ports", [])]:
+            raise ValueError("EXEC-RUNTIME: Compose host/container port mapping mismatch")
+    else:
+        actual = rendered.get("services", {}).get(docker["primary_service"], {})
+        if (network["bind_host"], network["host_port"], network["container_port"]) not in rendered_ports(actual):
+            raise ValueError("EXEC-RUNTIME: Compose host/container port mapping mismatch")
     health = service.get("healthcheck", {})
     if not isinstance(health, dict) or health.get("disable") or not isinstance(health.get("test"), list) or len(health["test"]) < 2 or health["test"][0] not in {"CMD", "CMD-SHELL"}:
         raise ValueError("EXEC-RUNTIME: Compose healthcheck required")
@@ -155,6 +420,27 @@ def compose_contract(root, docker, network, env_values, secrets):
                           ("APP_HEALTH_PATH", network["health_path"])):
         if key in environment and expand(environment[key]) != expected:
             raise ValueError(f"EXEC-RUNTIME: Compose network environment mismatch {key}")
+    if rendered is not None:
+        actual = rendered["services"][docker["primary_service"]]
+        actual_health = actual.get("healthcheck", {})
+        if (not isinstance(actual_health, dict) or actual_health.get("disable")
+                or not isinstance(actual_health.get("test"), list)
+                or len(actual_health["test"]) < 2):
+            raise ValueError("EXEC-RUNTIME: effective Compose healthcheck missing")
+        actual_environment = actual.get("environment", {})
+        if not isinstance(actual_environment, dict):
+            raise ValueError("EXEC-RUNTIME: effective Compose environment missing")
+        for key, expected in (("APP_CONTAINER_LISTEN_HOST", network["container_listen_host"]),
+                              ("APP_CONTAINER_PORT", str(network["container_port"])),
+                              ("APP_HEALTH_PATH", network["health_path"])):
+            if key in environment and actual_environment.get(key) != expected:
+                raise ValueError(f"EXEC-RUNTIME: effective Compose environment mismatch {key}")
+        if network["health_path"] != NA:
+            actual_health_text = " ".join(str(value) for value in actual_health["test"])
+            if (network["health_path"] not in actual_health_text
+                    and ("APP_HEALTH_PATH" not in actual_health_text
+                         or actual_environment.get("APP_HEALTH_PATH") != network["health_path"])):
+                raise ValueError("EXEC-RUNTIME: effective Compose health path mismatch")
 
 
 def runtime_contract(root, config):

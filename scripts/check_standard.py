@@ -9,6 +9,8 @@ import re
 from datetime import UTC, date, datetime
 from pathlib import Path
 
+from project_runner import ComposeUnavailable
+
 INVARIANTS = frozenset(
     {
         "AGENT_WORKFLOW.md",
@@ -508,6 +510,9 @@ def main() -> int:
         print("FOUNDATION DECLARED DEBT: " + ("; ".join(result["foundation_debt"]) or "none"))
         if args.require_semantic:
             require(result["semantic"] == "APPROVED", "ADP-STRUCTURE: semantic acceptance pending")
+    except ComposeUnavailable:
+        print("PENDING: required Docker Compose verification unavailable; adoption blocked")
+        return 3
     except (OSError, ValueError, KeyError, TypeError, AttributeError) as exc:
         print(f"FAIL: {exc}")
         return 1

@@ -392,7 +392,7 @@
         "unit": {
           "status": "APPLICABLE",
           "command": "test",
-          "timeout_seconds": 180,
+          "timeout_seconds": 360,
           "network": "loopback-only",
           "state": "temporary-synthetic"
         },
@@ -406,7 +406,7 @@
         "isolated_acceptance": {
           "status": "APPLICABLE",
           "command": "test",
-          "timeout_seconds": 180,
+          "timeout_seconds": 360,
           "network": "loopback-only",
           "state": "temporary-synthetic"
         },

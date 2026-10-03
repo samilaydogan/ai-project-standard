@@ -22,6 +22,11 @@ from health_scaffold import Handler
 import check_standard
 
 
+def compose_available():
+    return bool(shutil.which('docker')) and subprocess.run(
+        ['docker', 'compose', 'version'], capture_output=True, timeout=5, check=False).returncode == 0
+
+
 class FoundationTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
@@ -73,6 +78,16 @@ class FoundationTests(unittest.TestCase):
             'environment':{'DB_USER':'${DB_USER}', 'DB_PASSWORD':'${DB_PASSWORD:?required}'},
             'healthcheck':{'test':['CMD','db-health']}, 'volumes':['dbstate:/data'], 'ports':['127.0.0.1:5433:5432']}
         compose['volumes'] = {'dbstate':{}}
+        (self.root / 'compose.yaml').write_text(json.dumps(compose))
+        return compose
+
+    def parameterized_db(self):
+        compose = self.docker_db()
+        self.f['database']['host_port_env_key'] = 'DB_PORT'
+        self.profile['runtime']['environment']['optional_env_keys'].append('DB_PORT')
+        with (self.root / '.env.example').open('a') as output:
+            output.write('DB_PORT=5433\n')
+        compose['services']['database']['ports'] = ['127.0.0.1:${DB_PORT:-5433}:5432']
         (self.root / 'compose.yaml').write_text(json.dumps(compose))
         return compose
 
@@ -176,7 +191,7 @@ class FoundationTests(unittest.TestCase):
         compose = self.docker_db()
         compose['services']['database']['volumes'] = ['elsewhere:/data']
         (self.root / 'compose.yaml').write_text(json.dumps(compose))
-        self.reject('named volume coherence')
+        self.reject('named volume coherence|Compose rendering failed')
 
     def test_container_db_password_never_literal(self):
         compose = self.docker_db()
@@ -402,14 +417,22 @@ class FoundationTests(unittest.TestCase):
                 kwargs = run.call_args.kwargs
                 self.assertNotIn('PRODUCTION_TOKEN', kwargs['env'])
                 self.assertNotIn('HTTPS_PROXY', kwargs['env'])
-                self.assertEqual(kwargs['timeout'],180)
+                self.assertEqual(kwargs['timeout'], reference_tests.TIMEOUT_SECONDS)
                 self.assertTrue(kwargs['env']['PYTHONPATH'].startswith(kwargs['env']['HOME']))
                 self.assertFalse(Path(kwargs['env']['HOME']).exists())  # temp state cleaned after child completion
 
     def test_timeout_is_failure_not_pass(self):
-        with patch.object(reference_tests.subprocess,'run',side_effect=subprocess.TimeoutExpired('synthetic',180)):
+        with patch.object(reference_tests.subprocess,'run',side_effect=subprocess.TimeoutExpired('synthetic',reference_tests.TIMEOUT_SECONDS)):
             with contextlib.redirect_stderr(io.StringIO()):
                 self.assertEqual(reference_tests.main(),124)
+
+    def test_canonical_test_timeouts_share_a_bounded_policy(self):
+        formal = json.loads((self.root / 'test-control-profile.json').read_text())
+        classes = self.f['testing']['classes']
+        self.assertEqual(reference_tests.TIMEOUT_SECONDS, 360)
+        self.assertEqual(formal['timeout_seconds'], reference_tests.TIMEOUT_SECONDS)
+        self.assertEqual(classes['unit']['timeout_seconds'], reference_tests.TIMEOUT_SECONDS)
+        self.assertEqual(classes['isolated_acceptance']['timeout_seconds'], reference_tests.TIMEOUT_SECONDS)
 
     def test_reference_guard_denies_external_before_dns(self):
         argv=[sys.executable,'-B','-c',"import test_network_guard,socket;socket.getaddrinfo('example.invalid',443)"]
@@ -442,6 +465,409 @@ class FoundationTests(unittest.TestCase):
         compose['services']['database']['ports'] = ['127.0.0.1:9999:5432']
         (self.root / 'compose.yaml').write_text(json.dumps(compose))
         self.reject('DB Compose port coherence')
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_inactive_database_profile_cannot_pass_from_raw_source(self):
+        compose = self.docker_db()
+        compose['services']['database']['profiles'] = ['optional']
+        (self.root / 'compose.yaml').write_text(json.dumps(compose))
+        with patch.dict(os.environ, {'COMPOSE_PROFILES': 'optional'}):
+            self.reject('effective DB Compose service missing')
+
+    def test_inactive_database_profile_requires_compose(self):
+        compose = self.docker_db()
+        compose['services']['database']['profiles'] = ['optional']
+        (self.root / 'compose.yaml').write_text(json.dumps(compose))
+        with patch.object(project_runner.shutil, 'which', return_value=None):
+            with self.assertRaises(project_runner.ComposeUnavailable):
+                self.load()
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_parameterized_host_port_default_and_override(self):
+        self.parameterized_db()
+        self.load()
+        docker = self.profile['runtime']['docker']
+        values = project_runner.env_contract(self.root, self.profile['runtime']['environment'])
+        for supplied, expected in (('', 5433), ('5434', 5434)):
+            with self.subTest(supplied=supplied):
+                effective = project_runner.compose_render(self.root, docker, env_values=values,
+                    secrets={'DB_PASSWORD'}, override={'DB_PORT': supplied})
+                self.assertEqual(effective['name'], 'project-scaffold')
+                self.assertEqual(project_runner.rendered_ports(effective['services']['database']),
+                                 [('127.0.0.1', expected, 5432)])
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_parameterized_port_mismatches_fail_closed(self):
+        base = self.parameterized_db()
+        for defect, binding, expected in (
+            ('default', '127.0.0.1:${DB_PORT:-5440}:5432', 'source/default'),
+            ('environment', '127.0.0.1:${OTHER_PORT:-5433}:5432', 'source/default'),
+            ('target', '127.0.0.1:${DB_PORT:-5433}:5434', 'source/default'),
+        ):
+            with self.subTest(defect=defect):
+                compose = copy.deepcopy(base)
+                compose['services']['database']['ports'] = [binding]
+                (self.root / 'compose.yaml').write_text(json.dumps(compose))
+                self.reject(expected)
+        compose = copy.deepcopy(base)
+        compose['services']['database']['ports'].append('127.0.0.1:5440:5432')
+        (self.root / 'compose.yaml').write_text(json.dumps(compose))
+        self.reject('source/default')
+        (self.root / 'compose.yaml').write_text(json.dumps(base))
+        self.profile['runtime']['environment']['optional_env_keys'].remove('DB_PORT')
+        self.reject('example inventory differs')
+
+    def test_parameterized_source_cannot_claim_fixed_profile(self):
+        self.parameterized_db()
+        del self.f['database']['host_port_env_key']
+        self.reject('DB Compose port coherence')
+
+    def test_parameterized_port_render_failure_is_not_a_pass(self):
+        self.parameterized_db()
+        with patch.object(project_runner.subprocess, 'run', side_effect=[
+            subprocess.CompletedProcess([], 0, 'Docker Compose version test', ''),
+            subprocess.CompletedProcess([], 1, '', '')]):
+            self.reject('Compose rendering failed')
+
+    def test_home_relative_database_bind_fails_before_machine_resolution(self):
+        compose = self.docker_db()
+        for source in ('~/db', '~otheruser/db', '${DATA_ROOT:-~/db}'):
+            with self.subTest(source=source):
+                changed = copy.deepcopy(compose)
+                changed['services']['database']['volumes'].append(source + ':/cache')
+                (self.root / 'compose.yaml').write_text(json.dumps(changed))
+                for home in ('machine-a', 'machine-b'):
+                    with patch.dict(os.environ, {'HOME': str(Path(self.temp.name) / home)}):
+                        self.reject('HOME-relative Compose path')
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_yaml_home_relative_bind_fails_before_machine_resolution(self):
+        self.parameterized_db()
+        (self.root / 'compose.yaml').write_text('''name: project-scaffold
+services:
+  scaffold:
+    image: python:3.11-slim
+  database:
+    image: postgres:17-alpine
+    volumes:
+      - ~/db:/data
+''')
+        self.reject('HOME-relative Compose path')
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_project_relative_database_bind_is_supported(self):
+        compose = self.docker_db()
+        self.f['database']['data_root'] = './data'
+        self.f['persistent_data']['database_data_root'] = './data'
+        self.profile['runtime']['storage'].update(data_roots=['./data'], volume_roots=[])
+        compose['services']['database']['volumes'] = ['./data:/data']
+        (self.root / 'compose.yaml').write_text(json.dumps(compose))
+        self.load()
+        absolute = str(self.root / 'data')
+        self.f['database']['data_root'] = absolute
+        self.f['persistent_data']['database_data_root'] = absolute
+        self.profile['runtime']['storage']['data_roots'] = [absolute]
+        compose['services']['database']['volumes'] = [absolute + ':/data']
+        (self.root / 'compose.yaml').write_text(json.dumps(compose))
+        self.load()
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_project_relative_yaml_database_bind_is_supported(self):
+        self.docker_db()
+        self.f['database']['data_root'] = './data'
+        self.f['persistent_data']['database_data_root'] = './data'
+        self.profile['runtime']['storage'].update(data_roots=['./data'], volume_roots=[])
+        (self.root / 'compose.yaml').write_text('''name: project-scaffold
+services:
+  scaffold:
+    image: python:3.11-slim
+    ports: ["127.0.0.1:8080:8080"]
+    environment:
+      APP_CONTAINER_LISTEN_HOST: "0.0.0.0"
+      APP_CONTAINER_PORT: "8080"
+      APP_HEALTH_PATH: "/health"
+    healthcheck:
+      test: ["CMD", "python3", "-c", "print('/health')"]
+  database:
+    image: postgres:17-alpine
+    x-foundation-role: database
+    ports: ["127.0.0.1:5433:5432"]
+    environment:
+      DB_USER: "${DB_USER}"
+      DB_PASSWORD: "${DB_PASSWORD:?required}"
+    healthcheck:
+      test: ["CMD", "db-health"]
+    volumes: ["./data:/data"]
+''')
+        self.load()
+
+    def test_fixed_json_with_unresolved_interpolation_requires_compose(self):
+        compose = self.docker_db()
+        compose['services']['database']['environment']['POSTGRES_DB'] = '${UNDECLARED_VALUE}'
+        (self.root / 'compose.yaml').write_text(json.dumps(compose))
+        with patch.object(project_runner.shutil, 'which', return_value=None):
+            with self.assertRaises(project_runner.ComposeUnavailable):
+                self.load()
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_fixed_json_undefined_malformed_and_private_env_fail(self):
+        original = self.docker_db()
+        (self.root / '.env').write_text('UNDECLARED_VALUE=hidden-local-value\n')
+        for value, expected in (('${UNDECLARED_VALUE}', 'diagnostics'),
+                                ('${UNDECLARED_VALUE', 'rendering failed')):
+            with self.subTest(value=value):
+                compose = copy.deepcopy(original)
+                compose['services']['database']['environment']['POSTGRES_DB'] = value
+                (self.root / 'compose.yaml').write_text(json.dumps(compose))
+                with patch.dict(os.environ, {'UNDECLARED_VALUE': 'hidden-caller-value'}):
+                    self.reject(expected)
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_json_and_yaml_undefined_interpolation_classify_equally(self):
+        self.docker_db()
+        docker = self.profile['runtime']['docker']
+        values = project_runner.env_contract(self.root, self.profile['runtime']['environment'])
+        for source in (
+            json.dumps({'name': 'project-scaffold', 'services': {'scaffold': {
+                'image': 'alpine', 'environment': {'POSTGRES_DB': '${UNDECLARED_VALUE}'}}}}),
+            'name: project-scaffold\nservices:\n  scaffold:\n    image: alpine\n'
+            '    environment:\n      POSTGRES_DB: "${UNDECLARED_VALUE}"\n',
+        ):
+            with self.subTest(serialization=source[:1]):
+                (self.root / 'compose.yaml').write_text(source)
+                with self.assertRaisesRegex(ValueError, 'diagnostics'):
+                    project_runner.compose_render(self.root, docker, env_values=values, secrets={'DB_PASSWORD'})
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_undefined_and_malformed_interpolation_fail_closed(self):
+        original = self.parameterized_db()
+        for value, expected in (('${UNDECLARED_VALUE}', 'diagnostics'),
+                                ('${UNDECLARED_VALUE', 'rendering failed')):
+            with self.subTest(value=value):
+                compose = copy.deepcopy(original)
+                compose['services']['database']['environment']['POSTGRES_DB'] = value
+                (self.root / 'compose.yaml').write_text(json.dumps(compose))
+                self.reject(expected)
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_missing_required_database_value_is_not_accepted(self):
+        compose = self.parameterized_db()
+        compose['services']['database']['environment']['POSTGRES_DB'] = '${MISSING_DB_NAME}'
+        (self.root / 'compose.yaml').write_text(json.dumps(compose))
+        self.reject('diagnostics')
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_private_dotenv_cannot_satisfy_undeclared_interpolation(self):
+        compose = self.parameterized_db()
+        (self.root / '.env').write_text('UNDECLARED_VALUE=hidden-local-value\n')
+        compose['services']['database']['environment']['POSTGRES_DB'] = '${UNDECLARED_VALUE}'
+        (self.root / 'compose.yaml').write_text(json.dumps(compose))
+        self.reject('diagnostics')
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_caller_environment_cannot_satisfy_undeclared_interpolation(self):
+        compose = self.parameterized_db()
+        compose['services']['database']['environment']['POSTGRES_DB'] = '${UNDECLARED_VALUE}'
+        (self.root / 'compose.yaml').write_text(json.dumps(compose))
+        with patch.dict(os.environ, {'UNDECLARED_VALUE': 'hidden-caller-value'}):
+            self.reject('diagnostics')
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_tool_environment_is_not_implicit_compose_authority(self):
+        compose = self.parameterized_db()
+        for variable in ('HOME', 'CI_RANDOM_DB_NAME'):
+            with self.subTest(variable=variable):
+                changed = copy.deepcopy(compose)
+                changed['services']['database']['environment']['POSTGRES_DB'] = '${' + variable + '}'
+                (self.root / 'compose.yaml').write_text(json.dumps(changed))
+                with patch.dict(os.environ, {variable: 'machine-specific-value'}):
+                    self.reject('Compose tool environment is not interpolation authority' if variable == 'HOME'
+                                else 'diagnostics')
+
+    def test_fixed_port_source_also_rejects_implicit_tool_input(self):
+        compose = self.docker_db()
+        compose['services']['database']['environment']['POSTGRES_DB'] = '${HOME}'
+        (self.root / 'compose.yaml').write_text(json.dumps(compose))
+        self.reject('Compose tool environment is not interpolation authority')
+
+    def test_escaped_tool_name_is_literal_not_interpolation(self):
+        compose = self.docker_db()
+        compose['services']['database']['environment']['LITERAL_NAME'] = '$$HOME'
+        (self.root / 'compose.yaml').write_text(json.dumps(compose))
+        self.load()
+        compose['services']['database']['environment']['LITERAL_NAME'] = '$$${HOME}'
+        (self.root / 'compose.yaml').write_text(json.dumps(compose))
+        self.reject('Compose tool environment is not interpolation authority')
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_declared_home_cannot_become_compose_tool_input(self):
+        compose = self.parameterized_db()
+        self.profile['runtime']['environment']['optional_env_keys'].append('HOME')
+        with (self.root / '.env.example').open('a') as output:
+            output.write('HOME=declared-compose-value\n')
+        compose['services']['database']['environment']['POSTGRES_DB'] = '${HOME}'
+        (self.root / 'compose.yaml').write_text(json.dumps(compose))
+        self.reject('Compose tool environment is not interpolation authority')
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_declared_values_override_caller_environment(self):
+        compose = self.parameterized_db()
+        compose['services']['database']['environment']['DB_USER'] = '${DB_USER}'
+        (self.root / 'compose.yaml').write_text(json.dumps(compose))
+        with patch.dict(os.environ, {'DB_USER': 'wrong-caller-value'}):
+            self.load()
+            effective = project_runner.compose_render(self.root, self.profile['runtime']['docker'],
+                env_values=project_runner.env_contract(self.root, self.profile['runtime']['environment']),
+                secrets={'DB_PASSWORD'})
+        self.assertEqual(effective['services']['database']['environment']['DB_USER'], 'synthetic')
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_different_tool_homes_produce_same_verified_model(self):
+        self.parameterized_db()
+        original_plugin = Path.home() / '.docker' / 'cli-plugins' / 'docker-compose'
+        models = []
+        for name in ('machine-a', 'machine-b'):
+            home = Path(self.temp.name) / name
+            home.mkdir()
+            if original_plugin.is_file():
+                plugin = home / '.docker' / 'cli-plugins' / 'docker-compose'
+                plugin.parent.mkdir(parents=True)
+                plugin.symlink_to(original_plugin.resolve())
+            with patch.dict(os.environ, {'HOME': str(home)}):
+                self.load()
+                models.append(project_runner.compose_render(
+                    self.root, self.profile['runtime']['docker'],
+                    env_values=project_runner.env_contract(self.root, self.profile['runtime']['environment']),
+                    secrets={'DB_PASSWORD'}))
+        self.assertEqual(models[0], models[1])
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_explicit_service_env_file_is_not_a_verified_input(self):
+        compose = self.parameterized_db()
+        for service_name in ('database', 'scaffold'):
+            for file_name in ('.env', '/dev/null', 'missing-local.env'):
+                with self.subTest(service=service_name, env_file=file_name):
+                    changed = copy.deepcopy(compose)
+                    changed['services'][service_name]['env_file'] = file_name
+                    (self.root / 'compose.yaml').write_text(json.dumps(changed))
+                    self.reject('Compose service env_file')
+        changed = copy.deepcopy(compose)
+        changed['services']['database']['env_file'] = '.env'
+        changed['services']['database']['command'] = ['db-server', '--from-env-file']
+        (self.root / 'compose.yaml').write_text(json.dumps(changed))
+        self.reject('Compose service env_file')
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_yaml_source_rejects_tool_interpolation_and_env_file(self):
+        self.parameterized_db()
+        base = '''name: project-scaffold
+services:
+  scaffold:
+    image: python:3.11-slim
+  database:
+    image: postgres:17-alpine
+    x-foundation-role: database
+    environment:
+      POSTGRES_DB: "${HOME}"
+'''
+        (self.root / 'compose.yaml').write_text(base)
+        self.reject('Compose tool environment is not interpolation authority')
+        (self.root / 'compose.yaml').write_text(base.replace('    environment:\n      POSTGRES_DB: "${HOME}"',
+                                                             '    env_file: /dev/null'))
+        self.reject('Compose service env_file')
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_legitimate_unrelated_default_interpolation_is_accepted(self):
+        compose = self.parameterized_db()
+        compose['services']['database']['environment']['OPTIONAL_MODE'] = '${OPTIONAL_MODE-default}'
+        (self.root / 'compose.yaml').write_text(json.dumps(compose))
+        self.load()
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_host_port_override_cannot_change_database_environment(self):
+        compose = self.parameterized_db()
+        compose['services']['database']['environment']['POSTGRES_DB'] = '${DB_PORT:-5433}'
+        (self.root / 'compose.yaml').write_text(json.dumps(compose))
+        self.reject('foundation identity drift')
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_host_port_override_cannot_change_database_command(self):
+        compose = self.parameterized_db()
+        compose['services']['database']['command'] = ['db-server', '--mode=${DB_PORT:-5433}']
+        (self.root / 'compose.yaml').write_text(json.dumps(compose))
+        self.reject('foundation identity drift')
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_host_port_override_cannot_change_database_service_identity(self):
+        compose = self.parameterized_db()
+        compose['services']['database']['hostname'] = 'db-${DB_PORT:-5433}'
+        (self.root / 'compose.yaml').write_text(json.dumps(compose))
+        self.reject('foundation identity drift')
+
+    def test_compose_unavailable_is_pending_not_pass(self):
+        self.parameterized_db()
+        with patch.object(project_runner.shutil, 'which', return_value=None):
+            with self.assertRaisesRegex(project_runner.ComposeUnavailable, 'verification unavailable'):
+                self.load()
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_parameterized_port_example_mismatch_fails(self):
+        self.parameterized_db()
+        path = self.root / '.env.example'
+        path.write_text(path.read_text().replace('DB_PORT=5433', 'DB_PORT=5440'))
+        self.reject('example/default')
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_operationhub_style_port_is_configurable_without_changing_target(self):
+        compose = self.parameterized_db()
+        self.f['database']['host_port'] = 15432
+        self.f['database']['host_port_env_key'] = 'OPERATION_HUB_DB_PORT'
+        keys = self.profile['runtime']['environment']['optional_env_keys']
+        keys[keys.index('DB_PORT')] = 'OPERATION_HUB_DB_PORT'
+        example = self.root / '.env.example'
+        example.write_text(example.read_text().replace('DB_PORT=5433', 'OPERATION_HUB_DB_PORT=15432'))
+        compose['services']['database']['ports'] = ['127.0.0.1:${OPERATION_HUB_DB_PORT:-15432}:5432']
+        (self.root / 'compose.yaml').write_text(json.dumps(compose))
+        self.load()
+        docker = self.profile['runtime']['docker']
+        values = project_runner.env_contract(self.root, self.profile['runtime']['environment'])
+        for supplied, expected in (('', 15432), ('15433', 15433)):
+            effective = project_runner.compose_render(self.root, docker, env_values=values,
+                secrets={'DB_PASSWORD'}, override={'OPERATION_HUB_DB_PORT': supplied})
+            self.assertEqual(project_runner.rendered_ports(effective['services']['database']),
+                             [('127.0.0.1', expected, 5432)])
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_parameterized_database_in_ordinary_yaml(self):
+        self.parameterized_db()
+        self.profile['runtime']['docker']['compose_project_name'] = 'source'
+        (self.root / 'compose.yaml').write_text('''services:
+  scaffold:
+    image: python:3.11-slim
+    ports:
+      - "${APP_BIND_HOST:-127.0.0.1}:${APP_HOST_PORT:-8080}:${APP_CONTAINER_PORT:-8080}"
+    environment:
+      APP_CONTAINER_LISTEN_HOST: "${APP_CONTAINER_LISTEN_HOST:-0.0.0.0}"
+      APP_CONTAINER_PORT: "${APP_CONTAINER_PORT:-8080}"
+      APP_HEALTH_PATH: "${APP_HEALTH_PATH:-/health}"
+    healthcheck:
+      test: ["CMD", "python3", "-c", "print('/health')"]
+  database:
+    image: postgres:17-alpine
+    x-foundation-role: database
+    ports:
+      - "127.0.0.1:${DB_PORT:-5433}:5432"
+    environment:
+      DB_USER: "${DB_USER}"
+      DB_PASSWORD: "${DB_PASSWORD:?required}"
+    healthcheck:
+      test: ["CMD", "db-health"]
+    volumes:
+      - dbstate:/data
+volumes:
+  dbstate: {}
+''')
+        self.load()
 
     def test_unpublished_database_port_supported(self):
         compose = self.docker_db()

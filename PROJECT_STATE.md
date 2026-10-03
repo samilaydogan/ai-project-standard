@@ -9,3 +9,7 @@ Limits: trusted reviewed single-process stdlib validators only; no hostile-code 
 ## Protocol stability decision
 
 PROTOCOL_STABILITY_GATE = PASS. SUPERVISOR_CODEX_TRANSPORT_AUTOMATION = DEFERRED — REVISIT AFTER AUTHHUB ADOPTION DOGFOOD. Owner-provided decision and policy-backed local immutable pin analysis: [SUP-PROTOCOL-STABILITY-001](docs/packets/PROTOCOL-STABILITY-001.md). No R2/new work or consumer action. Local/internal adoption may be separately authorized against c4c2caa983986bd13626a645f67e992ab3a97ca6, 0.2.5 FINAL, unchanged manifest; publication is not a prerequisite. This is not post-result AuthHub semantic approval. Previous pending-gate observations above are historical closure context, superseded by this decision.
+
+## 0.2.6 local finalization
+
+The human owner granted HUMAN SEMANTIC ACCEPTANCE bound to RC6 manifest SHA-256 `200ba6b1d33087e7c78fe875140bd68b9f1edd9f23472b2741ee805591767708`. A separate owner packet conditionally authorizes the validated local 0.2.6 FINAL commit; neither decision authorizes tag, push, publication or consumer adoption. Prior immutable 0.2.5 FINAL at c4c2caa983986bd13626a645f67e992ab3a97ca6 remains historical. R1 is CLOSED and CURRENT/NEXT remain NONE. Exact validation and changed-file evidence belong to [STD-0-2-6-CORRECTIVE-CANDIDATE](docs/packets/STD-0-2-6-CORRECTIVE-CANDIDATE.md). OperationHub was not modified.

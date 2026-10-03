@@ -2,6 +2,10 @@
 
 Repository-owned review history; not a consumer adoption/pin or product roadmap owner.
 
+## 2026-10-03 — 0.2.6 corrective finalization
+
+Owner assignment targets the 0.2.5 Compose/parameterized-host-port rigidity without reopening R1 or rewriting the immutable 0.2.5 FINAL source. The human owner explicitly granted HUMAN SEMANTIC ACCEPTANCE bound to the exact 0.2.6 RC6 manifest SHA-256 `200ba6b1d33087e7c78fe875140bd68b9f1edd9f23472b2741ee805591767708` after the final bounded review. That acceptance did not authorize commit, tag, push or publication. A subsequent separate owner finalization packet conditionally authorized the local RELEASE_COMMIT step only after FINAL-candidate validation and repository preflight. The [corrective evidence packet](docs/packets/STD-0-2-6-CORRECTIVE-CANDIDATE.md) retains RC history and finalization evidence. No consumer repin, tag, push, publication or OperationHub change follows from this local FINAL content.
+
 ## 2026-09-27 — active standard 0.2.2 FINAL
 
 Owner-approved Supervisor closure: commit cd2c377318775e1d3477b97297273b5253575e73, manifest bc2f1bc073c7f608b21d149e291007013b1512332f9f2162649a1d9d92abb9d9; detailed decision/evidence in docs/SUPERVISOR_CAPABILITY_CLOSURE.md. This bootstrap uses the active canonical repository files in place, with no copied companion, consumer exceptions or standard-adoption.json. Integrity PASS does not authenticate human approval. No consumer semantic acceptance or runtime/publication approval is inferred. Owner bootstrap instruction authorizes local roadmap/state and a gated commit only; see docs/packets/BOOTSTRAP-001.md. No standard policy/version/distribution bytes change.

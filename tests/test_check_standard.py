@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import contextlib
+import io
 import shutil
 import subprocess
 import sys
@@ -14,6 +16,12 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import check_standard as checker
 import generate_release
+import project_runner
+
+
+def compose_available():
+    return bool(shutil.which('docker')) and subprocess.run(
+        ['docker', 'compose', 'version'], capture_output=True, timeout=5, check=False).returncode == 0
 
 
 class StandardTests(unittest.TestCase):
@@ -120,6 +128,59 @@ class StandardTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'new consumer must initialize'):
             checker.check(self.standard, self.consumer, new_consumer=True)
         self.assertEqual(before, (self.consumer / 'pyproject.toml').read_bytes())
+
+    @unittest.skipUnless(compose_available(), 'Docker Compose CLI unavailable')
+    def test_parameterized_docker_consumer_retains_pending_human_acceptance(self):
+        source = Path(__file__).resolve().parents[1]
+        shutil.copy2(source / 'compose.yaml', self.consumer / 'compose.yaml')
+        profile = json.loads((source / 'execution-profile.docker.json').read_text())
+        profile['foundation']['identity']['application_version'] = '0.1.0'
+        profile['foundation']['toolchain']['manifest_sha256'] = checker.digest(self.consumer / 'pyproject.toml')
+        env = profile['runtime']['environment']
+        env['optional_env_keys'].extend(['DB_USER', 'DB_PORT', 'DB_PASSWORD'])
+        env['secret_env_keys'].append('DB_PASSWORD')
+        with (self.consumer / '.env.example').open('a') as output:
+            output.write('DB_USER=synthetic\nDB_PORT=5433\nDB_PASSWORD=\n')
+        db = profile['foundation']['database']
+        db.update(database_mode='container', database_engine='postgres', host='database', host_port=5433,
+                  host_port_env_key='DB_PORT', listen_port=5432, name='synthetic', user_env_key='DB_USER',
+                  password_env_key='DB_PASSWORD', compose_service='database', data_root='volume:dbstate',
+                  health_command=['db-health'], test_isolation='isolated-container')
+        profile['foundation']['persistent_data']['database_data_root'] = 'volume:dbstate'
+        profile['runtime']['storage'].update(status='READY', volume_roots=['dbstate'])
+        (self.consumer / 'execution-profile.json').write_text(json.dumps(profile))
+        compose = json.loads((self.consumer / 'compose.yaml').read_text())
+        compose['services']['database'] = {
+            'x-foundation-role': 'database', 'image': 'postgres:17-alpine',
+            'environment': {'DB_USER': '${DB_USER}', 'DB_PASSWORD': '${DB_PASSWORD:?required}'},
+            'healthcheck': {'test': ['CMD', 'db-health']},
+            'volumes': ['dbstate:/data'], 'ports': ['127.0.0.1:${DB_PORT:-5433}:5432'],
+        }
+        compose['volumes'] = {'dbstate': {}}
+        (self.consumer / 'compose.yaml').write_text(json.dumps(compose))
+        result = checker.check(self.standard, self.consumer)
+        self.assertEqual(result['structure'], 'PASS')
+        self.assertEqual(result['semantic'], 'PENDING')
+        with patch.object(project_runner, 'compose_render', side_effect=project_runner.ComposeUnavailable(
+                'EXEC-RUNTIME: Docker Compose verification unavailable')):
+            with self.assertRaises(project_runner.ComposeUnavailable):
+                checker.check(self.standard, self.consumer)
+
+    def test_unavailable_compose_cli_reports_pending_with_blocking_exit(self):
+        output = io.StringIO()
+        with patch.object(sys, 'argv', ['check_standard.py', '--standard', str(self.standard)]), \
+                patch.object(checker, 'check', side_effect=project_runner.ComposeUnavailable('unavailable')), \
+                contextlib.redirect_stdout(output):
+            self.assertEqual(checker.main(), 3)
+        self.assertIn('PENDING: required Docker Compose verification unavailable', output.getvalue())
+
+    def test_malformed_compose_cli_reports_fail_with_blocking_exit(self):
+        output = io.StringIO()
+        with patch.object(sys, 'argv', ['check_standard.py', '--standard', str(self.standard)]), \
+                patch.object(checker, 'check', side_effect=ValueError('EXEC-RUNTIME: rendering failed')), \
+                contextlib.redirect_stdout(output):
+            self.assertEqual(checker.main(), 1)
+        self.assertIn('FAIL: EXEC-RUNTIME: rendering failed', output.getvalue())
 
     def test_new_consumer_cli_and_missing_context(self):
         argv = [sys.executable, '-B', str(self.standard / 'scripts/check_standard.py'),

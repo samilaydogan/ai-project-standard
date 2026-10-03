@@ -6,6 +6,7 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import sys
 import threading
 import time
@@ -366,6 +367,13 @@ def main():
             # Explicitly opt-in adapter starts tests with no inherited credentials.
             safe_env = {k: os.environ[k] for k in ("PATH", "LANG", "LC_CTYPE") if k in os.environ}
             with tempfile.TemporaryDirectory(prefix="formal-test-environment-") as tmp:
+                # A user-installed Compose plugin is executable tooling, not Docker
+                # configuration. Expose only its reviewed binary in disposable HOME.
+                plugin = Path.home() / ".docker" / "cli-plugins" / "docker-compose"
+                if shutil.which("docker") and plugin.is_file() and os.access(plugin, os.X_OK):
+                    isolated_plugin = Path(tmp) / ".docker" / "cli-plugins" / "docker-compose"
+                    isolated_plugin.parent.mkdir(parents=True)
+                    isolated_plugin.symlink_to(plugin.resolve())
                 os.environ.clear()
                 guard = root / "scripts/test_network_guard.py"
                 (Path(tmp) / "sitecustomize.py").write_bytes(guard.read_bytes())

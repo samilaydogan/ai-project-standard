@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import fnmatch
+import copy
 import hashlib
 import json
 import re
@@ -259,9 +260,19 @@ def validate(root, config):
             require(all(lock.get('packages', {}).get('', {}).get(kind, {}) == project.get(kind, {}) for kind in ('dependencies', 'devDependencies', 'optionalDependencies')), "lock dependency map mismatch")
     policy = hygiene(root, f["hygiene"], runtime)
     db = f["database"]
-    shape(db, {"database_mode", "database_engine", "host", "host_port", "listen_port", "name", "user_env_key",
-               "password_env_key", "connection_env_key", "data_root", "compose_service", "health_command",
-               "required_at_day_zero", "test_isolation"}, "database")
+    db_fields = {"database_mode", "database_engine", "host", "host_port", "listen_port", "name", "user_env_key",
+                 "password_env_key", "connection_env_key", "data_root", "compose_service", "health_command",
+                 "required_at_day_zero", "test_isolation"}
+    require(isinstance(db, dict) and set(db) in (db_fields, db_fields | {"host_port_env_key"}),
+            "database fixed schema")
+    port_env = db.get("host_port_env_key")
+    if port_env is not None:
+        from project_runner import COMPOSE_TOOL_KEYS
+        require(db["database_mode"] == "container" and type(db["host_port"]) is int,
+                "parameterized host port requires published container DB")
+        env_key(port_env, "DB host port")
+        require(port_env not in secrets, "DB host port cannot be secret")
+        require(port_env not in COMPOSE_TOOL_KEYS, "DB host port cannot use Compose tool environment")
     mode = db["database_mode"]
     require(mode in {"none", "embedded", "container", "external"}, "database_mode")
     require(db["database_engine"] in {"none", "sqlite", "postgres", "mysql", "project_defined"}, "database_engine")
@@ -287,15 +298,57 @@ def validate(root, config):
             if mode == 'container':
                 require(runtime['runtime_mode'] in {'docker','hybrid'}, 'container DB requires Docker applicability')
                 require(type(db['listen_port']) is int and 1 <= db['listen_port'] <= 65535, 'DB listen port')
-                compose = json_file(root, runtime['docker']['compose_file'])
+                from project_runner import (compose_source, compose_render, compose_needs_resolution,
+                                            rendered_ports, env_contract)
+                docker = runtime['docker']
+                compose = compose_source(root, docker)
                 service = compose.get('services', {}).get(db['compose_service'])
                 require(isinstance(service, dict) and db['compose_service'] != runtime['docker']['primary_service'], 'DB service coherence')
+                effective_service = None
+                if port_env is None and compose_needs_resolution(root, docker, compose):
+                    effective = compose_render(root, docker, env_values=env_contract(root, env), secrets=secrets)
+                    effective_service = effective.get('services', {}).get(db['compose_service'])
+                    require(isinstance(effective_service, dict), 'effective DB Compose service missing')
                 require(db['host'] in {db['compose_service'], service.get('hostname')}, 'DB host/service coherence')
                 ports = service.get('ports', [])
                 if db['host_port'] == NA:
                     require(not ports, 'unpublished DB cannot expose host port')
+                elif port_env is not None:
+                    default = str(db['host_port'])
+                    binding = f"{runtime['network']['bind_host']}:${{{port_env}:-{default}}}:{db['listen_port']}"
+                    require(ports == [binding], 'DB parameterized port source/default coherence')
+                    values = env_contract(root, env)
+                    require(values[port_env] == default, 'DB parameterized port example/default coherence')
+                    alternative = db['host_port'] + 1 if db['host_port'] < 65535 else db['host_port'] - 1
+                    observed = []
+                    for value, expected in (("", db['host_port']), (str(alternative), alternative)):
+                        rendered = compose_render(root, docker, env_values=values, secrets=secrets,
+                                                  override={port_env: value})
+                        require(rendered.get('name') == docker['compose_project_name'], 'DB Compose project identity')
+                        actual = rendered.get('services', {}).get(db['compose_service'])
+                        require(isinstance(actual, dict), 'DB Compose service identity')
+                        require(rendered_ports(actual) == [(runtime['network']['bind_host'], expected, db['listen_port'])],
+                                'DB parameterized effective port coherence')
+                        # Compare Compose's parsed semantic model, not rendered text.
+                        # Only the verified published host port is authorized to vary.
+                        projection = copy.deepcopy(rendered)
+                        projection['services'][db['compose_service']]['ports'][0]['published'] = '<host-port>'
+                        observed.append(projection)
+                    require(observed[0] == observed[1],
+                            'DB parameterized foundation identity drift')
                 else:
-                    require(ports == [f"{runtime['network']['bind_host']}:{db['host_port']}:{db['listen_port']}"], 'DB Compose port coherence')
+                    literal = f"{runtime['network']['bind_host']}:{db['host_port']}:{db['listen_port']}"
+                    expected = [(runtime['network']['bind_host'], db['host_port'], db['listen_port'])]
+                    require(ports == [literal] or (isinstance(ports, list) and len(ports) == 1
+                            and isinstance(ports[0], dict) and rendered_ports(service) == expected),
+                            'DB Compose port coherence')
+                if effective_service is not None:
+                    expected_ports = [] if db['host_port'] == NA else [
+                        (runtime['network']['bind_host'], db['host_port'], db['listen_port'])]
+                    require(rendered_ports(effective_service) == expected_ports,
+                            'effective DB Compose port coherence')
+                    require(effective_service.get('healthcheck', {}).get('test') == ['CMD', *db['health_command']],
+                            'effective DB service health coherence')
                 require(service.get('x-foundation-role') == 'database', 'DB Compose role declaration')
                 require(service.get('healthcheck', {}).get('test') == ['CMD', *db['health_command']], 'DB service health coherence')
                 environment = service.get('environment', {})
@@ -303,15 +356,28 @@ def validate(root, config):
                 require(environment[db['password_env_key']] in {None, '${'+db['password_env_key']+'}', '${'+db['password_env_key']+':?required}'}, 'no literal/default DB password')
                 data_root(root, db['data_root'], 'DB data', policy)
                 require(service.get('volumes'), 'DB persistent volume required')
+                def mounts(source, kind):
+                    return any((isinstance(v, str) and v.startswith(source + ':')) or
+                               (isinstance(v, dict) and v.get('type') == kind and
+                                v.get('source') == source and isinstance(v.get('target'), str)
+                                and v['target'].startswith('/')) for v in service['volumes'])
                 if db['data_root'].startswith('volume:'):
                     volume = db['data_root'][7:]
-                    require(volume in compose.get('volumes', {}) and any(isinstance(v,str) and v.startswith(volume+':') for v in service['volumes']), 'DB named volume coherence')
+                    require(volume in compose.get('volumes', {}) and mounts(volume, 'volume'), 'DB named volume coherence')
                 else:
-                    require(any(isinstance(v,str) and v.startswith(db['data_root']+':') for v in service['volumes']), 'DB bind volume coherence')
+                    require(mounts(db['data_root'], 'bind'), 'DB bind volume coherence')
+                if effective_service is not None:
+                    expected_source = db['data_root'][7:] if db['data_root'].startswith('volume:') else db['data_root']
+                    if not db['data_root'].startswith('volume:') and not Path(expected_source).is_absolute():
+                        expected_source = str(root / expected_source)
+                    require(any(isinstance(mount, dict) and mount.get('source') == expected_source
+                                for mount in effective_service.get('volumes', [])),
+                            'effective DB persistent volume coherence')
             else:
                 require(db['compose_service'] == NA and db['data_root'] == NA and db['listen_port'] == NA, 'external DB has no local service/data/listen port')
                 if runtime['docker']['status'] == 'READY':
-                    compose = json_file(root, runtime['docker']['compose_file'])
+                    from project_runner import compose_source
+                    compose = compose_source(root, runtime['docker'])
                     require(not any('database' in s.get('x-foundation-role','') for s in compose.get('services',{}).values()), 'external DB cannot define local DB service')
     migration = f['migration']
     shape(migration, {'applicability','strategy','command','preflight_command','schema_version_source','current_version','target_version',
@@ -397,7 +463,8 @@ def validate(root, config):
         if jobs['command'] != NA:
             if not command(config,jobs['command'],'worker',mutating=True):debt.append('worker command pending')
         if jobs['compose_service'] != NA:
-            require(runtime['docker']['status']=='READY' and jobs['compose_service'] in json_file(root,runtime['docker']['compose_file']).get('services',{}), 'worker service applicability')
+            from project_runner import compose_source
+            require(runtime['docker']['status']=='READY' and jobs['compose_service'] in compose_source(root,runtime['docker']).get('services',{}), 'worker service applicability')
         require(jobs['mode'] not in {'worker'} or jobs['command'] != NA or jobs['compose_service'] != NA, 'worker entry required')
         if jobs['health_command'] != NA and not command(config,jobs['health_command'],'worker health',mutating=False):debt.append('worker health pending')
     auth = f['authentication']

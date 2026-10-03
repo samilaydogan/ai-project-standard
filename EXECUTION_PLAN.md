@@ -16,3 +16,7 @@ STD-SUP-01 CLOSED at cd2c377318775e1d3477b97297273b5253575e73 (0.2.2 FINAL). STD
 ## Subsequent owner decision
 
 [SUP-PROTOCOL-STABILITY-001](docs/packets/PROTOCOL-STABILITY-001.md) records PROTOCOL_STABILITY_GATE PASS and transport automation DEFERRED. Earlier deferred-gate description records closure context; the decision creates no implementation unit or live pointer transition. AuthHub local immutable adoption is possible only under a separately authorized consumer task. No R2 or implementation is selected.
+
+## Closed-R1 corrective finalization (no roadmap transition)
+
+Owner assignment `STD-0-2-6-COMPOSE-PARAMETERIZATION` authorized a narrow correction to the existing consumer verifier, not a new R1/R2 unit. The human owner accepted only the exact RC6 manifest `200ba6b1d33087e7c78fe875140bd68b9f1edd9f23472b2741ee805591767708`; a separate finalization instruction conditionally authorizes a validated local FINAL commit. The [evidence packet](docs/packets/STD-0-2-6-CORRECTIVE-CANDIDATE.md) owns exact validation and decision references. CURRENT/NEXT remain NONE; R1 executable work remains CLOSED. 0.2.5 FINAL source and prior owner protocol-stability decision stay historical truth. No consumer upgrade, tag, push or publication follows from local finalization.

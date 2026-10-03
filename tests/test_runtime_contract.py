@@ -16,6 +16,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import project_runner
 
 
+def compose_available():
+    return bool(shutil.which('docker')) and subprocess.run(
+        ['docker', 'compose', 'version'], capture_output=True, timeout=5, check=False).returncode == 0
+
+
 class RuntimeContractTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
@@ -58,6 +63,19 @@ class RuntimeContractTests(unittest.TestCase):
 
     def docker(self):
         self.profile = json.loads((self.source / "execution-profile.docker.json").read_text())
+
+    def static_docker_json(self):
+        self.docker()
+        compose = json.loads((self.root / "compose.yaml").read_text())
+        service = compose["services"]["scaffold"]
+        service.pop("build")
+        service["image"] = "python:3.11-slim"
+        service["ports"] = ["127.0.0.1:8080:8080"]
+        service["environment"] = {
+            "APP_CONTAINER_LISTEN_HOST": "0.0.0.0", "APP_CONTAINER_PORT": "8080",
+            "APP_HEALTH_PATH": "/health",
+        }
+        return json.dumps(compose, separators=(",", ":"))
 
     def test_native_day_zero_explicit_and_no_env_required(self):
         self.assertEqual(self.load()["runtime"]["docker"]["status"], "NOT APPLICABLE")
@@ -203,6 +221,17 @@ class RuntimeContractTests(unittest.TestCase):
 
     def test_docker_reference_static_contract(self):
         self.docker()
+        compose_path = self.root / "compose.yaml"
+        compose = json.loads(compose_path.read_text())
+        service = compose["services"]["scaffold"]
+        service.pop("build")
+        service["image"] = "python:3.11-slim"
+        service["ports"] = ["127.0.0.1:8080:8080"]
+        service["environment"] = {
+            "APP_CONTAINER_LISTEN_HOST": "0.0.0.0", "APP_CONTAINER_PORT": "8080",
+            "APP_HEALTH_PATH": "/health",
+        }
+        compose_path.write_text(json.dumps(compose))
         self.save()
         # A fake docker command would leave a sentinel if the validator invoked it.
         fake = self.root / "docker"
@@ -213,6 +242,171 @@ class RuntimeContractTests(unittest.TestCase):
             project_runner.load(self.root)
         self.assertEqual(after, {str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in self.root.rglob('*') if p.is_file()})
         self.assertFalse((self.root / "validator-ran-docker").exists())
+
+    def test_duplicate_json_members_fail_before_static_verification(self):
+        safe = self.static_docker_json()
+        path = self.root / "compose.yaml"
+        path.write_text(safe)
+        self.load()
+        cases = {
+            "service name": safe.replace('"scaffold":{',
+                                         '"scaffold":{"profiles":["optional"]},"scaffold":{', 1),
+            "root services": safe.replace('"services":{', '"services":{},"services":{', 1),
+            "service image": safe.replace('"image":"python:3.11-slim"',
+                                           '"image":"alpine","image":"python:3.11-slim"', 1),
+            "environment": safe.replace('"APP_CONTAINER_PORT":"8080"',
+                                        '"APP_CONTAINER_PORT":"9999","APP_CONTAINER_PORT":"8080"', 1),
+            "healthcheck": safe.replace('"healthcheck":{',
+                                        '"healthcheck":{"test":["CMD","false"],', 1),
+            "top-level volume": safe.replace('"services":{',
+                                             '"volumes":{"data":{},"data":{}},"services":{', 1),
+            "long port": safe.replace('"ports":["127.0.0.1:8080:8080"]',
+                                      '"ports":[{"target":9999,"target":8080}]', 1),
+            "long volume": safe.replace('"services":{',
+                                        '"volumes":{"data":{}},"services":{', 1).replace(
+                                            '"image":"python:3.11-slim"',
+                                            '"image":"python:3.11-slim","volumes":[{"target":"/a","target":"/b"}]', 1),
+        }
+        for name, source in cases.items():
+            with self.subTest(name=name):
+                path.write_text(source)
+                with patch.object(project_runner, "compose_render", side_effect=AssertionError(
+                        "duplicate JSON must not fall back to Compose")):
+                    self.reject("duplicate JSON Compose member")
+
+    def test_nonstandard_json_constants_rejected_at_any_depth(self):
+        for value in ("NaN", "Infinity", "-Infinity"):
+            with self.subTest(value=value):
+                source = '{"name":"project-scaffold","services":{"scaffold":' \
+                         '{"image":"alpine","environment":{"X":' + value + '}}}}'
+                with self.assertRaisesRegex(ValueError, "invalid JSON Compose constant"):
+                    project_runner.strict_compose_json(source)
+
+    def test_surrogate_escapes_cannot_static_pass_when_compose_rejects_them(self):
+        safe = json.loads(self.static_docker_json())
+        path = self.root / "compose.yaml"
+        for value in ("\ud800", "\udc00", "😀"):
+            with self.subTest(value=repr(value)):
+                changed = copy.deepcopy(safe)
+                changed["services"]["scaffold"]["environment"]["UNICODE"] = value
+                path.write_text(json.dumps(changed))
+                self.reject("invalid JSON Compose Unicode escape")
+        literal = json.dumps({"X": r"\ud800"})
+        self.assertEqual(project_runner.strict_compose_json(literal)["X"], r"\ud800")
+        changed = copy.deepcopy(safe)
+        changed["services"]["scaffold"]["environment"]["UNICODE"] = "😀"
+        path.write_text(json.dumps(changed, ensure_ascii=False))
+        self.load()
+
+    def test_invalid_json_file_syntax_does_not_fall_back_to_yaml(self):
+        safe = self.static_docker_json()
+        self.profile["runtime"]["docker"]["compose_file"] = "compose.json"
+        path = self.root / "compose.json"
+        for name, source in {
+            "trailing comma": safe[:-1] + ",}",
+            "comment": safe + " # comment",
+            "invalid escape": safe.replace("python:3.11-slim", "python:\\q"),
+        }.items():
+            with self.subTest(name=name):
+                path.write_text(source)
+                self.reject("invalid JSON Compose source")
+
+    def test_invalid_json_top_level_is_not_a_compose_project(self):
+        self.static_docker_json()
+        path = self.root / "compose.yaml"
+        for source in ("[]", "null", '"text"', "42"):
+            with self.subTest(source=source):
+                path.write_text(source)
+                self.reject("invalid Compose services")
+
+    def test_yaml_only_syntax_cannot_take_static_json_path(self):
+        safe = self.static_docker_json()
+        path = self.root / "compose.yaml"
+        for source in (safe[:-1] + ",}", safe + " # YAML comment"):
+            with self.subTest(source=source[-20:]):
+                path.write_text(source)
+                with patch.object(project_runner.shutil, "which", return_value=None):
+                    with self.assertRaises(project_runner.ComposeUnavailable):
+                        self.load()
+
+    @unittest.skipUnless(compose_available(), "Docker Compose CLI unavailable")
+    def test_duplicate_yaml_mapping_and_json_member_both_fail(self):
+        self.static_docker_json()
+        (self.root / "compose.yaml").write_text('''name: project-scaffold
+services:
+  scaffold:
+    image: alpine
+  scaffold:
+    image: alpine
+''')
+        self.reject("rendering failed")
+
+    def test_static_compose_subset_is_positive_and_excludes_effective_features(self):
+        self.docker()
+        compose = json.loads((self.root / "compose.yaml").read_text())
+        service = compose["services"]["scaffold"]
+        service.pop("build")
+        service["image"] = "python:3.11-slim"
+        service["ports"] = ["127.0.0.1:8080:8080"]
+        service["environment"] = {"APP_CONTAINER_LISTEN_HOST": "0.0.0.0",
+                                  "APP_CONTAINER_PORT": "8080", "APP_HEALTH_PATH": "/health"}
+        self.assertTrue(project_runner.static_compose_eligible(compose))
+        for location, key, value in (("service", "profiles", ["optional"]),
+                                     ("service", "depends_on", ["other"]),
+                                     ("service", "command", ["serve"]),
+                                     ("service", "networks", ["custom"]),
+                                     ("service", "ports", [{"published": 8080, "target": 8080}]),
+                                     ("root", "include", ["other.yaml"]),
+                                     ("root", "x-extension", {"value": "literal"})):
+            with self.subTest(key=key):
+                changed = copy.deepcopy(compose)
+                target = changed if location == "root" else changed["services"]["scaffold"]
+                target[key] = value
+                self.assertFalse(project_runner.static_compose_eligible(changed))
+
+    @unittest.skipUnless(compose_available(), "Docker Compose CLI unavailable")
+    def test_profiled_primary_is_absent_in_effective_json_and_yaml(self):
+        self.docker()
+        source = json.loads((self.root / "compose.yaml").read_text())
+        service = source["services"]["scaffold"]
+        service.pop("build")
+        service["image"] = "python:3.11-slim"
+        service["profiles"] = ["optional"]
+        for data in (json.dumps(source), '''name: project-scaffold
+services:
+  scaffold:
+    image: python:3.11-slim
+    profiles: [optional]
+    ports: ["${APP_BIND_HOST:-127.0.0.1}:${APP_HOST_PORT:-8080}:${APP_CONTAINER_PORT:-8080}"]
+    environment:
+      APP_CONTAINER_LISTEN_HOST: "${APP_CONTAINER_LISTEN_HOST:-0.0.0.0}"
+      APP_CONTAINER_PORT: "${APP_CONTAINER_PORT:-8080}"
+      APP_HEALTH_PATH: "${APP_HEALTH_PATH:-/health}"
+    healthcheck:
+      test: ["CMD", "python3", "/health"]
+'''):
+            with self.subTest(serialization=data[:1]):
+                (self.root / "compose.yaml").write_text(data)
+                with patch.dict(os.environ, {"COMPOSE_PROFILES": "optional"}):
+                    self.reject("effective primary Compose service missing")
+
+    def test_profiled_json_without_compose_is_pending(self):
+        self.docker()
+        source = json.loads((self.root / "compose.yaml").read_text())
+        service = source["services"]["scaffold"]
+        service.pop("build")
+        service["image"] = "python:3.11-slim"
+        service["profiles"] = ["optional"]
+        (self.root / "compose.yaml").write_text(json.dumps(source))
+        with patch.object(project_runner.shutil, "which", return_value=None):
+            with self.assertRaises(project_runner.ComposeUnavailable):
+                self.load()
+
+    def test_resolution_dependent_json_requires_compose(self):
+        self.docker()
+        with patch.object(project_runner.shutil, "which", return_value=None):
+            with self.assertRaises(project_runner.ComposeUnavailable):
+                self.load()
 
     def test_docker_missing_compose_or_service_rejected(self):
         self.docker()
@@ -238,10 +432,33 @@ class RuntimeContractTests(unittest.TestCase):
                 (self.root / "compose.yaml").write_text(json.dumps(compose))
                 self.reject("EXEC-RUNTIME|SEC-ENV")
 
-    def test_compose_unsupported_yaml_honest_failure(self):
+    def test_invalid_yaml_honest_failure(self):
         self.docker()
-        (self.root / "compose.yaml").write_text("services:\n  scaffold: {}\n")
-        self.reject("JSON-compatible YAML")
+        (self.root / "compose.yaml").write_text("services: [\n")
+        self.reject("Compose rendering failed")
+
+    @unittest.skipUnless(compose_available(), "Docker Compose CLI unavailable")
+    def test_ordinary_yaml_uses_read_only_effective_compose(self):
+        self.docker()
+        (self.root / "compose.yaml").write_text('''name: project-scaffold
+services:
+  scaffold:
+    image: python:3.11-slim
+    ports:
+      - "${APP_BIND_HOST:-127.0.0.1}:${APP_HOST_PORT:-8080}:${APP_CONTAINER_PORT:-8080}"
+    environment:
+      APP_CONTAINER_LISTEN_HOST: "${APP_CONTAINER_LISTEN_HOST:-0.0.0.0}"
+      APP_CONTAINER_PORT: "${APP_CONTAINER_PORT:-8080}"
+      APP_HEALTH_PATH: "${APP_HEALTH_PATH:-/health}"
+    healthcheck:
+      test: ["CMD", "python3", "-c", "print('/health')"]
+''')
+        self.load()
+        compose_path = self.root / 'compose.yaml'
+        compose_path.write_text(compose_path.read_text().replace(
+            'APP_HEALTH_PATH: "${APP_HEALTH_PATH:-/health}"',
+            'APP_HEALTH_PATH: "${APP_HEALTH_PATH:-/health}"\n      EXTRA: "${UNDECLARED_VALUE}"'))
+        self.reject('diagnostics')
 
     def test_storage_applicability_coherent(self):
         self.profile["runtime"]["storage"]["data_roots"] = ["data"]
